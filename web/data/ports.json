@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-15T17:09:15Z",
+    "generated_at": "2026-06-15T18:02:57Z",
     "port_count": 77,
     "sources": [
       "IANA",
@@ -94,8 +94,8 @@
     "service_name": "ssh",
     "transport": [
       "TCP",
-      "SCTP",
-      "UDP"
+      "UDP",
+      "SCTP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password>",
     "description": "SSH",
@@ -191,7 +191,7 @@
         "exploited_in_wild": 0,
         "description": "sshd program in the Rapidstream 2.1 Beta VPN appliance has a hard-coded \"rsadmin\" account with a null password, which allows remote attackers to execute arbitrary commands via ssh.",
         "published_at": "2000-10-20T04:00:00.000",
-        "fetched_at": "2026-06-15T17:01:45Z",
+        "fetched_at": "2026-06-15T17:11:07Z",
         "epss_updated_at": "2026-06-15T17:02:28Z",
         "poc_count": 0,
         "poc_urls": "[]",
