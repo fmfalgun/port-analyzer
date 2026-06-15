@@ -24,6 +24,7 @@ jobs:
       - name: Build port data
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          PYTHONPATH: ${{ github.workspace }}
         run: python scripts/build_data.py
 
       - name: Check for changes
