@@ -417,6 +417,24 @@ main {
   background: var(--amber);
   color: var(--black);
 }
+.browse-cves-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.18rem 0.55rem;
+  border-radius: 3px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.browse-cves-btn:hover {
+  background: var(--accent);
+  color: var(--black);
+}
 
 .port-card-body {
   padding: 1.25rem;

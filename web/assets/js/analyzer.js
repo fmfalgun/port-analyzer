@@ -225,6 +225,10 @@ function buildCard(r) {
   const riskLevel = esc(r.risk_level || "LOW");
   const riskClass = `risk-${riskLevel}`;
 
+  const browseBtn = (!API_BASE && r.cve_count > 0)
+    ? `<a class="browse-cves-btn" href="ports.html?p=${esc(String(r.port))}" title="Browse all ${esc(String(r.cve_count))} CVEs">Browse CVEs ↗</a>`
+    : "";
+
   card.innerHTML = `
     <div class="port-card-header" onclick="toggleCard(this)">
       <div>
@@ -234,6 +238,7 @@ function buildCard(r) {
       </div>
       <div style="display:flex;align-items:center;gap:0.75rem">
         <button class="dl-report-btn" title="Download markdown report">&#8595; Report</button>
+        ${browseBtn}
         <span class="risk-badge ${riskClass}">${riskLevel}</span>
         <span class="collapse-icon">▾</span>
       </div>
@@ -324,13 +329,16 @@ function cveSection(r) {
   }).join("");
 
   return `<div class="section-block">
-    <div class="section-title">CVEs (top ${cves.length})</div>
+    <div class="section-title">CVEs (top ${cves.length} of ${esc(String(r.cve_count ?? cves.length))})</div>
     <table class="cve-table">
       <thead><tr>
         <th>CVE ID</th><th>CVSS / Severity</th><th>EPSS</th><th>Description</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>
+    ${(!API_BASE && r.cve_count > cves.length)
+      ? `<div style="text-align:right;margin-top:0.5rem"><a href="ports.html?p=${esc(String(r.port))}" style="color:var(--accent);font-size:0.82rem">Browse all ${esc(String(r.cve_count))} CVEs →</a></div>`
+      : ""}
   </div>`;
 }
 

@@ -45,8 +45,9 @@ PORT_LIST = sorted(set(WELL_KNOWN + REGISTERED))
 
 # Repo root = one level up from scripts/
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_OUTPUT = REPO_ROOT / "web" / "data" / "ports.json"
-DEFAULT_DB     = REPO_ROOT / "db" / "port_analyzer.db"
+DEFAULT_OUTPUT   = REPO_ROOT / "web" / "data" / "ports.json"
+DEFAULT_PORTS_DIR = REPO_ROOT / "web" / "data" / "ports"
+DEFAULT_DB       = REPO_ROOT / "db" / "port_analyzer.db"
 
 SOURCES = ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK"]
 
@@ -72,6 +73,13 @@ def _load_existing(output_path: Path) -> dict:
         except (json.JSONDecodeError, OSError):
             print("[!] existing output file is unreadable — starting fresh")
     return {}
+
+
+def _build_summary(result: dict) -> dict:
+    """Return a copy of result with the all_cves key removed."""
+    s = dict(result)
+    s.pop("all_cves", None)
+    return s
 
 
 def _cache_only_result(port: int, db) -> dict:
@@ -172,9 +180,12 @@ def main(ports_raw: str | None, no_live: bool, output_path: str | None, db_path:
     total = len(target_ports)
 
     # ── banner ─────────────────────────────────────────────────────────────────
+    ports_dir = out_path.parent / "ports"
+
     print(f"[i] port-analyzer — build_data.py")
     print(f"[i] ports to process : {total}")
     print(f"[i] output           : {out_path}")
+    print(f"[i] ports dir        : {ports_dir}")
     print(f"[i] database         : {db_str}")
     if no_live:
         print("[!] --no-live: serving from cache only, skipping API calls")
@@ -209,10 +220,18 @@ def main(ports_raw: str | None, no_live: bool, output_path: str | None, db_path:
             kevc = result.get("kev_count", 0)
             # Overwrite the line we started
             print(f"\r[>] port {idx}/{total} — {port} ({svc})")
-            print(f"[+] done ({cvec} CVEs, {kevc} KEV)")
+
+            # Write full data (including all_cves) to ports/{port}.json
+            port_file = ports_dir / f"{port}.json"
+            port_file.parent.mkdir(parents=True, exist_ok=True)
+            with port_file.open("w") as fh:
+                json.dump(result, fh, indent=2, default=str)
+
+            print(f"[+] done ({cvec} CVEs, {kevc} KEV) → ports/{port}.json")
 
             results.append(result)
-            port_data[str(port)] = result
+            # Store only the summary (no all_cves) in the merged dict
+            port_data[str(port)] = _build_summary(result)
 
         except Exception as exc:
             print()  # newline after the partial line

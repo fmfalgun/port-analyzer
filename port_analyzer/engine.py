@@ -351,6 +351,7 @@ def analyze_port(port: int, db=None, verbose: bool = False) -> dict:
             "exploitdb_hits":   exploitdb_hits,
             "shadowserver_hits": shadowserver_hits,
             "top_cves":        top_cves,
+            "all_cves":        cves_rows,
             "techniques":      tech_rows,
             "variot_vulns":    variot_rows,
             "pentest_notes":   PENTEST_NOTES.get(port, []),

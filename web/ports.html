@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CVE Explorer | Port Analyzer</title>
+  <meta name="description" content="Full CVE list with filtering, sorting, and downloads for any port — Port Analyzer." />
+
+  <!-- Fonts — same as index.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <style>
+    /* ── CVE Explorer page-specific styles ───────────────────────── */
+
+    /* Page wrapper */
+    .explorer-wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 1.75rem 2rem 4rem;
+    }
+
+    /* Status bar (loading / error) */
+    .explorer-status {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+    .explorer-status.loading {
+      background: rgba(212,136,42,0.08);
+      border: 1px solid var(--border);
+      color: var(--amber);
+    }
+    .explorer-status.error {
+      background: rgba(255,68,68,0.08);
+      border: 1px solid rgba(255,68,68,0.3);
+      color: var(--critical);
+    }
+
+    /* Error card */
+    .error-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 640px;
+    }
+    .error-detail {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--dim);
+      line-height: 1.7;
+    }
+    .back-link {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--amber);
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ── Port header ─────────────────────────────────────────────── */
+    #port-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .port-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .port-hdr-left {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .port-hdr-num {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    .port-hdr-dash {
+      font-family: var(--font-mono);
+      color: var(--dim);
+      font-size: 1.2rem;
+    }
+
+    .port-hdr-svc {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+
+    .port-hdr-transport {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--dim);
+    }
+
+    .port-hdr-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    .hdr-count {
+      color: var(--cream);
+      font-weight: 700;
+    }
+
+    .hdr-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      padding: 0.18rem 0.55rem;
+      border-radius: 3px;
+    }
+
+    .kev-badge {
+      background: rgba(255,68,68,0.15);
+      color: var(--critical);
+      border: 1px solid rgba(255,68,68,0.3);
+    }
+
+    .poc-badge {
+      background: rgba(255,179,71,0.12);
+      color: var(--warn);
+      border: 1px solid rgba(255,179,71,0.3);
+    }
+
+    .edb-badge {
+      background: rgba(74,144,217,0.12);
+      color: var(--info);
+      border: 1px solid rgba(74,144,217,0.3);
+    }
+
+    .hdr-data-note {
+      font-size: 0.75rem;
+      color: var(--dim);
+    }
+
+    /* ── Filter bar ──────────────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      padding: 0.75rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px 6px 0 0;
+      position: sticky;
+      top: 57px;   /* height of nav */
+      z-index: 50;
+      margin-bottom: 0;
+    }
+
+    .filter-bar input[type="text"],
+    .filter-bar select {
+      background: var(--black);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.4rem 0.65rem;
+      color: var(--cream);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .filter-bar input[type="text"] {
+      width: 180px;
+    }
+
+    .filter-bar input[type="text"]:focus,
+    .filter-bar select:focus {
+      border-color: var(--amber);
+    }
+
+    .filter-bar input[type="text"]::placeholder {
+      color: var(--dim);
+    }
+
+    .filter-bar select {
+      cursor: pointer;
+    }
+
+    .filter-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--dim);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .filter-checkbox input[type="checkbox"] {
+      accent-color: var(--amber);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .filter-checkbox:hover { color: var(--cream); }
+
+    .filter-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+
+    #cve-count-label {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--dim);
+      white-space: nowrap;
+    }
+
+    .dl-btn {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.65rem;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--dim);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .dl-btn:hover {
+      color: var(--amber);
+      border-color: var(--amber);
+    }
+
+    /* ── Explorer table wrapper ──────────────────────────────────── */
+    #cve-table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      overflow-x: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Override base .cve-table for explorer: sticky head, compact rows */
+    .explorer-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .explorer-table thead {
+      position: sticky;
+      top: 117px;  /* nav (57px) + filter bar (~60px) */
+      z-index: 40;
+      background: var(--card);
+    }
+
+    .explorer-table th {
+      color: var(--dim);
+      font-weight: 400;
+      text-align: left;
+      padding: 0.4rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      background: var(--card);
+    }
+
+    .explorer-table td {
+      padding: 0.35rem 0.6rem;
+      border-bottom: 1px solid rgba(42,48,40,0.4);
+      vertical-align: middle;
+      line-height: 1.4;
+    }
+
+    .explorer-table tr:nth-child(even) td {
+      background: rgba(255,255,255,0.013);
+    }
+
+    .explorer-table tr:hover td {
+      background: rgba(212,136,42,0.05);
+    }
+
+    .explorer-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Column widths */
+    .col-cve   { min-width: 150px; }
+    .col-cvss  { width: 58px;  white-space: nowrap; }
+    .col-sev   { width: 90px;  white-space: nowrap; }
+    .col-epss  { width: 68px;  white-space: nowrap; text-align: right; }
+    .col-kev   { width: 70px;  text-align: center; }
+    .col-poc   { width: 80px;  text-align: center; }
+    .col-edb   { width: 80px;  text-align: center; }
+    .col-desc  { min-width: 200px; color: var(--dim); font-size: 0.78rem; }
+
+    /* CVE link style */
+    .cve-link {
+      color: var(--info);
+      text-decoration: none;
+    }
+    .cve-link:hover { text-decoration: underline; }
+
+    /* Cell badges */
+    .badge-kev {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--critical);
+      letter-spacing: 0.05em;
+    }
+
+    .badge-poc {
+      font-size: 0.75rem;
+      color: var(--warn);
+    }
+
+    .badge-edb {
+      font-size: 0.75rem;
+      color: var(--info);
+    }
+
+    .cell-dim {
+      color: var(--dim);
+      font-size: 0.75rem;
+    }
+
+    /* ── Pagination ───────────────────────────────────────────────── */
+    #pagination {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 0.75rem 0 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      flex-wrap: wrap;
+    }
+
+    .pg-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--dim);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.65rem;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .pg-btn:hover:not([disabled]) {
+      color: var(--amber);
+      border-color: var(--amber);
+    }
+
+    .pg-btn[disabled] {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .pg-label {
+      color: var(--dim);
+      padding: 0 0.5rem;
+    }
+
+    /* ── Extra sections ───────────────────────────────────────────── */
+    .extra-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .explorer-wrap { padding: 1.25rem 1.25rem 4rem; }
+      .filter-bar { top: 57px; }
+      .explorer-table thead { top: 57px; }
+    }
+
+    @media (max-width: 700px) {
+      .hide-mobile { display: none; }
+      .filter-bar { gap: 0.5rem; }
+      .filter-bar input[type="text"] { width: 130px; }
+      .filter-right { margin-left: 0; width: 100%; justify-content: flex-end; }
+      .port-hdr-num { font-size: 1.2rem; }
+      .port-hdr-svc { font-size: 1.1rem; }
+      .explorer-table { font-size: 0.76rem; }
+    }
+
+    @media (max-width: 480px) {
+      .explorer-wrap { padding: 1rem 0.9rem 4rem; }
+      nav { padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation (same as index.html + Home link) ──────────────── -->
+<nav>
+  <a class="nav-brand" href="index.html">PORT ANALYZER</a>
+  <div class="nav-links">
+    <a href="index.html">← Home</a>
+    <a href="https://github.com/fmfalgun/port-analyzer/blob/master/docs/api.md" target="_blank" rel="noopener">API Docs</a>
+    <a href="register.html">Get API Key</a>
+    <a href="https://fmfalgun.github.io" target="_blank" rel="noopener noreferrer">Portfolio</a>
+  </div>
+</nav>
+
+<!-- ── Page content ──────────────────────────────────────────────── -->
+<div class="explorer-wrap" id="explorer-wrap">
+
+  <!-- Status (loading / error) -->
+  <div id="explorer-status" class="explorer-status"></div>
+
+  <!-- Port header: number, service, risk badge, counts -->
+  <div id="port-header"></div>
+
+  <!-- Filter / sort bar -->
+  <div class="filter-bar" id="filter-bar">
+    <input
+      id="cve-search"
+      type="text"
+      placeholder="Search CVE ID…"
+      autocomplete="off"
+      spellcheck="false"
+    />
+
+    <select id="filter-sev" title="Filter by severity">
+      <option value="">All Severities</option>
+      <option value="CRITICAL">CRITICAL</option>
+      <option value="HIGH">HIGH</option>
+      <option value="MEDIUM">MEDIUM</option>
+      <option value="LOW">LOW</option>
+    </select>
+
+    <select id="sort-by" title="Sort order">
+      <option value="cvss">Sort: CVSS ↓</option>
+      <option value="epss">Sort: EPSS ↓</option>
+      <option value="published">Sort: Published ↓</option>
+      <option value="cve_id">Sort: CVE ID</option>
+    </select>
+
+    <label class="filter-checkbox" title="Show only CISA KEV entries">
+      <input type="checkbox" id="filter-kev" />
+      KEV only
+    </label>
+
+    <label class="filter-checkbox" title="Show only CVEs with public PoC">
+      <input type="checkbox" id="filter-poc" />
+      Has PoC
+    </label>
+
+    <div class="filter-right">
+      <span id="cve-count-label"></span>
+      <button class="dl-btn" id="dl-csv"  title="Download filtered CVEs as CSV">↓ CSV</button>
+      <button class="dl-btn" id="dl-json" title="Download filtered CVEs as JSON">↓ JSON</button>
+    </div>
+  </div>
+
+  <!-- CVE table -->
+  <div id="cve-table-wrap"></div>
+
+  <!-- Pagination -->
+  <div id="pagination" class="pagination"></div>
+
+  <!-- VARIoT IoT vulns (rendered if data.variot_vulns exists) -->
+  <div id="variot-section"></div>
+
+  <!-- MITRE ATT&CK, pentest notes, defensive notes -->
+  <div id="extra-sections"></div>
+
+</div><!-- /.explorer-wrap -->
+
+<footer>
+  <p>
+    Built by <a href="https://fmfalgun.github.io">Falgun Marothia</a> ·
+    Sources: NVD · CISA KEV · EPSS · MITRE ATT&CK · IANA ·
+    <a href="register.html">Get API Key</a> ·
+    <a href="https://github.com/fmfalgun/port-analyzer/blob/master/docs/api.md">API Docs</a>
+  </p>
+</footer>
+
+<script src="assets/js/ports.js"></script>
+</body>
+</html>
