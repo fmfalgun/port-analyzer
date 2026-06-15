@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-15T18:12:12Z",
+    "generated_at": "2026-06-15T18:14:05Z",
     "port_count": 77,
     "sources": [
       "IANA",
@@ -969,9 +969,9 @@
     "port": 443,
     "service_name": "https",
     "transport": [
-      "TCP",
+      "UDP",
       "SCTP",
-      "UDP"
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "HTTPS",
@@ -995,7 +995,7 @@
         "exploited_in_wild": 0,
         "description": "Buffer overflow in (1) HttpSaveCVP.dll and (2) HttpSaveCSP.dll in Trend Micro InterScan VirusWall 3.5.1 allows remote attackers to execute arbitrary code.",
         "published_at": "2001-12-31T05:00:00.000",
-        "fetched_at": "2026-06-15T16:39:50Z",
+        "fetched_at": "2026-06-15T17:50:17Z",
         "epss_updated_at": "2026-06-15T16:55:20Z",
         "poc_count": 0,
         "poc_urls": "[]",
@@ -1019,7 +1019,7 @@
         "exploited_in_wild": 0,
         "description": "Multiple unspecified vulnerabilities in Opera 8.50 on Linux and Windows have unknown impact and attack vectors, related to (1) \" handling of must-revalidate cache directive for HTTPS pages\" or (2) a \"display issue with cookie comment encoding.\"",
         "published_at": "2005-09-26T19:03:00.000",
-        "fetched_at": "2026-06-15T16:39:50Z",
+        "fetched_at": "2026-06-15T17:50:32Z",
         "epss_updated_at": "2026-06-15T16:55:20Z",
         "poc_count": 0,
         "poc_urls": "[]",
@@ -1043,7 +1043,7 @@
         "exploited_in_wild": 0,
         "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7 and Oracle Collaboration Suite 9.0.4.2 has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS04.",
         "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-15T16:43:10Z",
+        "fetched_at": "2026-06-15T17:50:36Z",
         "epss_updated_at": "2026-06-15T16:55:20Z",
         "poc_count": 0,
         "poc_urls": "[]",
@@ -1067,7 +1067,7 @@
         "exploited_in_wild": 0,
         "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7, Oracle Collaboration Suite 9.0.4.2, and Oracle E-Business Suite and Applications 11.5.10CU2 has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS05.",
         "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-15T16:43:10Z",
+        "fetched_at": "2026-06-15T17:50:36Z",
         "epss_updated_at": "2026-06-15T16:55:20Z",
         "poc_count": 0,
         "poc_urls": "[]",
@@ -1091,7 +1091,7 @@
         "exploited_in_wild": 0,
         "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7, when running on HP Tru64 UNIX, has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS07.",
         "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-15T16:43:10Z",
+        "fetched_at": "2026-06-15T17:50:36Z",
         "epss_updated_at": "2026-06-15T16:55:20Z",
         "poc_count": 0,
         "poc_urls": "[]",
