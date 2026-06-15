@@ -55,11 +55,72 @@
   </div>
 </div>
 
-<main>
-  <div id="ports-info-panel"></div>
-  <div id="status"></div>
-  <div id="results"></div>
-</main>
+<div class="layout">
+
+  <!-- ── side panel ───────────────────────────────────────────── -->
+  <aside class="info-panel">
+
+    <div class="panel-block">
+      <div class="panel-heading">&gt; WHY THIS EXISTS</div>
+      <p class="panel-text">
+        Every device on the internet talks through <span class="hl">ports</span>.
+        When attackers scan a network, ports are the first thing they probe —
+        because each port runs a service, and every service has vulnerabilities.
+      </p>
+      <p class="panel-text">
+        Port Analyzer answers one question:
+        <span class="hl">if this port is open, what can go wrong?</span>
+      </p>
+      <p class="panel-text dim-text">
+        No sign-up. No cloud. Data fetched from 7 open-source threat databases,
+        cached locally so repeat queries are instant.
+      </p>
+    </div>
+
+    <div class="panel-block">
+      <div class="panel-heading">&gt; HOW IT WORKS</div>
+      <div class="arch-diagram">
+        <div class="arch-box input-box">YOU TYPE A PORT</div>
+        <div class="arch-arrow">▼</div>
+        <div class="arch-box engine-box">QUERY ENGINE<span class="arch-sub">engine.py · analyze_port()</span></div>
+        <div class="arch-arrow">▼</div>
+        <div class="arch-cache">
+          <div class="cache-label">SQLite CACHE</div>
+          <div class="cache-sub">fresh? serve instantly<br>stale? fetch live</div>
+        </div>
+        <div class="arch-arrow">▼</div>
+        <div class="arch-sources-grid">
+          <span class="src-tag">NVD</span>
+          <span class="src-tag">CISA KEV</span>
+          <span class="src-tag">EPSS</span>
+          <span class="src-tag">PoC·GitHub</span>
+          <span class="src-tag">VARIoT</span>
+          <span class="src-tag">AttackerKB</span>
+          <span class="src-tag">Exploit-DB</span>
+        </div>
+        <div class="arch-arrow">▼</div>
+        <div class="arch-box output-box">RISK · CVEs · TECHNIQUES · COMMANDS</div>
+      </div>
+    </div>
+
+    <div class="panel-block term-block">
+      <div class="panel-heading term-heading">&gt; LIVE RECON FEED</div>
+      <div class="term-screen" id="term-screen">
+        <div class="term-lines" id="term-lines"></div>
+        <span class="term-cursor" id="term-cursor">█</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── main results ──────────────────────────────────────────── -->
+  <main>
+    <div id="ports-info-panel"></div>
+    <div id="status"></div>
+    <div id="results"></div>
+  </main>
+
+</div>
 
 <footer>
   <p>

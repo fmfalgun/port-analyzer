@@ -551,6 +551,115 @@ function downloadReport(r) {
   URL.revokeObjectURL(url);
 }
 
+// ── hacker terminal animation ─────────────────────────────────────
+
+(function initTerminal() {
+  const BOOT_LINES = [
+    { text: "PORT.SCANNER v0.1.0 — INITIALIZING",    cls: "ok"  },
+    { text: "─────────────────────────────────────", cls: "sep" },
+    { text: "LOADING THREAT INTELLIGENCE FEEDS...",   cls: "mid" },
+    { text: "[OK] NVD ──────── 250,000+ CVE records", cls: "ok"  },
+    { text: "[OK] CISA KEV ─── 1,187 exploited live", cls: "ok"  },
+    { text: "[OK] EPSS ─────── prediction model v3",  cls: "ok"  },
+    { text: "[OK] PoC·GitHub ─ live repo tracking",   cls: "ok"  },
+    { text: "[OK] VARIoT ───── IoT threat feed",      cls: "ok"  },
+    { text: "[OK] AttackerKB ─ community ratings",    cls: "ok"  },
+    { text: "[OK] Exploit-DB ─ exploit scripts db",   cls: "ok"  },
+    { text: "─────────────────────────────────────", cls: "sep" },
+    { text: "ALL SYSTEMS OPERATIONAL",                cls: "ok"  },
+    { text: "CACHE: SQLITE WAL MODE READY",           cls: "dim" },
+    { text: "─────────────────────────────────────", cls: "sep" },
+    { text: "ENTER TARGET PORT TO BEGIN RECON...",    cls: "warn"},
+  ];
+
+  const SCAN_SEQUENCES = [
+    [
+      { text: "─────────────────────────────────────", cls: "sep"  },
+      { text: "> SCANNING 443/tcp [HTTPS/TLS]...",    cls: "mid"  },
+      { text: "  QUERYING NVD DATABASE...",            cls: "dim"  },
+      { text: "  CVE-2024-6387  CVSS:9.8  CRITICAL",  cls: "warn" },
+      { text: "  CVE-2023-38408 CVSS:9.8  CRITICAL",  cls: "warn" },
+      { text: "  EXPLOIT CODE:  PUBLIC [PoC:3]",      cls: "warn" },
+      { text: "  CISA KEV:      CONFIRMED [3 CVEs]",  cls: "warn" },
+      { text: "  RISK LEVEL:    HIGH",                 cls: "ok"   },
+      { text: "─────────────────────────────────────", cls: "sep"  },
+    ],
+    [
+      { text: "─────────────────────────────────────", cls: "sep"  },
+      { text: "> SCANNING 22/tcp [SSH]...",            cls: "mid"  },
+      { text: "  QUERYING NVD DATABASE...",            cls: "dim"  },
+      { text: "  CVE-2024-6387  CVSS:9.8  CRITICAL",  cls: "warn" },
+      { text: "  ATTACKERKB:    SCORE 4.1/5.0",       cls: "warn" },
+      { text: "  MITRE T1021.004 LATERAL MOVEMENT",   cls: "ok"   },
+      { text: "  RISK LEVEL:    HIGH",                 cls: "ok"   },
+      { text: "─────────────────────────────────────", cls: "sep"  },
+    ],
+    [
+      { text: "─────────────────────────────────────", cls: "sep"  },
+      { text: "> SCANNING 3306/tcp [MYSQL]...",        cls: "mid"  },
+      { text: "  QUERYING NVD DATABASE...",            cls: "dim"  },
+      { text: "  21 CVEs FOUND",                       cls: "ok"   },
+      { text: "  CISA KEV: 0 CONFIRMED EXPLOITS",     cls: "dim"  },
+      { text: "  PUBLIC PoC: 2 CVEs EXPOSED",         cls: "warn" },
+      { text: "  RISK LEVEL: MEDIUM",                  cls: "ok"   },
+      { text: "─────────────────────────────────────", cls: "sep"  },
+    ],
+  ];
+
+  let linesEl, cursorEl;
+  let scanIdx = 0;
+  let bootDone = false;
+
+  function addLine(text, cls) {
+    const div = document.createElement("div");
+    div.className = "term-line" + (cls ? " " + cls : "");
+    div.textContent = text;
+    linesEl.appendChild(div);
+    linesEl.parentElement.scrollTop = linesEl.parentElement.scrollHeight;
+  }
+
+  function clearAfterBoot() {
+    // keep only boot lines, remove scan lines
+    while (linesEl.children.length > BOOT_LINES.length) {
+      linesEl.removeChild(linesEl.lastChild);
+    }
+  }
+
+  async function sleep(ms) {
+    return new Promise(r => setTimeout(r, ms));
+  }
+
+  async function runBoot() {
+    for (const { text, cls } of BOOT_LINES) {
+      addLine(text, cls);
+      await sleep(80);
+    }
+    bootDone = true;
+    await sleep(2000);
+    runScanLoop();
+  }
+
+  async function runScanLoop() {
+    while (true) {
+      clearAfterBoot();
+      const seq = SCAN_SEQUENCES[scanIdx % SCAN_SEQUENCES.length];
+      scanIdx++;
+      for (const { text, cls } of seq) {
+        addLine(text, cls);
+        await sleep(120);
+      }
+      await sleep(3500);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    linesEl  = document.getElementById("term-lines");
+    cursorEl = document.getElementById("term-cursor");
+    if (!linesEl) return;
+    runBoot();
+  });
+})();
+
 // ── event wiring ──────────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {

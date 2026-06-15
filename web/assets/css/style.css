@@ -18,6 +18,12 @@
   --medium:   #D4882A;
   --low:      #3D9A3E;
   --info:     #4A90D9;
+  --warn:     #FFB347;
+
+  /* terminal / hacker */
+  --matrix:      #00FF41;
+  --matrix-dim:  #005514;
+  --matrix-mid:  #00AA2A;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -156,11 +162,168 @@ nav {
 #key-banner span { color: var(--amber); }
 #clear-key { background: none; border: none; color: var(--dim); cursor: pointer; margin-left: auto; font-size: 1rem; }
 
+/* ── two-column layout ─────────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  max-width: 1320px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* ── info sidebar ──────────────────────────────────────────────── */
+.info-panel {
+  position: sticky;
+  top: 57px;
+  height: calc(100vh - 57px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.info-panel::-webkit-scrollbar { width: 4px; }
+.info-panel::-webkit-scrollbar-thumb { background: var(--border); }
+
+.panel-block { display: flex; flex-direction: column; gap: 0.7rem; }
+
+.panel-heading {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--amber);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-text {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--dim);
+  line-height: 1.65;
+}
+.panel-text .hl { color: var(--cream); }
+.dim-text { font-size: 0.72rem; color: #3A3F35; }
+
+/* ── architecture diagram ──────────────────────────────────────── */
+.arch-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.arch-box {
+  width: 100%;
+  background: rgba(42,48,40,0.4);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.4rem 0.6rem;
+  color: var(--cream);
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.arch-sub { color: var(--dim); font-size: 0.62rem; }
+.input-box  { border-color: var(--amber); color: var(--amber); }
+.output-box { border-color: var(--info);  color: var(--info);  font-size: 0.62rem; }
+.engine-box { border-color: #3A3F35; }
+
+.arch-arrow { color: var(--dim); font-size: 0.8rem; line-height: 1; }
+
+.arch-cache {
+  width: 100%;
+  border: 1px dashed var(--border);
+  border-radius: 3px;
+  padding: 0.35rem 0.6rem;
+  text-align: center;
+}
+.cache-label { color: var(--medium); font-size: 0.68rem; letter-spacing: 0.06em; }
+.cache-sub   { color: var(--dim);    font-size: 0.6rem;  margin-top: 0.1rem; line-height: 1.4; }
+
+.arch-sources-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+  padding: 0.2rem 0;
+}
+.src-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+}
+
+/* ── hacker terminal ───────────────────────────────────────────── */
+.term-block { gap: 0.5rem; }
+
+.term-heading {
+  color: var(--matrix) !important;
+  border-bottom-color: var(--matrix-dim) !important;
+}
+
+.term-screen {
+  background: #050905;
+  border: 1px solid var(--matrix-dim);
+  border-radius: 3px;
+  padding: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--matrix);
+  min-height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+.term-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,255,65,0.015) 2px,
+    rgba(0,255,65,0.015) 4px
+  );
+  pointer-events: none;
+}
+
+.term-lines { display: flex; flex-direction: column; gap: 0.15rem; line-height: 1.5; }
+
+.term-line { color: var(--matrix); }
+.term-line.ok  { color: var(--matrix); }
+.term-line.dim { color: var(--matrix-dim); }
+.term-line.mid { color: var(--matrix-mid); }
+.term-line.warn { color: var(--warn); }
+.term-line.sep  { color: var(--matrix-dim); letter-spacing: -0.05em; }
+
+@keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+.term-cursor {
+  display: inline-block;
+  color: var(--matrix);
+  animation: blink 1s step-end infinite;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
 /* ── main content ──────────────────────────────────────────────── */
 main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 2rem 1.75rem 4rem;
+  min-width: 0;
 }
 
 /* ── status bar ────────────────────────────────────────────────── */
@@ -586,9 +749,28 @@ footer {
 footer a { color: var(--amber); text-decoration: none; }
 
 /* ── responsive ────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .info-panel {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+  }
+  .panel-block { flex: 1 1 200px; }
+  .term-block  { flex: 1 1 100%; }
+}
+
 @media (max-width: 600px) {
   nav { padding: 1rem; }
   .search-wrap { flex-direction: column; }
   .cve-table { font-size: 0.75rem; }
   .meta-grid { grid-template-columns: 1fr 1fr; }
+  .info-panel { padding: 1rem; }
 }
