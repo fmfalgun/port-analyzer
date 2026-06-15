@@ -151,12 +151,13 @@ python run.py --serve        # starts backend on :8000
 | `--no-live` | off | Skip all API calls; serve from local cache only |
 | `--top N` | 5 | Number of top CVEs to display per port |
 | `--report PATH` | off | Save a full markdown report to a file |
+| `--sync` | off | Push the result to the GitHub Pages dataset via the GitHub Contents API (requires `GITHUB_PAT`) |
 | `--db PATH` | `$DB_PATH` | Override the SQLite database path |
 | `-h / --help` | — | Show help |
 
 **Saving markdown reports:**
 
-The `--report PATH` flag writes a full markdown intelligence report to a file instead of (or in addition to) terminal output. When multiple ports are analyzed, all reports are concatenated in the file with `---` separators.
+The `--report PATH` flag writes a full markdown intelligence report to a file instead of (or in addition to) terminal output. When multiple ports are analyzed, all reports are concatenated in the file with `---` separators. Reports include CVE IDs as clickable links to their NVD detail pages and MITRE technique IDs as links to the ATT&CK technique pages, and each report closes with a `## References` section listing all data sources used (IANA, NVD, CISA KEV if applicable, EPSS, MITRE ATT&CK) along with per-CVE and per-technique links.
 
 ```bash
 # Save a single-port report
@@ -167,6 +168,39 @@ python -m port_analyzer 22,80,443 --report /tmp/report.md
 ```
 
 Port ranges are capped at 1000 ports per invocation. All ports must be in the range 0–65535.
+
+**Pushing results to the live GitHub Pages dataset (`--sync`):**
+
+The `--sync` flag pushes the analyzed port result directly to the GitHub Pages static dataset so that the live site reflects it immediately — no manual step required. After analysis completes, the CLI fetches the current `web/data/ports.json` from GitHub, merges the new port data in, and commits the updated file back via the GitHub Contents API. Because a Personal Access Token (PAT) — not the automatic `GITHUB_TOKEN` — is used, the push triggers a real push event and the `deploy-pages.yml` workflow fires automatically. The site typically updates within ~30 seconds.
+
+**One-time setup — create a GitHub Fine-grained Personal Access Token:**
+
+1. Go to **GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens**.
+2. Click **Generate new token**.
+3. Under **Repository access**, select the `port-analyzer` repository only.
+4. Under **Permissions → Repository permissions**, set **Contents** to **Read and write**.
+5. Generate the token and copy it immediately (it is shown only once).
+6. Export it in your shell (or add it to `.env`):
+
+```bash
+export GITHUB_PAT=ghp_your_token_here
+```
+
+**Usage:**
+
+```bash
+# One-time setup
+export GITHUB_PAT=ghp_your_token_here
+
+# Analyze and push to the live site
+python -m port_analyzer 31337 --sync
+python -m port_analyzer 8080,4444 --sync
+
+# Combine with other flags
+python -m port_analyzer 22 --sync --report /tmp/port22.md
+```
+
+The `--sync` flag is also listed in the flags summary table above; add `GITHUB_PAT` to the table of environment variables in `.env` when you want it persisted across sessions.
 
 ---
 
@@ -198,7 +232,7 @@ Open `http://localhost:8000` in a browser. Enter a port number, comma-separated 
 
 **Available ports panel:** If you search for a port that is not in the pre-built static dataset, the UI shows a helpful message pointing you to the CLI (`python -m port_analyzer.cli <port>`) and displays a collapsible panel listing all ~118 pre-built ports so you can see what is available at a glance.
 
-**Markdown report download:** Each result card includes a **↓ Report** button that generates a markdown intelligence report for that port and downloads it as `port-{N}-report.md` directly in the browser — no server round-trip required.
+**Markdown report download:** Each result card includes a **↓ Report** button that generates a markdown intelligence report for that port and downloads it as `port-{N}-report.md` directly in the browser — no server round-trip required. The downloaded report contains the same clickable CVE links (to NVD) and MITRE technique links (to ATT&CK) as CLI `--report` output, and ends with a `## References` section listing all data sources with per-CVE and per-technique links.
 
 To use an API key in the web UI, click **Get API Key** in the navigation bar to register, then paste the key into the UI — it is stored in `localStorage` and sent automatically with each request.
 

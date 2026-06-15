@@ -35,6 +35,12 @@
 13. [Static Data URL (No Backend Required)](#13-static-data-url-no-backend-required)
 14. [Embed via iframe](#14-embed-via-iframe)
 15. [Query the API Directly from a Portfolio Site](#15-query-the-api-directly-from-a-portfolio-site)
+16. [Web UI Features — Pre-Built Ports and Markdown Download](#16-web-ui-features----pre-built-ports-and-markdown-download)
+
+**Part 4 — CLI Reference**
+
+17. [`--sync`: Push Analysis Results to GitHub Pages](#17---sync-push-analysis-results-to-github-pages)
+18. [Markdown Reports — Clickable Links and References Section](#18-markdown-reports----clickable-links-and-references-section)
 
 ---
 
@@ -865,7 +871,12 @@ It also displays a collapsible panel listing every port that is available in the
 
 #### Per-port markdown download
 
-Each result card in the web UI includes a **↓ Report** button. Clicking it generates a complete markdown intelligence report for that port (covering CVEs, MITRE ATT&CK techniques, pentest notes, and defensive recommendations) and downloads it as `port-{N}-report.md`. The generation is entirely client-side — no additional API request is made.
+Each result card in the web UI includes a **↓ Report** button. Clicking it generates a complete markdown intelligence report for that port and downloads it as `port-{N}-report.md`. The generation is entirely client-side — no additional API request is made.
+
+Reports include:
+- CVE IDs as clickable markdown links to the NVD detail page (`https://nvd.nist.gov/vuln/detail/{CVE-ID}`)
+- MITRE technique IDs as clickable links to the ATT&CK entry (dot → slash in the URL path, e.g. `T1021.004` → `https://attack.mitre.org/techniques/T1021/004/`)
+- A `## References` section at the end listing IANA, NVD port search, CISA KEV (when `kev_count > 0`), EPSS, MITRE ATT&CK, and per-CVE and per-technique bullet links
 
 #### CLI equivalent — `--report PATH`
 
@@ -879,8 +890,102 @@ python -m port_analyzer.cli 22 --report /tmp/port22.md
 python -m port_analyzer.cli 22,80,443 --report /tmp/report.md
 ```
 
-The `--report` flag can be combined with `--no-live` (reads from local cache) or `--json` (JSON goes to stdout; markdown goes to the file path).
+The `--report` flag can be combined with `--no-live` (reads from local cache), `--json` (JSON goes to stdout; markdown goes to the file path), or `--sync` (see [section 17](#17---sync-push-analysis-results-to-github-pages)).
 
 ---
 
-*Document version: 1.1 — Updated 2026-06-15*
+## Part 4 — CLI Reference
+
+### 17. `--sync`: Push Analysis Results to GitHub Pages
+
+The `--sync` flag uploads the analysis result for each queried port to the live GitHub Pages dataset using the GitHub Contents API. A Personal Access Token (PAT) authenticates the push. Because a PAT push fires a real `push` event on the repository, it automatically triggers `deploy-pages.yml` — the live site updates in roughly 30 seconds.
+
+#### Why PAT and not GITHUB_TOKEN
+
+GitHub Actions' built-in `GITHUB_TOKEN` cannot trigger other workflows. A PAT push fires an authentic `push` event that `deploy-pages.yml` is able to listen on. This is the same architectural reason that `build-data.yml` uses a `workflow_run` trigger.
+
+#### One-time setup
+
+1. Go to **GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens**.
+2. Click **Generate new token**.
+3. Under **Repository access**, select only the `port-analyzer` repository.
+4. Under **Permissions**, set **Contents → Read and write**.
+5. Generate and copy the token.
+6. Export it in your shell (add to `~/.bashrc` or `~/.zshenv` to persist):
+
+```bash
+export GITHUB_PAT=ghp_your_token_here
+```
+
+The `GITHUB_REPO` variable defaults to `fmfalgun/port-analyzer`. Set it only if you are working with a fork:
+
+```bash
+export GITHUB_REPO=yourusername/port-analyzer   # optional
+```
+
+#### Usage
+
+```bash
+# Analyze port 31337 and push the result to the live dataset
+python -m port_analyzer 31337 --sync
+
+# Multiple ports — each port is pushed individually
+python -m port_analyzer 22,443 --sync
+
+# Combine with --report to write a local markdown file at the same time
+python -m port_analyzer 22 --sync --report /tmp/port22.md
+```
+
+#### Environment variables
+
+| Variable | Required | Default | Purpose |
+|---|---|---|---|
+| `GITHUB_PAT` | Yes (for `--sync`) | — | Personal Access Token for GitHub Contents API push |
+| `GITHUB_REPO` | No | `fmfalgun/port-analyzer` | Target repository for the sync (owner/repo) |
+| `NVD_API_KEY` | No | — | NVD API key — raises the NVD rate limit 10x |
+
+---
+
+### 18. Markdown Reports — Clickable Links and References Section
+
+Both the CLI `--report PATH` output and the web UI **↓ Report** download button produce fully linked markdown reports.
+
+#### Inline hyperlinks
+
+- **CVE IDs** are rendered as clickable links to the NVD detail page:
+  `[CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387)`
+- **MITRE technique IDs** are rendered as clickable links to the ATT&CK entry. The dot in the technique ID is converted to a slash in the URL path:
+  `[T1021.004](https://attack.mitre.org/techniques/T1021/004/)`
+
+#### `## References` section
+
+Every port report ends with a `## References` section listing the canonical sources consulted. The section always includes:
+
+- IANA service name registry
+- NVD port-keyword search URL for the service
+- EPSS score API
+- MITRE ATT&CK (general)
+
+When `kev_count > 0`, a CISA KEV link is also included. Per-CVE and per-technique bullet links are appended after the general references:
+
+```markdown
+## References
+
+- [IANA Service Name Registry](https://www.iana.org/assignments/service-names-port-numbers/)
+- [NVD — ssh vulnerability search](https://nvd.nist.gov/vuln/search/results?keyword=ssh)
+- [CISA Known Exploited Vulnerabilities](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+- [EPSS — Exploit Prediction Scoring System](https://www.first.org/epss/)
+- [MITRE ATT&CK](https://attack.mitre.org/)
+
+**CVEs referenced:**
+- [CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387)
+- [CVE-2023-38408](https://nvd.nist.gov/vuln/detail/CVE-2023-38408)
+
+**ATT&CK techniques referenced:**
+- [T1021.004 — Remote Services: SSH](https://attack.mitre.org/techniques/T1021/004/)
+- [T1563.001 — Remote Service Session Hijacking: SSH Hijacking](https://attack.mitre.org/techniques/T1563/001/)
+```
+
+---
+
+*Document version: 1.2 — Updated 2026-06-15*

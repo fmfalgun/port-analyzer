@@ -30,6 +30,11 @@
 11. [Vanilla JS Fetch Example](#11-vanilla-js-fetch-example)
 12. [Rate Limit Recommendations for Embedded Use](#12-rate-limit-recommendations-for-embedded-use)
 
+**Part 3 — CLI Reference**
+
+13. [`--sync`: Push Analysis Results to GitHub Pages](#13---sync-push-analysis-results-to-github-pages)
+14. [Markdown Reports — Clickable Links and References Section](#14-markdown-reports----clickable-links-and-references-section)
+
 ---
 
 ## Part 1 — API Reference
@@ -708,3 +713,99 @@ The anonymous tier allows **20 requests per day per IP address**. For a static s
 - **Do not embed your personal API key in public source code.** If your static site's HTML is public (as it is on GitHub Pages), any key in the source is visible to anyone. Treat embedded keys as shared read-only credentials with no sensitive access — exactly what Port Analyzer keys are. Still, rotate the key if it is abused.
 
 - **Monitor usage with `GET /api/v1/key/info`.** Check `requests_today` and `rate_limit` to understand your current daily consumption before approaching the limit.
+
+---
+
+## Part 3 — CLI Reference
+
+### 13. `--sync`: Push Analysis Results to GitHub Pages
+
+The `--sync` flag uploads the analysis result for each queried port to the live GitHub Pages dataset using the GitHub Contents API. A Personal Access Token (PAT) authenticates the push. Because a PAT push fires a real `push` event on the repository, it automatically triggers `deploy-pages.yml` — the live site updates in roughly 30 seconds.
+
+#### Why PAT and not GITHUB_TOKEN
+
+GitHub Actions' built-in `GITHUB_TOKEN` cannot trigger other workflows. A PAT push fires an authentic `push` event that `deploy-pages.yml` is able to listen on. This is the same architectural reason that `build-data.yml` uses a `workflow_run` trigger.
+
+#### One-time setup
+
+1. Go to **GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens**.
+2. Click **Generate new token**.
+3. Under **Repository access**, select only the `port-analyzer` repository.
+4. Under **Permissions**, set **Contents → Read and write**.
+5. Generate and copy the token.
+6. Export it in your shell (add to `~/.bashrc` or `~/.zshenv` to persist):
+
+```bash
+export GITHUB_PAT=ghp_your_token_here
+```
+
+The `GITHUB_REPO` variable defaults to `fmfalgun/port-analyzer`. Set it only if you are working with a fork:
+
+```bash
+export GITHUB_REPO=yourusername/port-analyzer   # optional
+```
+
+#### Usage
+
+```bash
+# Analyze port 31337 and push the result to the live dataset
+python -m port_analyzer 31337 --sync
+
+# Multiple ports — each port is pushed individually
+python -m port_analyzer 22,443 --sync
+
+# Combine with --report to write a local markdown file at the same time
+python -m port_analyzer 22 --sync --report /tmp/port22.md
+```
+
+#### Environment variables
+
+| Variable | Required | Default | Purpose |
+|---|---|---|---|
+| `GITHUB_PAT` | Yes (for `--sync`) | — | Personal Access Token for GitHub Contents API push |
+| `GITHUB_REPO` | No | `fmfalgun/port-analyzer` | Target repository for the sync (owner/repo) |
+| `NVD_API_KEY` | No | — | NVD API key — raises the NVD rate limit 10x |
+
+---
+
+### 14. Markdown Reports — Clickable Links and References Section
+
+Both the CLI `--report PATH` output and the web UI **↓ Report** download button produce fully linked markdown reports.
+
+#### Inline hyperlinks
+
+- **CVE IDs** are rendered as clickable links to the NVD detail page:
+  `[CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387)`
+- **MITRE technique IDs** are rendered as clickable links to the ATT&CK entry. The dot in the technique ID is converted to a slash in the URL path:
+  `[T1021.004](https://attack.mitre.org/techniques/T1021/004/)`
+
+#### `## References` section
+
+Every port report ends with a `## References` section listing the canonical sources consulted. The section always includes:
+
+- IANA service name registry
+- NVD port-keyword search URL for the service
+- EPSS score API
+- MITRE ATT&CK (general)
+
+When `kev_count > 0`, a CISA KEV link is also included. Per-CVE and per-technique bullet links are appended after the general references:
+
+```markdown
+## References
+
+- [IANA Service Name Registry](https://www.iana.org/assignments/service-names-port-numbers/)
+- [NVD — ssh vulnerability search](https://nvd.nist.gov/vuln/search/results?keyword=ssh)
+- [CISA Known Exploited Vulnerabilities](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+- [EPSS — Exploit Prediction Scoring System](https://www.first.org/epss/)
+- [MITRE ATT&CK](https://attack.mitre.org/)
+
+**CVEs referenced:**
+- [CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387)
+- [CVE-2023-38408](https://nvd.nist.gov/vuln/detail/CVE-2023-38408)
+
+**ATT&CK techniques referenced:**
+- [T1021.004 — Remote Services: SSH](https://attack.mitre.org/techniques/T1021/004/)
+- [T1563.001 — Remote Service Session Hijacking: SSH Hijacking](https://attack.mitre.org/techniques/T1563/001/)
+```
+
+The `--report` flag can be combined with `--sync` or `--json` (JSON goes to stdout; markdown goes to the file path).
