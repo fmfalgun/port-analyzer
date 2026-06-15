@@ -62,6 +62,27 @@ CREATE TABLE IF NOT EXISTS cisa_kev_cache (
     data        TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS exploitdb_cache (
+    id          INTEGER PRIMARY KEY CHECK (id = 1),
+    fetched_at  TEXT NOT NULL,
+    data        TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS variot_vulns (
+    variot_id   TEXT NOT NULL,
+    port        INTEGER NOT NULL,
+    cve_id      TEXT,
+    title       TEXT,
+    description TEXT,
+    cvss_score  REAL,
+    published   TEXT,
+    affected    TEXT,
+    fetched_at  TEXT NOT NULL,
+    PRIMARY KEY (variot_id, port)
+);
+
+CREATE INDEX IF NOT EXISTS idx_variot_port ON variot_vulns(port);
+
 CREATE TABLE IF NOT EXISTS api_keys (
     key              TEXT PRIMARY KEY,
     email            TEXT NOT NULL UNIQUE,
@@ -89,12 +110,38 @@ def today_utc() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
+def _migrate(db: sqlite3.Connection):
+    """Add columns introduced after initial schema without dropping existing data."""
+    new_cols = [
+        # Tier 1 — PoC-in-GitHub
+        ("cves", "poc_count",             "INTEGER DEFAULT 0"),
+        ("cves", "poc_urls",              "TEXT"),
+        ("cves", "poc_checked_at",        "TEXT"),
+        # Tier 2 — AttackerKB
+        ("cves", "attackerkb_score",      "REAL"),
+        ("cves", "attackerkb_url",        "TEXT"),
+        # Tier 2 — Exploit-DB
+        ("cves", "exploitdb_count",       "INTEGER DEFAULT 0"),
+        ("cves", "exploitdb_ids",         "TEXT"),
+        # Tier 2 — Shadowserver
+        ("cves", "shadowserver_count",    "INTEGER"),
+        ("cves", "shadowserver_updated_at", "TEXT"),
+    ]
+    for table, col, typedef in new_cols:
+        try:
+            db.execute(f"ALTER TABLE {table} ADD COLUMN {col} {typedef}")
+            db.commit()
+        except sqlite3.OperationalError:
+            pass  # column already exists
+
+
 def get_db(path: str = DB_PATH) -> sqlite3.Connection:
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(path)
     db.row_factory = sqlite3.Row
     db.executescript(SCHEMA)
     db.commit()
+    _migrate(db)
     return db
 
 
@@ -283,6 +330,99 @@ def check_key_rate_limit(db: sqlite3.Connection, key: str) -> tuple[bool, int, i
         return False, 0, 0
     used = row["requests_today"] if row["reset_date"] == today else 0
     return used < row["rate_limit"], used, row["rate_limit"]
+
+
+# ── IP rate limiting (no-key requests) ────────────────────────────────────────
+
+# ── PoC-in-GitHub ─────────────────────────────────────────────────────────────
+
+def update_cve_poc(db: sqlite3.Connection, cve_id: str, poc_count: int, poc_list: list):
+    db.execute("""
+        UPDATE cves SET poc_count=?, poc_urls=?, poc_checked_at=?
+        WHERE cve_id=?
+    """, (poc_count, json.dumps(poc_list), now_utc(), cve_id))
+    db.commit()
+
+
+# ── VARIoT ────────────────────────────────────────────────────────────────────
+
+def upsert_variot_vuln(db: sqlite3.Connection, variot_id: str, port: int,
+                       cve_id: str | None, title: str | None, description: str | None,
+                       cvss_score: float | None, published: str | None, affected: str | None):
+    db.execute("""
+        INSERT INTO variot_vulns
+            (variot_id, port, cve_id, title, description, cvss_score, published, affected, fetched_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(variot_id, port) DO UPDATE SET
+            cve_id      = excluded.cve_id,
+            title       = excluded.title,
+            description = excluded.description,
+            cvss_score  = excluded.cvss_score,
+            published   = excluded.published,
+            affected    = excluded.affected,
+            fetched_at  = excluded.fetched_at
+    """, (variot_id, port, cve_id, title, description, cvss_score, published, affected, now_utc()))
+    db.commit()
+
+
+def get_variot_vulns(db: sqlite3.Connection, port: int) -> list[dict]:
+    rows = db.execute("""
+        SELECT * FROM variot_vulns WHERE port=?
+        ORDER BY cvss_score DESC NULLS LAST
+    """, (port,)).fetchall()
+    return [dict(r) for r in rows]
+
+
+# ── AttackerKB ────────────────────────────────────────────────────────────────
+
+def update_cve_attackerkb(db: sqlite3.Connection, cve_id: str,
+                           score: float | None, url: str | None):
+    db.execute("""
+        UPDATE cves SET attackerkb_score=?, attackerkb_url=?
+        WHERE cve_id=?
+    """, (score, url, cve_id))
+    db.commit()
+
+
+# ── Exploit-DB ────────────────────────────────────────────────────────────────
+
+def get_exploitdb_cache(db: sqlite3.Connection) -> str | None:
+    """Return cached CSV text if less than 24h old, else None."""
+    row = db.execute("SELECT * FROM exploitdb_cache WHERE id=1").fetchone()
+    if not row:
+        return None
+    fetched = datetime.fromisoformat(row["fetched_at"].replace("Z", "+00:00"))
+    age_hours = (datetime.now(timezone.utc) - fetched).total_seconds() / 3600
+    if age_hours > 24:
+        return None
+    return row["data"]
+
+
+def set_exploitdb_cache(db: sqlite3.Connection, csv_text: str):
+    db.execute("""
+        INSERT INTO exploitdb_cache (id, fetched_at, data) VALUES (1, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET fetched_at=excluded.fetched_at, data=excluded.data
+    """, (now_utc(), csv_text))
+    db.commit()
+
+
+def update_cve_exploitdb(db: sqlite3.Connection, cve_id: str,
+                          count: int, ids_list: list):
+    db.execute("""
+        UPDATE cves SET exploitdb_count=?, exploitdb_ids=?
+        WHERE cve_id=?
+    """, (count, json.dumps(ids_list), cve_id))
+    db.commit()
+
+
+# ── Shadowserver ───────────────────────────────────────────────────────────────
+
+def update_cve_shadowserver(db: sqlite3.Connection, cve_id: str, count: int):
+    db.execute("""
+        UPDATE cves SET shadowserver_count=?, shadowserver_updated_at=?
+        WHERE cve_id=?
+    """, (count, now_utc(), cve_id))
+    db.commit()
 
 
 # ── IP rate limiting (no-key requests) ────────────────────────────────────────

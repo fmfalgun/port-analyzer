@@ -60,10 +60,12 @@ def _fetch_page(keyword: str, start_index: int, pub_start: str | None,
         "resultsPerPage": RESULTS_PER_PAGE,
         "startIndex":     start_index,
     }
+    # NVD API v2.0 requires BOTH pubStartDate and pubEndDate if either is used.
+    # Sending only pubEndDate returns a 400 error. On first fetch (no cursor),
+    # omit both date filters to retrieve all historical CVEs.
     if pub_start:
         params["pubStartDate"] = pub_start
-    if pub_end:
-        params["pubEndDate"] = pub_end
+        params["pubEndDate"]   = pub_end
 
     time.sleep(RATE_SLEEP)
     resp = requests.get(NVD_BASE, params=params, headers=_headers(), timeout=30)

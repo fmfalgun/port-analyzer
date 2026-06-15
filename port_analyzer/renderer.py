@@ -112,12 +112,35 @@ def render_port(result: dict):
     risk_text.append(f"  {risk}  ", style=f"bold {risk_color} on default")
     console.print(risk_text)
 
-    console.print(
-        f"  [dim]CVE Count  :[/dim] {cve_count}   "
-        f"[dim]CISA KEV:[/dim] "
-        + ("[bold red]" + str(kev_count) + " confirmed exploited[/bold red]"
-           if kev_count else "[green]0[/green]")
-    )
+    poc_count        = result.get("poc_count", 0)
+    attackerkb_hits  = result.get("attackerkb_hits", 0)
+    exploitdb_hits   = result.get("exploitdb_hits", 0)
+    shadowserver_hits = result.get("shadowserver_hits", 0)
+
+    overview = Text()
+    overview.append("  ")
+    overview.append("CVE Count  : ", style="dim")
+    overview.append(str(cve_count))
+    overview.append("   CISA KEV: ", style="dim")
+    if kev_count:
+        overview.append(f"{kev_count} confirmed exploited", style="bold red")
+    else:
+        overview.append("0", style="green")
+    overview.append("   Public PoC: ", style="dim")
+    if poc_count:
+        overview.append(f"{poc_count} CVE(s)", style="bold yellow")
+    else:
+        overview.append("0", style="green")
+    if attackerkb_hits:
+        overview.append("   AKB: ", style="dim")
+        overview.append(f"{attackerkb_hits} assessed", style="bold magenta")
+    if exploitdb_hits:
+        overview.append("   EDB: ", style="dim")
+        overview.append(f"{exploitdb_hits} exploit(s)", style="bold yellow")
+    if shadowserver_hits:
+        overview.append("   SS: ", style="dim")
+        overview.append(f"{shadowserver_hits} active scan(s)", style="bold red")
+    console.print(overview)
 
     # Use cases / description
     if result.get("search_terms"):
@@ -147,7 +170,10 @@ def render_port(result: dict):
 
             score_str = f"{score:.1f}" if score is not None else "N/A"
             epss_str  = f"EPSS:{epss:.2f}" if epss is not None else ""
-            kev_str   = " [bold red][KEV][/bold red]" if kev else ""
+            poc_n     = cve.get("poc_count") or 0
+            akb_score = cve.get("attackerkb_score")
+            edb_count = cve.get("exploitdb_count") or 0
+            ss_count  = cve.get("shadowserver_count") or 0
 
             sev_color = SEVERITY_COLOR.get(severity, "white")
             line = Text()
@@ -157,10 +183,17 @@ def render_port(result: dict):
             line.append(f"{severity:<9} ", style=sev_color)
             if epss_str:
                 line.append(f"{epss_str}  ", style="dim")
-            console.print(line, end="")
             if kev:
-                console.print("[bold red][KEV][/bold red]", end="")
-            console.print()
+                line.append("[KEV] ", style="bold red")
+            if poc_n:
+                line.append(f"[PoC:{poc_n}]", style="bold yellow")
+            if akb_score is not None:
+                line.append(f" [AKB:{akb_score:.1f}]", style="bold magenta")
+            if edb_count:
+                line.append(f" [EDB:{edb_count}]", style="bold yellow")
+            if ss_count:
+                line.append(f" [SS:{ss_count}]", style="bold red")
+            console.print(line)
             if desc:
                 console.print(f"    [dim]↳ {desc}[/dim]")
 
@@ -177,6 +210,27 @@ def render_port(result: dict):
             name   = tech["name"]
             tactic = TACTIC_ABBREV.get(tech.get("tactic", ""), tech.get("tactic", ""))
             console.print(f"    [bold cyan]{tid:<14}[/bold cyan] [dim]{tactic:<20}[/dim]  {name}")
+
+    # VARIoT IoT-specific vulns
+    variot_vulns = result.get("variot_vulns", [])
+    if variot_vulns:
+        console.print()
+        t = Text()
+        t.append("[>] ", style="cyan")
+        t.append(f"VARIoT — IoT Vulnerabilities ({len(variot_vulns)} found)")
+        console.print(t)
+        for v in variot_vulns[:5]:
+            cve_ref   = v.get("cve_id") or "no-CVE"
+            title     = (v.get("title") or v.get("description") or "")[:70]
+            vscore    = v.get("cvss_score")
+            score_str = f"CVSS:{vscore:.1f}" if vscore else ""
+            line = Text()
+            line.append("    ")
+            line.append(f"{cve_ref:<20}", style="bold cyan")
+            if score_str:
+                line.append(f"{score_str:<12}", style="yellow")
+            line.append(title, style="dim")
+            console.print(line)
 
     # Pentest notes
     pentest = result.get("pentest_notes", [])
@@ -232,6 +286,11 @@ def render_markdown(result: dict) -> str:
     lines.append(f"| Risk Level | {risk} |")
     lines.append(f"| CVE Count | {cve_count} |")
     lines.append(f"| KEV Count | {kev_count} |")
+    lines.append(f"| CVEs with Public PoC | {result.get('poc_count', 0)} |")
+    lines.append(f"| VARIoT IoT Vulns | {len(result.get('variot_vulns', []))} |")
+    lines.append(f"| AttackerKB Assessments | {result.get('attackerkb_hits', 0)} |")
+    lines.append(f"| Exploit-DB Entries | {result.get('exploitdb_hits', 0)} |")
+    lines.append(f"| Shadowserver Active Scans | {result.get('shadowserver_hits', 0)} |")
     lines.append("")
 
     # Description
@@ -251,20 +310,29 @@ def render_markdown(result: dict) -> str:
     top_cves = result.get("top_cves", [])
     if top_cves:
         lines.append("## Top CVEs")
-        lines.append("| CVE ID | CVSS | EPSS | KEV |")
-        lines.append("|---|---|---|---|")
+        lines.append("| CVE ID | CVSS | EPSS | KEV | PoC | AKB | EDB | SS |")
+        lines.append("|---|---|---|---|---|---|---|---|")
         for cve in top_cves:
-            cve_id   = cve.get("cve_id", "—")
-            score    = cve.get("cvss_score")
-            severity = cve.get("cvss_severity") or "?"
-            epss     = cve.get("epss_score")
-            kev      = cve.get("exploited_in_wild", False)
+            cve_id    = cve.get("cve_id", "—")
+            score     = cve.get("cvss_score")
+            severity  = cve.get("cvss_severity") or "?"
+            epss      = cve.get("epss_score")
+            kev       = cve.get("exploited_in_wild", False)
+            poc_n     = cve.get("poc_count") or 0
+            akb_score = cve.get("attackerkb_score")
+            edb_count = cve.get("exploitdb_count") or 0
+            ss_count  = cve.get("shadowserver_count") or 0
 
             score_str = f"{score:.1f} {severity}" if score is not None else "N/A"
             epss_str  = f"{epss:.2f}" if epss is not None else "—"
-            kev_str   = "Yes" if kev else "No"
+            kev_str   = "**Yes**" if kev else "No"
+            poc_str   = f"[{poc_n}](https://github.com/nomi-sec/PoC-in-GitHub)" if poc_n else "—"
+            akb_url   = cve.get("attackerkb_url") or f"https://attackerkb.com/topics/cve/{cve_id}"
+            akb_str   = f"[{akb_score:.1f}]({akb_url})" if akb_score is not None else "—"
+            edb_str   = str(edb_count) if edb_count else "—"
+            ss_str    = f"**{ss_count}**" if ss_count else "—"
             cve_cell  = _nvd_link(cve_id) if cve_id != "—" else "—"
-            lines.append(f"| {cve_cell} | {score_str} | {epss_str} | {kev_str} |")
+            lines.append(f"| {cve_cell} | {score_str} | {epss_str} | {kev_str} | {poc_str} | {akb_str} | {edb_str} | {ss_str} |")
         lines.append("")
 
     # MITRE ATT&CK techniques
@@ -279,6 +347,21 @@ def render_markdown(result: dict) -> str:
             tactic = tech.get("tactic", "—")
             tid_cell = _mitre_link(tid) if tid != "—" else "—"
             lines.append(f"| {tid_cell} | {name} | {tactic} |")
+        lines.append("")
+
+    # VARIoT
+    variot_vulns = result.get("variot_vulns", [])
+    if variot_vulns:
+        lines.append("## VARIoT — IoT Vulnerabilities")
+        lines.append("| CVE ID | CVSS | Title |")
+        lines.append("|---|---|---|")
+        for v in variot_vulns:
+            cve_ref   = v.get("cve_id") or "—"
+            vscore    = v.get("cvss_score")
+            title     = (v.get("title") or "—").replace("|", "\\|")[:80]
+            score_str = f"{vscore:.1f}" if vscore else "—"
+            cve_cell  = _nvd_link(cve_ref) if cve_ref.startswith("CVE-") else cve_ref
+            lines.append(f"| {cve_cell} | {score_str} | {title} |")
         lines.append("")
 
     # Pentest notes
@@ -304,6 +387,16 @@ def render_markdown(result: dict) -> str:
     if kev_count:
         lines.append(f"- **CISA Known Exploited Vulnerabilities** — <https://www.cisa.gov/known-exploited-vulnerabilities-catalog>")
     lines.append(f"- **EPSS (Exploit Prediction Scoring System)** — <https://www.first.org/epss/>")
+    if result.get("poc_count", 0):
+        lines.append(f"- **PoC-in-GitHub (nomi-sec)** — <https://github.com/nomi-sec/PoC-in-GitHub>")
+    if variot_vulns:
+        lines.append(f"- **VARIoT (IoT Vulnerability Database)** — <https://www.variot.eu/>")
+    if result.get("attackerkb_hits", 0):
+        lines.append(f"- **AttackerKB** — <https://attackerkb.com/>")
+    if result.get("exploitdb_hits", 0):
+        lines.append(f"- **Exploit-DB** — <https://www.exploit-db.com/>")
+    if result.get("shadowserver_hits", 0):
+        lines.append(f"- **Shadowserver** — <https://www.shadowserver.org/>")
     if techniques:
         lines.append(f"- **MITRE ATT&CK** — <https://attack.mitre.org/>")
     for cve in top_cves:

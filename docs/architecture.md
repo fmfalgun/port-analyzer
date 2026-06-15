@@ -38,6 +38,8 @@ Port Analyzer is a three-surface cybersecurity intelligence tool. A user inputs 
 - CVEs from NVD with CVSS scores and severity
 - CISA KEV status (confirmed exploited in the wild)
 - EPSS exploitation probability scores
+- Public PoC availability per CVE (nomi-sec PoC-in-GitHub)
+- IoT-specific CVEs from VARIoT (CIRCL Luxembourg)
 - MITRE ATT&CK technique mappings
 - Pentest notes (tools, checks, commands)
 - Defensive recommendations
@@ -73,6 +75,11 @@ Port Analyzer is a three-surface cybersecurity intelligence tool. A user inputs 
 │ │ IANA │  │  NVD  │  │CISA KEV │  │ EPSS │  │MITRE ATT&CK  │  │
 │ │ CSV  │  │API 2.0│  │JSON feed│  │ API  │  │ (seed map)   │  │
 │ └──────┘  └───────┘  └─────────┘  └──────┘  └──────────────┘  │
+│       ▼                    ▼                                    │
+│ ┌──────────────────┐  ┌──────────┐                             │
+│ │PoC-in-GitHub     │  │ VARIoT   │                             │
+│ │(nomi-sec, raw GH)│  │(variot.eu│                             │
+│ └──────────────────┘  └──────────┘                             │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -211,6 +218,39 @@ Future: full STIX bundle from GitHub (60MB) can be parsed offline and added
         as an optional --update-attack flag in the CLI
 ```
 
+### 3.6 PoC-in-GitHub (`sources/poc_github.py`)
+
+```
+Source: https://github.com/nomi-sec/PoC-in-GitHub
+URL pattern: https://raw.githubusercontent.com/nomi-sec/PoC-in-GitHub/master/{YYYY}/{CVE-ID}.json
+Auth: None (public GitHub CDN)
+Fetch strategy: PER-CVE LOOKUP
+  - Checks top 20 CVEs for a port (sorted by CVSS score, descending)
+  - GET {RAW_BASE}/{year}/{CVE-ID}.json
+  - 404 → no PoC; 200 → JSON array of repos with html_url, stargazers_count, full_name
+  - Stores poc_count and poc_urls JSON in cves table via update_cve_poc()
+  - 0.5s sleep between requests (REQ_SLEEP)
+  - Cache TTL: 24 hours (stale check via fetch_log, source='poc_github')
+
+Output: cves.poc_count (integer) + cves.poc_urls (JSON array of repo objects)
+```
+
+### 3.7 VARIoT (`sources/variot.py`)
+
+```
+URL: https://www.variot.eu/api/v1/vulnerabilities/?search={term}&format=json&limit=50
+Auth: None (EU Horizon 2020-funded public API)
+Fetch strategy: SEARCH BY TERM
+  - Checks top 3 search terms for a port (from PORT_SEARCH_TERMS)
+  - Handles both list and {"results": [...]} response shapes
+  - Filters: entries without CVE-prefixed IDs still stored but cve_id=None
+  - 1.0s sleep between requests (REQ_SLEEP)
+  - Cache TTL: 48 hours (stale check via fetch_log, source='variot')
+
+Output table: variot_vulns (variot_id, port, cve_id, title, description, cvss_score, published, affected)
+Focus: IoT device CVEs frequently absent from or under-enriched in NVD
+```
+
 ---
 
 ## 4. Smart Caching Architecture
@@ -236,13 +276,15 @@ Each source has its own TTL:
 | CISA KEV | 24h | New exploits confirmed daily |
 | EPSS | 24h | Scores recalculated daily |
 | MITRE ATT&CK | 8760h (1yr) | Seed map is static |
+| PoC-in-GitHub | 24h | New PoC repos appear daily |
+| VARIoT | 48h | IoT CVE feed updates less frequently |
 
 ### 4.2 Fetch Log Table
 
 ```sql
 fetch_log (
     port         INTEGER,
-    source       TEXT,      -- 'iana', 'nvd', 'cisa_kev', 'epss', 'mitre'
+    source       TEXT,      -- 'iana', 'nvd', 'cisa_kev', 'epss', 'mitre', 'poc_github', 'variot'
     last_fetched TEXT,      -- ISO 8601 UTC timestamp
     cursor       TEXT,      -- NVD only: pubEndDate of last successful fetch
     PRIMARY KEY (port, source)
@@ -275,7 +317,20 @@ For every `analyze_port(port)` call:
    YES → batch-fetch EPSS for all port's CVE IDs, update scores
    NO  → skip
 
-6. read everything from SQLite → assemble result dict → return
+6. fetch_poc_for_port(port)         → is_stale(port, 'poc_github', 24h)?
+   YES → for each of top 20 CVEs by CVSS: GET nomi-sec raw JSON
+         404 → poc_count=0; 200 → store repos list in poc_urls
+         update_fetch_log(port, 'poc_github')
+   NO  → skip
+
+7. fetch_variot_for_port(port, search_terms)
+                                    → is_stale(port, 'variot', 48h)?
+   YES → for top 3 search terms: GET variot.eu/api/v1/vulnerabilities/
+         upsert all returned entries into variot_vulns table
+         update_fetch_log(port, 'variot')
+   NO  → skip
+
+8. read everything from SQLite → assemble result dict → return
 ```
 
 ---
@@ -552,7 +607,7 @@ jobs:
   "_meta": {
     "generated_at": "2026-06-15T02:00:00Z",
     "port_count": 115,
-    "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK"]
+    "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK", "PoC-in-GitHub", "VARIoT"]
   },
   "22": {
     "port": 22,
@@ -570,7 +625,19 @@ jobs:
         "epss_score": 0.94,
         "epss_percentile": 0.99,
         "exploited_in_wild": 1,
+        "poc_count": 3,
+        "poc_urls": [{"url": "https://github.com/...", "stars": 42, "name": "user/repo"}],
         "description": "..."
+      }
+    ],
+    "poc_count": 2,
+    "variot_vulns": [
+      {
+        "variot_id": "VAR-202312-0001",
+        "cve_id": "CVE-2023-XXXXX",
+        "title": "OpenSSH IoT Device Vulnerability",
+        "cvss_score": 8.1,
+        "published": "2023-12-01"
       }
     ],
     "techniques": [
@@ -630,7 +697,9 @@ engine.py: analyze_port(22, db)
   ├── sources/mitre_attack.py: seed_techniques_for_port(22, db)
   ├── sources/nvd.py:          fetch_nvd_for_port(22, ["ssh","openssh",...], db)
   ├── sources/cisa_kev.py:     apply_kev_to_port(22, db)
-  └── sources/epss.py:         fetch_epss_for_port(22, db)
+  ├── sources/epss.py:         fetch_epss_for_port(22, db)
+  ├── sources/poc_github.py:   fetch_poc_for_port(22, db)
+  └── sources/variot.py:       fetch_variot_for_port(22, ["ssh","openssh",...], db)
          │
          ▼
      read from SQLite → assemble result dict
@@ -747,8 +816,27 @@ cves (
     description      TEXT,
     published_at     TEXT,
     fetched_at       TEXT,
-    epss_updated_at  TEXT
+    epss_updated_at  TEXT,
+    -- Tier 1 additions (added via _migrate())
+    poc_count        INTEGER DEFAULT 0,  -- number of public PoC repos (nomi-sec)
+    poc_urls         TEXT,               -- JSON array of {url, stars, name}
+    poc_checked_at   TEXT
 )
+
+-- IoT-specific vulnerabilities from VARIoT (CIRCL Luxembourg)
+variot_vulns (
+    variot_id    TEXT NOT NULL,
+    port         INTEGER NOT NULL,
+    cve_id       TEXT,            -- may be NULL if no CVE-prefixed ID
+    title        TEXT,
+    description  TEXT,
+    cvss_score   REAL,
+    published    TEXT,
+    affected     TEXT,            -- JSON string of affected products
+    fetched_at   TEXT NOT NULL,
+    PRIMARY KEY (variot_id, port)
+)
+CREATE INDEX idx_variot_port ON variot_vulns(port)
 
 -- ATT&CK techniques per port (from seed map, one-time write)
 techniques (
@@ -768,6 +856,13 @@ fetch_log (
     last_fetched TEXT,
     cursor       TEXT,     -- NVD only: ISO datetime for next pubStartDate
     PRIMARY KEY (port, source)
+)
+
+-- Exploit-DB CSV blob (one row, replaced every 24h)
+exploitdb_cache (
+    id         INTEGER PRIMARY KEY CHECK (id = 1),
+    fetched_at TEXT,
+    data       TEXT     -- full CSV blob from GitLab
 )
 
 -- CISA KEV blob (one row, replaced every 24h)
@@ -978,6 +1073,8 @@ Manual redeploy
 | `port_analyzer/sources/cisa_kev.py` | Data | CISA KEV blob, 24h cache, per-port filter |
 | `port_analyzer/sources/epss.py` | Data | EPSS batch scoring, daily refresh |
 | `port_analyzer/sources/mitre_attack.py` | Data | ATT&CK seed writer |
+| `port_analyzer/sources/poc_github.py` | Data | PoC-in-GitHub per-CVE lookup (nomi-sec) |
+| `port_analyzer/sources/variot.py` | Data | VARIoT IoT CVE search (variot.eu) |
 | `port_analyzer/engine.py` | Logic | Orchestration + PENTEST_NOTES + DEFENSIVE_NOTES |
 | `port_analyzer/renderer.py` | CLI UI | Rich terminal output, web-vapt style |
 | `port_analyzer/cli.py` | CLI UI | Click CLI, flag parsing, --no-live mode |
@@ -1027,9 +1124,14 @@ Per-port per day (after initial build):
   NVD incremental: ~1-2 API calls × 0.6s = ~1.2s per port
   EPSS batch:      1 call per 100 CVEs → negligible
   CISA KEV:        1 blob download shared across ALL ports = ~0.3s total
+  PoC-in-GitHub:   up to 20 requests × 0.5s = ~10s per port (24h TTL)
+  VARIoT:          up to 3 requests × 1.0s = ~3s per port (48h TTL)
+  → PoC and VARIoT dominate the per-port cost on refresh day
 
-~115 ports × 1.5s average = ~175s ≈ 3 minutes per daily run
-GitHub Actions free tier: 2000 min/month → using ~90 min/month (~5% of free tier)
+~115 ports × 1.5s (NVD/EPSS average) = ~175s ≈ 3 minutes for NVD/EPSS
+PoC refresh (daily): 115 ports × 10s = ~19 minutes (dominated by 0.5s sleep)
+VARIoT refresh (every 2nd day): 115 ports × 3s = ~6 minutes
+GitHub Actions free tier: 2000 min/month → using ~700 min/month (~35% of free tier)
 ```
 
 ---

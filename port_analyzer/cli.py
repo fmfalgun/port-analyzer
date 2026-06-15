@@ -54,7 +54,7 @@ def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int,
 
     if not output_json:
         renderer.info(f"port-analyzer v0.1.0  ·  querying {len(port_list)} port(s)")
-        renderer.info("sources: IANA · NVD · CISA KEV · EPSS · MITRE ATT&CK")
+        renderer.info("sources: IANA · NVD · CISA KEV · EPSS · MITRE ATT&CK · PoC-in-GitHub · VARIoT")
         if no_live:
             renderer.warn("--no-live: skipping API calls, serving from cache only")
         console.print()

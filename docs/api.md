@@ -416,7 +416,9 @@ Every endpoint that returns port data uses the same object shape. All fields are
 | `risk_level` | string | Aggregated risk classification: `"LOW"`, `"MEDIUM"`, `"HIGH"`, or `"CRITICAL"` |
 | `cve_count` | integer | Total number of CVEs associated with this port's service |
 | `kev_count` | integer | Number of CVEs on the CISA Known Exploited Vulnerabilities (KEV) catalogue |
+| `poc_count` | integer | Number of port's CVEs with at least one public PoC on PoC-in-GitHub |
 | `top_cves` | CVE[] | Up to 8 highest-severity CVEs (see CVE object below) |
+| `variot_vulns` | VARIoT[] | IoT-specific vulnerabilities from VARIoT matching this port's service (see VARIoT object below) |
 | `techniques` | Technique[] | Associated MITRE ATT&CK techniques (see Technique object below) |
 | `pentest_notes` | string[] | Actionable notes for penetration testers and red teamers |
 | `defensive_notes` | string[] | Actionable hardening and detection recommendations |
@@ -430,7 +432,21 @@ Every endpoint that returns port data uses the same object shape. All fields are
 | `cvss_severity` | string \| null | `"LOW"`, `"MEDIUM"`, `"HIGH"`, or `"CRITICAL"` |
 | `epss_score` | number \| null | EPSS probability of exploitation (0.0–1.0) |
 | `exploited_in_wild` | boolean | `true` if listed in the CISA KEV catalogue |
+| `poc_count` | integer | Number of public PoC repositories on GitHub (nomi-sec); `0` = no PoC found or not yet checked |
+| `poc_urls` | object[] \| null | Array of `{url, stars, name}` objects for each PoC repo; `null` if not yet checked |
 | `description` | string \| null | Brief CVE description |
+
+**VARIoT object**
+
+| Field | Type | Description |
+|---|---|---|
+| `variot_id` | string | VARIoT internal identifier |
+| `cve_id` | string \| null | Cross-referenced CVE ID (if available) |
+| `title` | string \| null | Vulnerability title |
+| `description` | string \| null | Vulnerability description |
+| `cvss_score` | number \| null | CVSS score as reported by VARIoT |
+| `published` | string \| null | Publication date (ISO 8601) |
+| `affected` | string \| null | Affected products/components (may be JSON-encoded string) |
 
 **Technique object**
 
@@ -745,9 +761,9 @@ The file structure:
   "_meta": {
     "generated_at": "2026-06-15T02:00:00Z",
     "port_count": 115,
-    "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK"]
+    "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK", "PoC-in-GitHub", "VARIoT"]
   },
-  "22": { ... port result object ... },
+  "22": { ... port result object (includes poc_count, variot_vulns) ... },
   "443": { ... port result object ... }
 }
 ```
@@ -876,7 +892,9 @@ Each result card in the web UI includes a **↓ Report** button. Clicking it gen
 Reports include:
 - CVE IDs as clickable markdown links to the NVD detail page (`https://nvd.nist.gov/vuln/detail/{CVE-ID}`)
 - MITRE technique IDs as clickable links to the ATT&CK entry (dot → slash in the URL path, e.g. `T1021.004` → `https://attack.mitre.org/techniques/T1021/004/`)
-- A `## References` section at the end listing IANA, NVD port search, CISA KEV (when `kev_count > 0`), EPSS, MITRE ATT&CK, and per-CVE and per-technique bullet links
+- A PoC column in the CVE table showing `[PoC:N]` badges with the count of public exploit repos
+- A VARIoT section listing IoT-specific vulnerabilities when available
+- A `## References` section at the end listing IANA, NVD port search, CISA KEV (when `kev_count > 0`), EPSS, MITRE ATT&CK, PoC-in-GitHub (when `poc_count > 0`), VARIoT (when `variot_vulns` is non-empty), and per-CVE and per-technique bullet links
 
 #### CLI equivalent — `--report PATH`
 
@@ -974,7 +992,7 @@ Every port report ends with a `## References` section listing the canonical sour
 - EPSS score API
 - MITRE ATT&CK (general)
 
-When `kev_count > 0`, a CISA KEV link is also included. Per-CVE and per-technique bullet links are appended after the general references:
+When `kev_count > 0`, a CISA KEV link is included. When `poc_count > 0`, a PoC-in-GitHub link is included. When `variot_vulns` is non-empty, a VARIoT link is included. Per-CVE and per-technique bullet links are appended after the general references:
 
 ```markdown
 ## References
@@ -984,6 +1002,8 @@ When `kev_count > 0`, a CISA KEV link is also included. Per-CVE and per-techniqu
 - [CISA Known Exploited Vulnerabilities](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
 - [EPSS — Exploit Prediction Scoring System](https://www.first.org/epss/)
 - [MITRE ATT&CK](https://attack.mitre.org/)
+- [PoC-in-GitHub — nomi-sec](https://github.com/nomi-sec/PoC-in-GitHub)
+- [VARIoT — IoT Vulnerability Database](https://www.variot.eu/)
 
 **CVEs referenced:**
 - [CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387)

@@ -3,12 +3,17 @@ Query engine — orchestrates all sources + cache for a single port.
 The CLI, backend API, and web all go through this.
 """
 
-from port_analyzer.cache import get_db, get_port_profile, get_cves, get_techniques
+from port_analyzer.cache import get_db, get_port_profile, get_cves, get_techniques, get_variot_vulns
 from port_analyzer.sources.iana import fetch_iana_for_port, get_search_terms
 from port_analyzer.sources.nvd import fetch_nvd_for_port
 from port_analyzer.sources.cisa_kev import apply_kev_to_port, get_kev_details
 from port_analyzer.sources.epss import fetch_epss_for_port
 from port_analyzer.sources.mitre_attack import seed_techniques_for_port
+from port_analyzer.sources.poc_github import fetch_poc_for_port
+from port_analyzer.sources.variot import fetch_variot_for_port
+from port_analyzer.sources.attackerkb import fetch_attackerkb_for_port
+from port_analyzer.sources.exploitdb import apply_exploitdb_to_port
+from port_analyzer.sources.shadowserver import fetch_shadowserver_for_port
 
 PENTEST_NOTES: dict[int, list[str]] = {
     21:    ["Anonymous login: ftp <host> (user: anonymous)", "Banner grab: nc -nv <host> 21",
@@ -299,13 +304,33 @@ def analyze_port(port: int, db=None, verbose: bool = False) -> dict:
         # 5. EPSS scores for all stored CVEs
         fetch_epss_for_port(port, db)
 
-        # ── assemble result ────────────────────────────────────────────────────
-        profiles   = [dict(r) for r in get_port_profile(db, port)]
-        cves_rows  = [dict(r) for r in get_cves(db, port)]
-        tech_rows  = [dict(r) for r in get_techniques(db, port)]
+        # 6. PoC-in-GitHub availability (top CVEs by CVSS)
+        fetch_poc_for_port(port, db)
 
-        kev_cve_ids = {c["cve_id"] for c in cves_rows if c.get("exploited_in_wild")}
-        top_cves    = sorted(cves_rows, key=lambda c: c.get("cvss_score") or 0, reverse=True)[:10]
+        # 7. VARIoT IoT-specific CVEs
+        fetch_variot_for_port(port, search_terms, db)
+
+        # 8. AttackerKB crowd-sourced exploitation assessments
+        fetch_attackerkb_for_port(port, db)
+
+        # 9. Exploit-DB public exploit code (full CSV, cached 24h)
+        apply_exploitdb_to_port(port, db)
+
+        # 10. Shadowserver real-time active scanning (no-op without API key)
+        fetch_shadowserver_for_port(port, db)
+
+        # ── assemble result ────────────────────────────────────────────────────
+        profiles      = [dict(r) for r in get_port_profile(db, port)]
+        cves_rows     = [dict(r) for r in get_cves(db, port)]
+        tech_rows     = [dict(r) for r in get_techniques(db, port)]
+        variot_rows   = get_variot_vulns(db, port)
+
+        kev_cve_ids      = {c["cve_id"] for c in cves_rows if c.get("exploited_in_wild")}
+        top_cves         = sorted(cves_rows, key=lambda c: c.get("cvss_score") or 0, reverse=True)[:10]
+        poc_count        = sum(1 for c in cves_rows if (c.get("poc_count") or 0) > 0)
+        attackerkb_hits  = sum(1 for c in cves_rows if c.get("attackerkb_score") is not None)
+        exploitdb_hits   = sum(1 for c in cves_rows if (c.get("exploitdb_count") or 0) > 0)
+        shadowserver_hits = sum(1 for c in cves_rows if (c.get("shadowserver_count") or 0) > 0)
 
         risk = _risk_level(cves_rows, bool(kev_cve_ids))
 
@@ -321,8 +346,13 @@ def analyze_port(port: int, db=None, verbose: bool = False) -> dict:
             "risk_level":      risk,
             "cve_count":       len(cves_rows),
             "kev_count":       len(kev_cve_ids),
+            "poc_count":        poc_count,
+            "attackerkb_hits":  attackerkb_hits,
+            "exploitdb_hits":   exploitdb_hits,
+            "shadowserver_hits": shadowserver_hits,
             "top_cves":        top_cves,
             "techniques":      tech_rows,
+            "variot_vulns":    variot_rows,
             "pentest_notes":   PENTEST_NOTES.get(port, []),
             "defensive_notes": DEFENSIVE_NOTES.get(port, []),
             "search_terms":    search_terms,

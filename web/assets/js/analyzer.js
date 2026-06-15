@@ -242,6 +242,7 @@ function buildCard(r) {
       ${metaGrid(r)}
       ${statsStrip(r)}
       ${cveSection(r)}
+      ${variotSection(r)}
       ${techniqueSection(r)}
       ${noteSection("PENTEST NOTES", r.pentest_notes)}
       ${noteSection("DEFENSIVE RECOMMENDATIONS", r.defensive_notes)}
@@ -258,12 +259,16 @@ function buildCard(r) {
 }
 
 function metaGrid(r) {
+  const pocCount    = r.poc_count ?? 0;
+  const variotCount = (r.variot_vulns || []).length;
   const items = [
     ["Transport",   esc((r.transport || ["TCP"]).join(" / "))],
     ["IANA Status", esc(r.iana_status || "—")],
     ["CVE Count",   esc(String(r.cve_count ?? "—"))],
     ["CISA KEV",    r.kev_count ? `<span style="color:var(--critical)">${esc(String(r.kev_count))} confirmed</span>` : "0"],
+    ["Public PoC",  pocCount ? `<span style="color:var(--warn)">${esc(String(pocCount))} CVE(s)</span>` : "0"],
   ];
+  if (variotCount) items.push(["VARIoT IoT Vulns", esc(String(variotCount))]);
   if (r.description) items.push(["Description", esc(r.description.slice(0, 100))]);
 
   return `<div class="meta-grid">${items.map(([l, v]) =>
@@ -283,9 +288,11 @@ function statsStrip(r) {
     ? `<span class="stat-val">${esc((topEpss.epss_score * 100).toFixed(0))}%</span> exploitation prob (EPSS top — ${esc(topEpss.cve_id)})`
     : null;
 
+  const pocCount = r.poc_count ?? 0;
   const parts = [
     epssStr,
     r.kev_count ? `<span class="stat-kev">${esc(String(r.kev_count))}</span> exploited in wild (CISA KEV)` : null,
+    pocCount ? `<span style="color:var(--warn)">${esc(String(pocCount))}</span> CVE(s) with public PoC` : null,
   ].filter(Boolean);
 
   if (!parts.length) return "";
@@ -301,13 +308,15 @@ function cveSection(r) {
     </div>`;
 
   const rows = cves.map(c => {
-    const sev   = esc(c.cvss_severity || "?");
-    const score = c.cvss_score != null ? esc(c.cvss_score.toFixed(1)) : "—";
-    const epss  = c.epss_score  != null ? esc((c.epss_score * 100).toFixed(0)) + "%" : "—";
-    const kev   = c.exploited_in_wild ? `<span class="cve-kev">KEV</span>` : "";
-    const desc  = esc((c.description || "").slice(0, 90));
+    const sev    = esc(c.cvss_severity || "?");
+    const score  = c.cvss_score != null ? esc(c.cvss_score.toFixed(1)) : "—";
+    const epss   = c.epss_score  != null ? esc((c.epss_score * 100).toFixed(0)) + "%" : "—";
+    const kev    = c.exploited_in_wild ? `<span class="cve-kev">KEV</span>` : "";
+    const pocN   = c.poc_count || 0;
+    const pocBadge = pocN ? `<span style="color:var(--warn);font-size:0.78rem">[PoC:${esc(String(pocN))}]</span>` : "";
+    const desc   = esc((c.description || "").slice(0, 90));
     return `<tr>
-      <td><span class="cve-id">${esc(c.cve_id)}</span> ${kev}</td>
+      <td><span class="cve-id">${esc(c.cve_id)}</span> ${kev} ${pocBadge}</td>
       <td class="sev-${sev}">${score} ${sev}</td>
       <td>${epss}</td>
       <td style="color:var(--dim);font-size:0.78rem">${desc}</td>
@@ -346,6 +355,33 @@ function techniqueSection(r) {
   return `<div class="section-block">
     <div class="section-title">MITRE ATT&CK</div>
     <div class="technique-list">${items}</div>
+  </div>`;
+}
+
+function variotSection(r) {
+  const vulns = (r.variot_vulns || []).slice(0, 5);
+  if (!vulns.length) return "";
+
+  const rows = vulns.map(v => {
+    const cve   = esc(v.cve_id || "—");
+    const score = v.cvss_score != null ? esc(v.cvss_score.toFixed(1)) : "—";
+    const title = esc((v.title || v.description || "").slice(0, 70));
+    const cveCell = v.cve_id && v.cve_id.startsWith("CVE-")
+      ? `<a href="https://nvd.nist.gov/vuln/detail/${cve}" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">${cve}</a>`
+      : cve;
+    return `<tr>
+      <td>${cveCell}</td>
+      <td style="color:var(--warn)">${score}</td>
+      <td style="color:var(--dim);font-size:0.78rem">${title}</td>
+    </tr>`;
+  }).join("");
+
+  return `<div class="section-block">
+    <div class="section-title">VARIoT — IoT Vulnerabilities (${esc(String((r.variot_vulns || []).length))} found)</div>
+    <table class="cve-table">
+      <thead><tr><th>CVE ID</th><th>CVSS</th><th>Title</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
   </div>`;
 }
 
@@ -393,6 +429,10 @@ function generateMarkdown(r) {
   lines.push(`| Risk Level | ${risk} |`);
   lines.push(`| CVE Count | ${cveCount} |`);
   lines.push(`| KEV Count | ${kevCount} |`);
+  lines.push(`| CVEs with Public PoC | ${r.poc_count ?? 0} |`);
+  if ((r.variot_vulns || []).length) {
+    lines.push(`| VARIoT IoT Vulns | ${(r.variot_vulns || []).length} |`);
+  }
   lines.push("");
 
   // Description
@@ -409,14 +449,15 @@ function generateMarkdown(r) {
   const topCves = r.top_cves || [];
   if (topCves.length) {
     lines.push("## Top CVEs");
-    lines.push("| CVE ID | CVSS | EPSS | KEV |");
-    lines.push("|---|---|---|---|");
+    lines.push("| CVE ID | CVSS | EPSS | KEV | PoC |");
+    lines.push("|---|---|---|---|---|");
     for (const c of topCves) {
       const score   = c.cvss_score != null ? `${c.cvss_score.toFixed(1)} ${c.cvss_severity || "?"}` : "N/A";
       const epss    = c.epss_score  != null ? c.epss_score.toFixed(2) : "—";
-      const kev     = c.exploited_in_wild ? "Yes" : "No";
+      const kev     = c.exploited_in_wild ? "**Yes**" : "No";
+      const poc     = (c.poc_count || 0) ? `[${c.poc_count}](https://github.com/nomi-sec/PoC-in-GitHub)` : "—";
       const cveCell = c.cve_id ? nvdLink(c.cve_id) : "—";
-      lines.push(`| ${cveCell} | ${score} | ${epss} | ${kev} |`);
+      lines.push(`| ${cveCell} | ${score} | ${epss} | ${kev} | ${poc} |`);
     }
     lines.push("");
   }
@@ -430,6 +471,22 @@ function generateMarkdown(r) {
     for (const t of techs) {
       const tidCell = t.technique_id ? mitreLink(t.technique_id) : "—";
       lines.push(`| ${tidCell} | ${t.name || "—"} | ${t.tactic || "—"} |`);
+    }
+    lines.push("");
+  }
+
+  // VARIoT IoT vulnerabilities
+  const variotVulns = r.variot_vulns || [];
+  if (variotVulns.length) {
+    lines.push("## VARIoT — IoT Vulnerabilities");
+    lines.push("| CVE ID | CVSS | Title |");
+    lines.push("|---|---|---|");
+    for (const v of variotVulns) {
+      const cveRef  = v.cve_id || "—";
+      const score   = v.cvss_score != null ? v.cvss_score.toFixed(1) : "—";
+      const title   = (v.title || v.description || "—").replace(/\|/g, "\\|").slice(0, 80);
+      const cveCell = cveRef.startsWith("CVE-") ? nvdLink(cveRef) : cveRef;
+      lines.push(`| ${cveCell} | ${score} | ${title} |`);
     }
     lines.push("");
   }
@@ -458,6 +515,12 @@ function generateMarkdown(r) {
     lines.push(`- **CISA Known Exploited Vulnerabilities** — <https://www.cisa.gov/known-exploited-vulnerabilities-catalog>`);
   }
   lines.push(`- **EPSS (Exploit Prediction Scoring System)** — <https://www.first.org/epss/>`);
+  if (r.poc_count) {
+    lines.push(`- **PoC-in-GitHub (nomi-sec)** — <https://github.com/nomi-sec/PoC-in-GitHub>`);
+  }
+  if ((r.variot_vulns || []).length) {
+    lines.push(`- **VARIoT (IoT Vulnerability Database)** — <https://www.variot.eu/>`);
+  }
   if (techs.length) {
     lines.push(`- **MITRE ATT&CK** — <https://attack.mitre.org/>`);
   }

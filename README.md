@@ -2,7 +2,7 @@
 
 Port-level cybersecurity intelligence in three modes — CLI, REST API, and browser UI.
 
-Enter one or more ports and get back: CVEs ranked by CVSS score, CISA KEV exploitation status, EPSS probability scores, mapped MITRE ATT&CK techniques, pentest commands, and defensive hardening notes. Results are cached locally in SQLite so every repeat query is instant, and only newly published CVEs are fetched on refresh.
+Enter one or more ports and get back: CVEs ranked by CVSS score, CISA KEV exploitation status, EPSS probability scores, public PoC availability per CVE, IoT-specific vulnerabilities from VARIoT, mapped MITRE ATT&CK techniques, pentest commands, and defensive hardening notes. Results are cached locally in SQLite so every repeat query is instant, and only newly published CVEs are fetched on refresh.
 
 ---
 
@@ -37,6 +37,8 @@ Port Analyzer is an offline-first intelligence tool for security engineers, pene
 | **Pentest notes** | Ready-to-run commands for the port (banners, brute force, tool flags) |
 | **Defensive notes** | Hardening recommendations for the service |
 | **Risk level** | Computed summary: CRITICAL / HIGH / MEDIUM / LOW |
+| **Public PoC availability** | PoC count per CVE from nomi-sec PoC-in-GitHub — signals where exploit code is already public |
+| **IoT vulnerability intelligence** | VARIoT — IoT-specific CVEs from CIRCL Luxembourg, often missing from NVD |
 
 All data sources are free and open — no commercial feeds required.
 
@@ -51,6 +53,8 @@ All data sources are free and open — no commercial feeds required.
 | [EPSS](https://www.first.org/epss/) | Exploit Prediction Scoring System | No |
 | [IANA Registry](https://www.iana.org/assignments/service-names-port-numbers/) | Official service names and port assignments | No |
 | [MITRE ATT&CK](https://attack.mitre.org/) | Technique and tactic mappings | No |
+| [PoC-in-GitHub (nomi-sec)](https://github.com/nomi-sec/PoC-in-GitHub) | Public PoC repo count per CVE; shows where exploit code is already public | No |
+| [VARIoT](https://www.variot.eu/) | IoT-specific vulnerabilities by CIRCL Luxembourg (EU Horizon 2020) | No |
 
 An optional NVD API key raises the NVD rate limit from 5 requests/30 s to 50 requests/30 s, which speeds up first-time queries significantly for large port ranges. Get one free at <https://nvd.nist.gov/developers/request-an-api-key>.
 
@@ -60,8 +64,8 @@ An optional NVD API key raises the NVD rate limit from 5 requests/30 s to 50 req
 
 All fetched data is stored in a local SQLite database (`db/port_analyzer.db` by default).
 
-- **First query** for a port: fetches the full CVE history from NVD, IANA identity, KEV list, and EPSS scores, then stores everything.
-- **Subsequent queries**: served from cache. NVD is re-queried only for CVEs published after the last fetch date (cursor-based incremental update). CISA KEV is re-downloaded at most once every 24 hours. IANA data is re-fetched at most once per year (assignments are nearly immutable).
+- **First query** for a port: fetches the full CVE history from NVD, IANA identity, KEV list, EPSS scores, PoC availability from PoC-in-GitHub, and IoT vulns from VARIoT, then stores everything.
+- **Subsequent queries**: served from cache. NVD is re-queried only for CVEs published after the last fetch date (cursor-based incremental update). CISA KEV is re-downloaded at most once every 24 hours. PoC-in-GitHub data is refreshed every 24 hours (top 20 CVEs by CVSS). VARIoT data is refreshed every 48 hours. IANA data is re-fetched at most once per year (assignments are nearly immutable).
 - **`--no-live` flag**: skip all network calls entirely and serve from whatever is already cached.
 
 This design means the tool is fast and works without a network connection once a port has been queried at least once.
@@ -327,6 +331,8 @@ Docker API (2375/2376), Kubernetes API (6443), Kubelet (10250), Zookeeper (2181)
 
 **OT and IoT protocols:**
 Modbus (502), MQTT/Mosquitto (1883), Android ADB (5555)
+
+For IoT-facing ports, VARIoT supplements NVD with vendor-specific vulnerabilities that are often missing from or poorly enriched in the NVD corpus.
 
 **VPN and tunnelling:**
 OpenVPN (1194), SOCKS proxy (1080)
