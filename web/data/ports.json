@@ -1,0 +1,2201 @@
+{
+  "_meta": {
+    "generated_at": "2026-06-15T10:10:26Z",
+    "port_count": 75,
+    "sources": [
+      "IANA",
+      "NVD",
+      "CISA KEV",
+      "EPSS",
+      "MITRE ATT&CK"
+    ]
+  },
+  "20": {
+    "port": 20,
+    "service_name": "ftp-data",
+    "transport": [
+      "SCTP",
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "FTP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ftp-data"
+    ]
+  },
+  "21": {
+    "port": 21,
+    "service_name": "ftp",
+    "transport": [
+      "SCTP",
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path>",
+    "description": "FTP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.002",
+        "port": 21,
+        "name": "SMB/Windows Admin Shares",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/002/",
+        "fetched_at": "2026-06-15T10:08:18Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 21,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-15T10:08:18Z"
+      },
+      {
+        "technique_id": "T1190",
+        "port": 21,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:08:18Z"
+      }
+    ],
+    "pentest_notes": [
+      "Anonymous login: ftp <host> (user: anonymous)",
+      "Banner grab: nc -nv <host> 21",
+      "Brute force: hydra -l admin -P wordlist.txt ftp://<host>",
+      "Tools: nmap -sV -sC -p 21, hydra, medusa, lftp"
+    ],
+    "defensive_notes": [
+      "Replace FTP with SFTP (port 22) or FTPS",
+      "Disable anonymous login",
+      "Restrict to known IPs via firewall"
+    ],
+    "search_terms": [
+      "ftp",
+      "vsftpd",
+      "proftpd",
+      "filezilla"
+    ]
+  },
+  "22": {
+    "port": 22,
+    "service_name": "ssh",
+    "transport": [
+      "SCTP",
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Defined TXT keys: u=<username> p=<password>",
+    "description": "SSH",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.004",
+        "port": 22,
+        "name": "Remote Services: SSH",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/004/",
+        "fetched_at": "2026-06-15T10:08:21Z"
+      },
+      {
+        "technique_id": "T1110.001",
+        "port": 22,
+        "name": "Brute Force: Password Guessing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1110/001/",
+        "fetched_at": "2026-06-15T10:08:21Z"
+      },
+      {
+        "technique_id": "T1098.004",
+        "port": 22,
+        "name": "Account Manipulation: SSH Authorized Keys",
+        "tactic": "persistence",
+        "url": "https://attack.mitre.org/techniques/T1098/004/",
+        "fetched_at": "2026-06-15T10:08:21Z"
+      }
+    ],
+    "pentest_notes": [
+      "Banner grab: nc -nv <host> 22",
+      "Check PasswordAuthentication and PermitRootLogin in sshd_config",
+      "Audit keys: ssh-audit <host>",
+      "Brute force: hydra -l root -P wordlist.txt ssh://<host>",
+      "Tools: ssh-audit, nmap -sV --script ssh*"
+    ],
+    "defensive_notes": [
+      "Disable PasswordAuthentication \u2014 enforce key-based auth only",
+      "Set PermitRootLogin no",
+      "Use fail2ban or sshguard",
+      "Bind to non-default port if possible (security-through-obscurity bonus)",
+      "Restrict to VPN/jump-host access"
+    ],
+    "search_terms": [
+      "ssh",
+      "openssh",
+      "dropbear",
+      "libssh"
+    ]
+  },
+  "23": {
+    "port": 23,
+    "service_name": "telnet",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Defined TXT keys: u=<username> p=<password>",
+    "description": "Telnet",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.002",
+        "port": 23,
+        "name": "Remote Services: Telnet",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/002/",
+        "fetched_at": "2026-06-15T10:08:24Z"
+      },
+      {
+        "technique_id": "T1110.001",
+        "port": 23,
+        "name": "Brute Force: Password Guessing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1110/001/",
+        "fetched_at": "2026-06-15T10:08:24Z"
+      }
+    ],
+    "pentest_notes": [
+      "Telnet sends credentials in plaintext \u2014 sniff with Wireshark",
+      "Brute force: hydra -l admin -P wordlist.txt telnet://<host>",
+      "Should never be exposed externally"
+    ],
+    "defensive_notes": [
+      "Disable immediately \u2014 use SSH instead",
+      "Should NEVER be internet-facing"
+    ],
+    "search_terms": [
+      "telnet"
+    ]
+  },
+  "25": {
+    "port": 25,
+    "service_name": "smtp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Simple Mail Transfer",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1566.001",
+        "port": 25,
+        "name": "Phishing: Spearphishing Attachment",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1566/001/",
+        "fetched_at": "2026-06-15T10:08:25Z"
+      },
+      {
+        "technique_id": "T1071.003",
+        "port": 25,
+        "name": "Application Layer Protocol: Mail Protocols",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/003/",
+        "fetched_at": "2026-06-15T10:08:25Z"
+      }
+    ],
+    "pentest_notes": [
+      "Banner grab: nc -nv <host> 25 \u2192 EHLO test",
+      "Check open relay: RCPT TO external address",
+      "Tools: smtp-user-enum, swaks, nmap --script smtp*"
+    ],
+    "defensive_notes": [
+      "Enable STARTTLS / enforce TLS",
+      "Configure SPF, DKIM, DMARC",
+      "Restrict to known sending IPs (no open relay)"
+    ],
+    "search_terms": [
+      "smtp",
+      "postfix",
+      "sendmail",
+      "exim"
+    ]
+  },
+  "53": {
+    "port": 53,
+    "service_name": "domain",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Domain Name Server",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1071.004",
+        "port": 53,
+        "name": "Application Layer Protocol: DNS",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/004/",
+        "fetched_at": "2026-06-15T10:08:28Z"
+      },
+      {
+        "technique_id": "T1568",
+        "port": 53,
+        "name": "Dynamic Resolution",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1568/",
+        "fetched_at": "2026-06-15T10:08:28Z"
+      },
+      {
+        "technique_id": "T1048.001",
+        "port": 53,
+        "name": "Exfiltration Over Alternative Protocol: DNS",
+        "tactic": "exfiltration",
+        "url": "https://attack.mitre.org/techniques/T1048/001/",
+        "fetched_at": "2026-06-15T10:08:28Z"
+      }
+    ],
+    "pentest_notes": [
+      "Zone transfer: dig axfr @<host> <domain>",
+      "DNS version: dig version.bind chaos txt @<host>",
+      "Tools: dnsx, dnsrecon, fierce, nmap --script dns*"
+    ],
+    "defensive_notes": [
+      "Disable zone transfers to unauthorised IPs",
+      "Rate-limit recursive queries",
+      "Use DNSSEC",
+      "Separate authoritative and recursive resolvers"
+    ],
+    "search_terms": [
+      "dns",
+      "bind",
+      "named",
+      "dnsmasq",
+      "unbound"
+    ]
+  },
+  "67": {
+    "port": 67,
+    "service_name": "bootps",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Defined TXT keys: None",
+    "description": "Bootstrap Protocol Server",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "dhcp",
+      "dhcpd"
+    ]
+  },
+  "69": {
+    "port": 69,
+    "service_name": "tftp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Trivial File Transfer",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "tftp"
+    ]
+  },
+  "80": {
+    "port": 80,
+    "service_name": "http",
+    "transport": [
+      "SCTP",
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path to document>",
+    "description": "HTTP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 80,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:08:35Z"
+      },
+      {
+        "technique_id": "T1059.007",
+        "port": 80,
+        "name": "Command and Scripting Interpreter: JavaScript",
+        "tactic": "execution",
+        "url": "https://attack.mitre.org/techniques/T1059/007/",
+        "fetched_at": "2026-06-15T10:08:35Z"
+      },
+      {
+        "technique_id": "T1071.001",
+        "port": 80,
+        "name": "Application Layer Protocol: Web Protocols",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/001/",
+        "fetched_at": "2026-06-15T10:08:35Z"
+      }
+    ],
+    "pentest_notes": [
+      "Directory brute: gobuster dir -u http://<host> -w wordlist.txt",
+      "Vuln scan: nikto -h <host>",
+      "Tech detect: whatweb <host>",
+      "Tools: burpsuite, nikto, gobuster, ffuf, nuclei"
+    ],
+    "defensive_notes": [
+      "Redirect all HTTP \u2192 HTTPS (301)",
+      "Enable HSTS",
+      "WAF recommended for production",
+      "Disable directory listing and default error pages"
+    ],
+    "search_terms": [
+      "http",
+      "apache",
+      "nginx",
+      "iis"
+    ]
+  },
+  "110": {
+    "port": 110,
+    "service_name": "pop3",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Post Office Protocol - Version 3",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1566.001",
+        "port": 110,
+        "name": "Phishing: Spearphishing Attachment",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1566/001/",
+        "fetched_at": "2026-06-15T10:08:38Z"
+      }
+    ],
+    "pentest_notes": [
+      "Banner grab: nc -nv <host> 110 \u2192 USER test PASS test",
+      "Check for plaintext credential transmission"
+    ],
+    "defensive_notes": [],
+    "search_terms": [
+      "pop3",
+      "dovecot"
+    ]
+  },
+  "111": {
+    "port": 111,
+    "service_name": "sunrpc",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "SUN Remote Procedure Call",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "rpcbind",
+      "portmap"
+    ]
+  },
+  "119": {
+    "port": 119,
+    "service_name": "nntp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Network News Transfer Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "nntp"
+    ]
+  },
+  "123": {
+    "port": 123,
+    "service_name": "ntp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Network Time Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ntp",
+      "ntpd"
+    ]
+  },
+  "135": {
+    "port": 135,
+    "service_name": "epmap",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "DCE endpoint resolution",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "rpc",
+      "dcom",
+      "msrpc"
+    ]
+  },
+  "137": {
+    "port": 137,
+    "service_name": "netbios-ns",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "NETBIOS Name Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "netbios",
+      "smb"
+    ]
+  },
+  "138": {
+    "port": 138,
+    "service_name": "netbios-dgm",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "NETBIOS Datagram Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "netbios-dgm"
+    ]
+  },
+  "139": {
+    "port": 139,
+    "service_name": "netbios-ssn",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "NETBIOS Session Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [
+      "Enum: enum4linux -a <host>",
+      "Null session: smbclient -L <host> -N",
+      "Tools: enum4linux, smbmap, crackmapexec"
+    ],
+    "defensive_notes": [],
+    "search_terms": [
+      "netbios",
+      "smb",
+      "samba"
+    ]
+  },
+  "143": {
+    "port": 143,
+    "service_name": "imap",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Internet Message Access Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1566.001",
+        "port": 143,
+        "name": "Phishing: Spearphishing Attachment",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1566/001/",
+        "fetched_at": "2026-06-15T10:08:52Z"
+      }
+    ],
+    "pentest_notes": [
+      "Banner grab: nc -nv <host> 143",
+      "Check for plaintext credential transmission"
+    ],
+    "defensive_notes": [],
+    "search_terms": [
+      "imap",
+      "dovecot",
+      "courier"
+    ]
+  },
+  "161": {
+    "port": 161,
+    "service_name": "snmp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "SNMP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1602.001",
+        "port": 161,
+        "name": "Data from Configuration Repository: SNMP MIB Dump",
+        "tactic": "collection",
+        "url": "https://attack.mitre.org/techniques/T1602/001/",
+        "fetched_at": "2026-06-15T10:08:55Z"
+      },
+      {
+        "technique_id": "T1040",
+        "port": 161,
+        "name": "Network Sniffing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1040/",
+        "fetched_at": "2026-06-15T10:08:55Z"
+      }
+    ],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "snmp"
+    ]
+  },
+  "162": {
+    "port": 162,
+    "service_name": "snmptrap",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "SNMPTRAP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "snmptrap"
+    ]
+  },
+  "389": {
+    "port": 389,
+    "service_name": "ldap",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Lightweight Directory Access Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1087.002",
+        "port": 389,
+        "name": "Account Discovery: Domain Account",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1087/002/",
+        "fetched_at": "2026-06-15T10:08:57Z"
+      },
+      {
+        "technique_id": "T1482",
+        "port": 389,
+        "name": "Domain Trust Discovery",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1482/",
+        "fetched_at": "2026-06-15T10:08:57Z"
+      }
+    ],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ldap",
+      "openldap"
+    ]
+  },
+  "443": {
+    "port": 443,
+    "service_name": "https",
+    "transport": [
+      "SCTP",
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "HTTPS",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 443,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:08:59Z"
+      },
+      {
+        "technique_id": "T1071.001",
+        "port": 443,
+        "name": "Application Layer Protocol: Web Protocols",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/001/",
+        "fetched_at": "2026-06-15T10:08:59Z"
+      },
+      {
+        "technique_id": "T1573",
+        "port": 443,
+        "name": "Encrypted Channel",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1573/",
+        "fetched_at": "2026-06-15T10:08:59Z"
+      }
+    ],
+    "pentest_notes": [
+      "SSL/TLS audit: testssl.sh <host>:443",
+      "Check cipher suites, certificate expiry, HSTS",
+      "Tools: testssl.sh, sslscan, sslyze, burpsuite"
+    ],
+    "defensive_notes": [
+      "Enforce TLS 1.2+ only (disable SSLv3, TLS 1.0, 1.1)",
+      "Use strong cipher suites (ECDHE + AES-GCM)",
+      "Enable HSTS with preloading",
+      "Rotate and monitor certificates (use ACME/Let's Encrypt)"
+    ],
+    "search_terms": [
+      "https",
+      "ssl",
+      "tls",
+      "apache",
+      "nginx",
+      "openssl"
+    ]
+  },
+  "445": {
+    "port": 445,
+    "service_name": "microsoft-ds",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Microsoft-DS",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.002",
+        "port": 445,
+        "name": "Remote Services: SMB/Windows Admin Shares",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/002/",
+        "fetched_at": "2026-06-15T10:09:04Z"
+      },
+      {
+        "technique_id": "T1110.002",
+        "port": 445,
+        "name": "Brute Force: Password Spraying",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1110/002/",
+        "fetched_at": "2026-06-15T10:09:04Z"
+      },
+      {
+        "technique_id": "T1569.002",
+        "port": 445,
+        "name": "System Services: Service Execution",
+        "tactic": "execution",
+        "url": "https://attack.mitre.org/techniques/T1569/002/",
+        "fetched_at": "2026-06-15T10:09:04Z"
+      }
+    ],
+    "pentest_notes": [
+      "Enum: smbmap -H <host>",
+      "Check EternalBlue: nmap --script smb-vuln-ms17-010",
+      "Tools: crackmapexec, impacket, enum4linux, smbclient"
+    ],
+    "defensive_notes": [
+      "Block at perimeter \u2014 SMB should NEVER be internet-facing",
+      "Patch MS17-010 (EternalBlue), MS08-067",
+      "Require SMB signing",
+      "Disable SMBv1 entirely"
+    ],
+    "search_terms": [
+      "smb",
+      "samba",
+      "cifs"
+    ]
+  },
+  "465": {
+    "port": 465,
+    "service_name": "urd",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Message Submission over TLS protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "smtps",
+      "smtp"
+    ]
+  },
+  "502": {
+    "port": 502,
+    "service_name": "mbap",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Modbus Application Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T0853",
+        "port": 502,
+        "name": "Scripting",
+        "tactic": "execution",
+        "url": "https://attack.mitre.org/techniques/T0853/",
+        "fetched_at": "2026-06-15T10:09:09Z"
+      },
+      {
+        "technique_id": "T0855",
+        "port": 502,
+        "name": "Unauthorized Command Message",
+        "tactic": "impair-process-control",
+        "url": "https://attack.mitre.org/techniques/T0855/",
+        "fetched_at": "2026-06-15T10:09:09Z"
+      }
+    ],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "modbus"
+    ]
+  },
+  "514": {
+    "port": 514,
+    "service_name": "shell",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "cmd like exec, but automatic authentication is performed as for login server",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "syslog"
+    ]
+  },
+  "515": {
+    "port": 515,
+    "service_name": "printer",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "spooler",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "lpd",
+      "cups"
+    ]
+  },
+  "587": {
+    "port": 587,
+    "service_name": "submission",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Message Submission",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "smtp",
+      "submission"
+    ]
+  },
+  "631": {
+    "port": 631,
+    "service_name": "ipp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Internet Printing Protocol over HTTPS",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ipp",
+      "cups"
+    ]
+  },
+  "636": {
+    "port": 636,
+    "service_name": "ldaps",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "ldap protocol over TLS/SSL (was sldap)",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ldaps",
+      "ldap"
+    ]
+  },
+  "873": {
+    "port": 873,
+    "service_name": "rsync",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "rsync",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "rsync"
+    ]
+  },
+  "902": {
+    "port": 902,
+    "service_name": "ideafarm-door",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "self documenting Telnet Door",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "vmware"
+    ]
+  },
+  "993": {
+    "port": 993,
+    "service_name": "imaps",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "IMAP over TLS protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "imaps",
+      "imap",
+      "dovecot"
+    ]
+  },
+  "995": {
+    "port": 995,
+    "service_name": "pop3s",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "POP3 over TLS protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "pop3s",
+      "pop3"
+    ]
+  },
+  "1080": {
+    "port": 1080,
+    "service_name": "socks",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Socks",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "socks",
+      "proxy"
+    ]
+  },
+  "1194": {
+    "port": 1194,
+    "service_name": "openvpn",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "OpenVPN",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "openvpn"
+    ]
+  },
+  "1433": {
+    "port": 1433,
+    "service_name": "ms-sql-s",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Microsoft-SQL-Server",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 1433,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:09:28Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 1433,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-15T10:09:28Z"
+      },
+      {
+        "technique_id": "T1505.001",
+        "port": 1433,
+        "name": "Server Software Component: SQL Stored Procedures",
+        "tactic": "persistence",
+        "url": "https://attack.mitre.org/techniques/T1505/001/",
+        "fetched_at": "2026-06-15T10:09:28Z"
+      }
+    ],
+    "pentest_notes": [
+      "Default creds: SA / (blank)",
+      "Xp_cmdshell if enabled = RCE",
+      "Tools: nmap --script ms-sql*, impacket mssqlclient.py"
+    ],
+    "defensive_notes": [
+      "Never expose to internet \u2014 use VPN + firewall rules",
+      "Disable xp_cmdshell",
+      "Use least-privilege service accounts"
+    ],
+    "search_terms": [
+      "mssql",
+      "sql server",
+      "microsoft sql"
+    ]
+  },
+  "1521": {
+    "port": 1521,
+    "service_name": "ncube-lm",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "nCube License Manager",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [
+      "Default SIDs: XE, ORCL",
+      "Tools: odat, nmap --script oracle*"
+    ],
+    "defensive_notes": [],
+    "search_terms": [
+      "oracle",
+      "oracle database"
+    ]
+  },
+  "1883": {
+    "port": 1883,
+    "service_name": "mqtt",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Message Queuing Telemetry Transport Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1040",
+        "port": 1883,
+        "name": "Network Sniffing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1040/",
+        "fetched_at": "2026-06-15T10:09:32Z"
+      },
+      {
+        "technique_id": "T1557",
+        "port": 1883,
+        "name": "Adversary-in-the-Middle",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1557/",
+        "fetched_at": "2026-06-15T10:09:32Z"
+      }
+    ],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "mqtt",
+      "mosquitto"
+    ]
+  },
+  "2049": {
+    "port": 2049,
+    "service_name": "shilp",
+    "transport": [
+      "SCTP",
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Defined TXT keys: path=<path to mount point>",
+    "description": "Network File System",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "nfs"
+    ]
+  },
+  "2181": {
+    "port": 2181,
+    "service_name": "eforward",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "eforward",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "zookeeper"
+    ]
+  },
+  "2375": {
+    "port": 2375,
+    "service_name": "docker",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Docker REST API (plain text)",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1610",
+        "port": 2375,
+        "name": "Deploy Container",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1610/",
+        "fetched_at": "2026-06-15T10:09:36Z"
+      },
+      {
+        "technique_id": "T1190",
+        "port": 2375,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:09:36Z"
+      }
+    ],
+    "pentest_notes": [
+      "Unauthenticated Docker API = instant RCE",
+      "curl http://<host>:2375/v1.41/containers/json",
+      "Escape container: mount host filesystem"
+    ],
+    "defensive_notes": [
+      "NEVER expose Docker API without TLS + mutual auth",
+      "Use unix socket only, or bind to 127.0.0.1"
+    ],
+    "search_terms": [
+      "docker"
+    ]
+  },
+  "2376": {
+    "port": 2376,
+    "service_name": "docker-s",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Docker REST API (ssl)",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "docker"
+    ]
+  },
+  "3000": {
+    "port": 3000,
+    "service_name": "hbci",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "This entry records an unassigned but widespread use",
+    "description": "RemoteWare Client",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "grafana",
+      "nodejs",
+      "express"
+    ]
+  },
+  "3306": {
+    "port": 3306,
+    "service_name": "mysql",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "MySQL",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 3306,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:09:40Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 3306,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-15T10:09:40Z"
+      }
+    ],
+    "pentest_notes": [
+      "Default: root / (blank or root)",
+      "Check skip-grant-tables",
+      "Tools: hydra -l root -P wordlist.txt mysql://<host>"
+    ],
+    "defensive_notes": [
+      "Bind to 127.0.0.1 or private network only",
+      "Disable root remote login",
+      "Use strong passwords + user grants"
+    ],
+    "search_terms": [
+      "mysql",
+      "mariadb"
+    ]
+  },
+  "3389": {
+    "port": 3389,
+    "service_name": "ms-wbt-server",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "MS WBT Server",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.001",
+        "port": 3389,
+        "name": "Remote Services: Remote Desktop Protocol",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/001/",
+        "fetched_at": "2026-06-15T10:09:42Z"
+      },
+      {
+        "technique_id": "T1110.001",
+        "port": 3389,
+        "name": "Brute Force: Password Guessing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1110/001/",
+        "fetched_at": "2026-06-15T10:09:42Z"
+      },
+      {
+        "technique_id": "T1563.002",
+        "port": 3389,
+        "name": "Remote Service Session Hijacking: RDP Hijacking",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1563/002/",
+        "fetched_at": "2026-06-15T10:09:42Z"
+      }
+    ],
+    "pentest_notes": [
+      "BlueKeep check: nmap --script rdp-vuln-ms12-020",
+      "Brute force: hydra -l administrator -P wordlist.txt rdp://<host>",
+      "Tools: rdesktop, xfreerdp, crowbar"
+    ],
+    "defensive_notes": [
+      "Enable NLA (Network Level Authentication)",
+      "Restrict to VPN/known IPs",
+      "Patch BlueKeep (CVE-2019-0708) and DejaBlue",
+      "Use RD Gateway"
+    ],
+    "search_terms": [
+      "rdp",
+      "remote desktop",
+      "mstsc"
+    ]
+  },
+  "3690": {
+    "port": 3690,
+    "service_name": "svn",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Subversion",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "svn",
+      "subversion"
+    ]
+  },
+  "4443": {
+    "port": 4443,
+    "service_name": "pharos",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Pharos",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "https",
+      "ssl"
+    ]
+  },
+  "4505": {
+    "port": 4505,
+    "service_name": "port-4505",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "saltstack",
+      "salt"
+    ]
+  },
+  "4506": {
+    "port": 4506,
+    "service_name": "port-4506",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "4506"
+    ]
+  },
+  "4848": {
+    "port": 4848,
+    "service_name": "appserv-http",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "App Server - Admin HTTP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "glassfish"
+    ]
+  },
+  "5000": {
+    "port": 5000,
+    "service_name": "commplex-main",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "flask",
+      "upnp"
+    ]
+  },
+  "5432": {
+    "port": 5432,
+    "service_name": "postgresql",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "PostgreSQL Database",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 5432,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:09:53Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 5432,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-15T10:09:53Z"
+      }
+    ],
+    "pentest_notes": [
+      "Default: postgres/postgres",
+      "SQL \u2192 OS if superuser: COPY FROM PROGRAM",
+      "Tools: hydra, pgadmin, psql"
+    ],
+    "defensive_notes": [
+      "Bind to 127.0.0.1 or private IP",
+      "pg_hba.conf: restrict hosts",
+      "Revoke superuser from application accounts"
+    ],
+    "search_terms": [
+      "postgresql",
+      "postgres"
+    ]
+  },
+  "5555": {
+    "port": 5555,
+    "service_name": "personal-agent",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Personal Agent",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "android adb",
+      "adb"
+    ]
+  },
+  "5601": {
+    "port": 5601,
+    "service_name": "esmagent",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Enterprise Security Agent",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "kibana"
+    ]
+  },
+  "5672": {
+    "port": 5672,
+    "service_name": "amqp",
+    "transport": [
+      "SCTP",
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "AMQP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "amqp",
+      "rabbitmq"
+    ]
+  },
+  "5900": {
+    "port": 5900,
+    "service_name": "rfb",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Remote Framebuffer",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.005",
+        "port": 5900,
+        "name": "Remote Services: VNC",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/005/",
+        "fetched_at": "2026-06-15T10:09:59Z"
+      },
+      {
+        "technique_id": "T1110.001",
+        "port": 5900,
+        "name": "Brute Force: Password Guessing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1110/001/",
+        "fetched_at": "2026-06-15T10:09:59Z"
+      }
+    ],
+    "pentest_notes": [
+      "No-auth VNC: try connect with no password",
+      "Tools: vncviewer, hydra -l <blank> -P wordlist.txt vnc://<host>"
+    ],
+    "defensive_notes": [
+      "Require VNC password or use SSH tunnel",
+      "Never expose to internet",
+      "Prefer RDP/SSH with MFA"
+    ],
+    "search_terms": [
+      "vnc",
+      "rfb"
+    ]
+  },
+  "5901": {
+    "port": 5901,
+    "service_name": "port-5901",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "5901"
+    ]
+  },
+  "6379": {
+    "port": 6379,
+    "service_name": "redis",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "An advanced key-value cache and store",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 6379,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:10:02Z"
+      },
+      {
+        "technique_id": "T1059",
+        "port": 6379,
+        "name": "Command and Scripting Interpreter",
+        "tactic": "execution",
+        "url": "https://attack.mitre.org/techniques/T1059/",
+        "fetched_at": "2026-06-15T10:10:02Z"
+      }
+    ],
+    "pentest_notes": [
+      "Unauthenticated Redis = config write / SSH key injection",
+      "redis-cli -h <host> INFO",
+      "Tools: redis-cli, redis-rogue-server"
+    ],
+    "defensive_notes": [
+      "Bind to 127.0.0.1 \u2014 never expose to internet",
+      "Enable requirepass",
+      "Disable CONFIG, FLUSHALL if not needed"
+    ],
+    "search_terms": [
+      "redis"
+    ]
+  },
+  "6443": {
+    "port": 6443,
+    "service_name": "sun-sr-https",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Service Registry Default HTTPS Domain",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "kubernetes",
+      "k8s api"
+    ]
+  },
+  "7001": {
+    "port": 7001,
+    "service_name": "afs3-callback",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "callbacks to cache managers",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "weblogic"
+    ]
+  },
+  "8009": {
+    "port": 8009,
+    "service_name": "nvme-disc",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "NVMe over Fabrics Discovery Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ajp",
+      "apache jserv",
+      "tomcat"
+    ]
+  },
+  "8080": {
+    "port": 8080,
+    "service_name": "http-alt",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "HTTP Alternate (see port 80)",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 8080,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:10:07Z"
+      },
+      {
+        "technique_id": "T1071.001",
+        "port": 8080,
+        "name": "Application Layer Protocol: Web Protocols",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/001/",
+        "fetched_at": "2026-06-15T10:10:07Z"
+      }
+    ],
+    "pentest_notes": [
+      "Same as port 80 + check /manager (Tomcat), /console (JBoss)",
+      "Tools: gobuster, nikto, burpsuite, nuclei"
+    ],
+    "defensive_notes": [],
+    "search_terms": [
+      "http",
+      "tomcat",
+      "jetty",
+      "jboss"
+    ]
+  },
+  "8443": {
+    "port": 8443,
+    "service_name": "pcsync-https",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "PCsync HTTPS",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "https",
+      "tomcat"
+    ]
+  },
+  "8888": {
+    "port": 8888,
+    "service_name": "ddi-tcp-1",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "NewsEDGE server TCP (TCP 1)",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "jupyter",
+      "http"
+    ]
+  },
+  "9000": {
+    "port": 9000,
+    "service_name": "cslistener",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "CSlistener",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "php-fpm",
+      "sonarqube"
+    ]
+  },
+  "9090": {
+    "port": 9090,
+    "service_name": "websm",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "WebSM",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "prometheus",
+      "cockpit"
+    ]
+  },
+  "9200": {
+    "port": 9200,
+    "service_name": "wap-wsp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "WAP connectionless session service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 9200,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:10:17Z"
+      },
+      {
+        "technique_id": "T1213",
+        "port": 9200,
+        "name": "Data from Information Repositories",
+        "tactic": "collection",
+        "url": "https://attack.mitre.org/techniques/T1213/",
+        "fetched_at": "2026-06-15T10:10:17Z"
+      }
+    ],
+    "pentest_notes": [
+      "Unauthenticated Elasticsearch = full data dump",
+      "curl http://<host>:9200/_cat/indices",
+      "curl http://<host>:9200/_all/_search?size=100"
+    ],
+    "defensive_notes": [
+      "Bind to 127.0.0.1 or private network",
+      "Enable X-Pack security (auth + TLS)",
+      "Never expose to internet without authentication"
+    ],
+    "search_terms": [
+      "elasticsearch"
+    ]
+  },
+  "9300": {
+    "port": 9300,
+    "service_name": "vrace",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Virtual Racing Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "elasticsearch"
+    ]
+  },
+  "10250": {
+    "port": 10250,
+    "service_name": "port-10250",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "kubelet",
+      "kubernetes"
+    ]
+  },
+  "11211": {
+    "port": 11211,
+    "service_name": "memcache",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Memory cache service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "memcached"
+    ]
+  },
+  "27017": {
+    "port": 27017,
+    "service_name": "mongodb",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Mongo database system",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 27017,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-15T10:10:22Z"
+      },
+      {
+        "technique_id": "T1213",
+        "port": 27017,
+        "name": "Data from Information Repositories",
+        "tactic": "collection",
+        "url": "https://attack.mitre.org/techniques/T1213/",
+        "fetched_at": "2026-06-15T10:10:22Z"
+      }
+    ],
+    "pentest_notes": [
+      "Unauthenticated MongoDB = full read/write access",
+      "mongo --host <host> \u2192 show dbs",
+      "Tools: mongodump, NoSQLMap"
+    ],
+    "defensive_notes": [
+      "Enable --auth flag",
+      "Bind to 127.0.0.1 or private IP",
+      "Use role-based access control"
+    ],
+    "search_terms": [
+      "mongodb"
+    ]
+  },
+  "27018": {
+    "port": 27018,
+    "service_name": "port-27018",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "mongodb"
+    ]
+  },
+  "27019": {
+    "port": 27019,
+    "service_name": "port-27019",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "27019"
+    ]
+  },
+  "50070": {
+    "port": 50070,
+    "service_name": "port-50070",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "hadoop",
+      "hdfs"
+    ]
+  }
+}
