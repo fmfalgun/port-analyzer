@@ -11,6 +11,13 @@
 3. [Data Source Layer](#3-data-source-layer)
 4. [Smart Caching Architecture](#4-smart-caching-architecture)
 5. [Static Data Pipeline (GitHub Actions)](#5-static-data-pipeline-github-actions)
+   - 5.1 [Why GitHub Actions (not browser JS)](#51-why-github-actions-not-browser-js)
+   - 5.2 [End-to-End Data Flow Diagram](#52-end-to-end-data-flow-diagram)
+   - 5.3 [The workflow_run Trigger — Why It's Needed](#53-the-workflow_run-trigger--why-its-needed)
+   - 5.4 [Key Implementation Fixes](#54-key-implementation-fixes)
+   - 5.5 [Current Workflow Files](#55-current-workflow-files)
+   - 5.7 [Static JSON Structure](#57-static-json-structure)
+   - 5.8 [JS Fallback Decision Tree](#58-js-fallback-decision-tree)
 6. [Request Flow — Per Surface](#6-request-flow--per-surface)
 7. [SQLite Schema Design](#7-sqlite-schema-design)
 8. [Security Architecture](#8-security-architecture)
@@ -18,6 +25,7 @@
 10. [File Ownership Map](#10-file-ownership-map)
 11. [Data Refresh Cycle](#11-data-refresh-cycle)
 12. [Extension Points](#12-extension-points)
+13. [Known Limitations](#13-known-limitations)
 
 ---
 
@@ -280,60 +288,269 @@ This is the "no-backend" mode — a GitHub Actions workflow runs on a cron sched
 Browser JS cannot call NVD/CISA/EPSS directly:
 
 ```
-Browser → fetch("https://services.nvd.nist.gov/...") → ❌ CORS blocked
-Browser → fetch("https://www.cisa.gov/feeds/...")    → ❌ CORS blocked
-Browser → fetch("https://api.first.org/...")         → ❌ CORS blocked
+Browser → fetch("https://services.nvd.nist.gov/...") → CORS blocked
+Browser → fetch("https://www.cisa.gov/feeds/...")    → CORS blocked
+Browser → fetch("https://api.first.org/...")         → CORS blocked
 ```
 
 These APIs are designed for server-to-server calls and don't send `Access-Control-Allow-Origin` headers. GitHub Actions runs Python server-side — no CORS restriction.
 
-### 5.2 Pipeline Flow
+### 5.2 End-to-End Data Flow Diagram
 
 ```
-GitHub Actions runner (ubuntu-latest)
-│
-├── triggers:
-│   ├── schedule: 0 2 * * *  (2AM UTC daily)
-│   └── workflow_dispatch     (manual trigger)
-│
-├── steps:
-│   1. checkout repo (master branch)
-│   2. setup Python 3.x
-│   3. pip install -r requirements.txt
-│   4. python scripts/build_data.py
-│      │  env: NVD_API_KEY=${{ secrets.NVD_API_KEY }}
-│      │
-│      │  for each port in PORT_LIST (~80 ports):
-│      │    → engine.analyze_port(port, db)
-│      │        └── calls all 5 sources (same code as CLI)
-│      │    → result serialized to dict
-│      │
-│      └── writes web/data/ports.json
-│
-│   5. git diff web/data/ports.json → if changed:
-│      git commit -m "data: refresh port intelligence [skip ci]"
-│      git push
-│
-└── [skip ci] in commit message prevents deploy-pages.yml re-triggering
-    (GitHub Pages already serves the file; no redeploy needed)
+┌────────────────────────────────────────────────────────────────────────┐
+│                    STATIC DATA PIPELINE                                │
+│                                                                        │
+│  ┌──────────────────────────────────┐                                  │
+│  │  Cron trigger (0 2 * * *)        │                                  │
+│  │  or workflow_dispatch (manual)   │                                  │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  build-data.yml                  │                                  │
+│  │  (GitHub Actions runner)         │                                  │
+│  │                                  │                                  │
+│  │  env: PYTHONPATH=$workspace      │  ← required: runner doesn't     │
+│  │  env: NVD_API_KEY=<secret>       │    add repo root automatically  │
+│  │                                  │                                  │
+│  │  python scripts/build_data.py    │                                  │
+│  │    for each port in PORT_LIST    │                                  │
+│  │    (~115 ports):                 │                                  │
+│  │      engine.analyze_port(port)   │                                  │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  Sources (server-side, no CORS)  │                                  │
+│  │  ┌──────┐ ┌─────┐ ┌──────────┐  │                                  │
+│  │  │ IANA │ │ NVD │ │CISA KEV  │  │                                  │
+│  │  └──────┘ └─────┘ └──────────┘  │                                  │
+│  │  ┌──────┐ ┌──────────────────┐  │                                  │
+│  │  │ EPSS │ │  MITRE ATT&CK    │  │                                  │
+│  │  └──────┘ └──────────────────┘  │                                  │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  SQLite cache                    │                                  │
+│  │  db/port_analyzer.db             │                                  │
+│  │  (WAL mode, per-run ephemeral)   │                                  │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  web/data/ports.json             │                                  │
+│  │  (written by build_data.py)      │                                  │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  git status --porcelain          │  ← detects new + modified files  │
+│  │  if changed:                     │    (git diff misses new files)   │
+│  │    git commit + git push         │                                  │
+│  │    (permissions: contents:write) │  ← explicit permission required  │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  GITHUB_TOKEN push               │                                  │
+│  │  (does NOT fire push event)      │  ← GitHub security restriction:  │
+│  │                                  │    token pushes don't trigger    │
+│  │                                  │    on: push workflows            │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  workflow_run trigger            │  ← deploy-pages.yml watches for  │
+│  │  (deploy-pages.yml fires when    │    "Build Port Data" completion  │
+│  │   build-data.yml completes)      │    instead of the push event     │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  deploy-pages.yml                │                                  │
+│  │  uploads web/ → Pages artifact  │                                  │
+│  │  (only runs if build succeeded)  │                                  │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  GitHub Pages CDN                │                                  │
+│  │  serves web/ including           │                                  │
+│  │  web/data/ports.json             │                                  │
+│  └──────────────┬───────────────────┘                                  │
+│                 │                                                       │
+│                 ▼                                                       │
+│  ┌──────────────────────────────────┐                                  │
+│  │  Browser                         │                                  │
+│  │  fetch("data/ports.json")        │                                  │
+│  │  same-origin → no CORS           │                                  │
+│  └──────────────────────────────────┘                                  │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 5.3 The [skip ci] Convention
+### 5.3 The workflow_run Trigger — Why It's Needed
 
-When `build-data.yml` commits `ports.json` and pushes, it would normally trigger `deploy-pages.yml` (which deploys the web frontend). This is wasteful — `ports.json` is served directly from the repo via Pages static serving, not via the deploy workflow. The `[skip ci]` tag in the commit message tells GitHub Actions to skip all workflow triggers for that commit.
+GitHub blocks workflows triggered by `GITHUB_TOKEN` pushes from firing `on: push` events in other workflows. This is a deliberate security restriction to prevent infinite trigger loops.
+
+Without `workflow_run`:
 
 ```
-Without [skip ci]:   data commit → deploy-pages runs → 2 min wasted build
-With [skip ci]:      data commit → no workflows triggered → instant
+build-data.yml pushes ports.json
+  → GITHUB_TOKEN push does NOT fire push event
+  → deploy-pages.yml never runs
+  → Pages still serves the OLD ports.json
 ```
 
-### 5.4 Static JSON Structure
+With `workflow_run` (current implementation):
+
+```
+build-data.yml completes
+  → GitHub fires "workflow_run completed" event
+  → deploy-pages.yml's workflow_run trigger fires
+  → Pages is redeployed with the new ports.json
+```
+
+The `deploy-pages.yml` guard ensures it only deploys on a successful build:
+
+```yaml
+if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+```
+
+### 5.4 Key Implementation Fixes
+
+Three subtle bugs were resolved to make the pipeline reliable:
+
+**PYTHONPATH fix**
+
+The GitHub Actions runner does not add the repo root to `PYTHONPATH`. Without this, `import port_analyzer` fails with `ModuleNotFoundError`. Fixed by setting:
+
+```yaml
+env:
+  PYTHONPATH: ${{ github.workspace }}
+```
+
+**git status --porcelain for change detection**
+
+`git diff` only detects modified tracked files — it misses untracked new files. On the first run, `web/data/ports.json` doesn't exist yet, so `git diff` reports no changes and the commit is skipped. Fixed by using:
+
+```bash
+git status --porcelain web/data/ports.json
+```
+
+**contents: write permission**
+
+`GITHUB_TOKEN` has read-only permissions by default in modern GitHub Actions. To commit and push the updated `ports.json`, the workflow job must declare:
+
+```yaml
+permissions:
+  contents: write
+```
+
+### 5.5 Current Workflow Files
+
+**`.github/workflows/build-data.yml`** (data fetch + commit):
+
+```yaml
+name: Build Port Data
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 2 AM UTC daily
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build port data
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          PYTHONPATH: ${{ github.workspace }}
+        run: python scripts/build_data.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if [[ -n "$(git status --porcelain web/data/ports.json)" ]]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push updated data
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add web/data/ports.json
+          git commit -m "data: refresh port intelligence"
+          git push origin master
+```
+
+**`.github/workflows/deploy-pages.yml`** (deploy web/ to Pages):
+
+```yaml
+name: Deploy Web to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "web/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Build Port Data"]
+    types: [completed]
+    branches: [master]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+### 5.7 Static JSON Structure
 
 ```json
 {
   "_meta": {
     "generated_at": "2026-06-15T02:00:00Z",
-    "port_count": 80,
+    "port_count": 115,
     "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK"]
   },
   "22": {
@@ -364,7 +581,7 @@ With [skip ci]:      data commit → no workflows triggered → instant
 }
 ```
 
-### 5.5 JS Fallback Decision Tree
+### 5.8 JS Fallback Decision Tree
 
 ```
 User enters "22" in web UI
@@ -706,20 +923,23 @@ User browser
 
 ```
 Push to master (web/** changed)
-  → deploy-pages.yml triggers
+  → deploy-pages.yml triggers (on: push paths: web/**)
   → uploads web/ to GitHub Pages environment
   → Pages live in ~30s
-
-Push to master (only ports.json changed with [skip ci])
-  → NO workflow triggers
-  → Pages auto-serves the new file (it's already committed)
-  → No build needed
 
 Cron 0 2 * * * (daily 2AM UTC)
   → build-data.yml triggers
   → runs build_data.py → NVD_API_KEY from GitHub Secrets
-  → if ports.json changed: commits with [skip ci] + pushes
-  → Pages serves updated data within seconds of push
+  → if ports.json changed: commits + pushes via GITHUB_TOKEN
+  → GITHUB_TOKEN push does NOT fire on: push event (GitHub restriction)
+  → build-data.yml completion fires workflow_run event
+  → deploy-pages.yml workflow_run trigger picks it up
+  → Pages redeployed with new ports.json in ~1-2 min
+
+Manual redeploy
+  → workflow_dispatch on either workflow
+  → build-data: refetches and commits data
+  → deploy-pages: redeploys current web/ to Pages
 ```
 
 ---
@@ -769,7 +989,8 @@ Day 1  │  build-data.yml cron triggers (2AM UTC)
        │     IANA: skipped (8760h TTL)
        │     ATT&CK: skipped (8760h TTL)
        │  → ports.json updated with deltas
-       │  → commit [skip ci] → push → Pages serves within 10s
+       │  → commit + push → workflow_run fires deploy-pages.yml
+       │  → Pages redeployed and live in ~1-2 min
 
 Day 365│  IANA TTL expires → re-fetches CSV (usually identical)
        │  ATT&CK seed TTL expires → re-seeds from static map (identical)
@@ -783,8 +1004,8 @@ Per-port per day (after initial build):
   EPSS batch:      1 call per 100 CVEs → negligible
   CISA KEV:        1 blob download shared across ALL ports = ~0.3s total
 
-80 ports × 1.5s average = ~120s = 2 minutes per daily run
-GitHub Actions free tier: 2000 min/month → using ~60 min/month (3% of free tier)
+~115 ports × 1.5s average = ~175s ≈ 3 minutes per daily run
+GitHub Actions free tier: 2000 min/month → using ~90 min/month (~5% of free tier)
 ```
 
 ---
@@ -842,4 +1063,35 @@ The JS automatically uses live mode when `apiBase` is non-empty.
 
 ---
 
-*Document version: 1.0 — Generated 2026-06-15*
+## 13. Known Limitations
+
+### Static mode: pre-built port set only
+
+The GitHub Pages static mode serves `web/data/ports.json` which is built from `PORT_LIST` in `scripts/build_data.py`. This list currently contains **~115 ports** (54 well-known, 61 registered). Ports outside this list return a "port not in static dataset" message. Live FastAPI mode has no such restriction — it queries any port 0–65535 on demand.
+
+`PORT_LIST` is split into two groups:
+
+- **WELL_KNOWN** — ports 0–1023 commonly exploited during pentests (22, 23, 25, 53, 80, 443, 445, etc.)
+- **REGISTERED** — ports 1024–49151 for common services (databases, message queues, web frameworks, k8s, industrial protocols, etc.)
+
+To add a port, see [Section 12](#12-extension-points).
+
+### workflow_run: no artifact sharing
+
+`deploy-pages.yml` triggered by `workflow_run` re-checks out the repo and re-uploads `web/` as a Pages artifact. It does not consume build artifacts from `build-data.yml`. This is by design — the committed `ports.json` is the canonical output.
+
+### NVD rate limiting without API key
+
+Without `NVD_API_KEY` set in GitHub Secrets, NVD allows 5 requests per 30 seconds with a 6-second sleep between calls. For ~115 ports, the initial full historical fetch can take 30–60 minutes. Subsequent incremental runs are fast regardless (1–2 calls per port). Set `NVD_API_KEY` for production to use the 50 req/30s tier.
+
+### Live API backend: not deployed by default
+
+The FastAPI backend (`backend/main.py`) must be deployed separately (Railway, Render, Fly.io, etc.). The default GitHub Pages deployment uses static mode only. Set `window.PA_CONFIG.apiBase` in `web/index.html` to enable live mode.
+
+### Interactive API docs disabled in production
+
+Swagger UI (`/docs`) and ReDoc (`/redoc`) are disabled by default. Set `ENABLE_DOCS=1` in the backend environment to enable them.
+
+---
+
+*Document version: 1.1 — Updated 2026-06-15*
