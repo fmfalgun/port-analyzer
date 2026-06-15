@@ -26,7 +26,8 @@ console = Console()
 @click.option("--db", default=None, help="Path to SQLite DB (overrides DB_PATH env var)")
 @click.option("--top", default=5, show_default=True, help="Number of CVEs to show per port")
 @click.option("--report", "report_path", default=None, metavar="PATH", help="Save a markdown report to PATH")
-def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int, report_path: str | None):
+@click.option("--sync", is_flag=True, help="Push results to GitHub Pages dataset (requires GITHUB_PAT env var)")
+def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int, report_path: str | None, sync: bool):
     """
     Port Analyzer — cybersecurity intelligence for any port or port range.
 
@@ -124,6 +125,19 @@ def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int,
         t = Text()
         t.append("[✓] ", style="green")
         t.append(f"Report saved to {report_path}")
+        console.print(t)
+
+    if sync and not output_json:
+        from port_analyzer.sync import sync_ports
+        from rich.text import Text
+        renderer.action("syncing to GitHub Pages...")
+        ok, msg = sync_ports(results)
+        t = Text()
+        if ok:
+            t.append("[✓] ", style="green")
+        else:
+            t.append("[✗] ", style="red")
+        t.append(msg)
         console.print(t)
 
 
