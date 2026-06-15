@@ -22,9 +22,10 @@
 <nav>
   <a class="nav-brand" href="/">PORT ANALYZER</a>
   <div class="nav-links">
-    <a href="/">Analyzer</a>
-    <a href="/docs" target="_blank" rel="noopener">API Docs</a>
-    <a href="https://YOUR_DOMAIN" target="_blank" rel="noopener noreferrer">Portfolio</a>
+    <a href="index.html">Analyzer</a>
+    <a href="https://github.com/fmfalgun/port-analyzer/blob/master/docs/api.md" target="_blank" rel="noopener">API Docs</a>
+    <a href="register.html" class="nav-active" aria-current="page">Get API Key</a>
+    <a href="https://fmfalgun.github.io" target="_blank" rel="noopener noreferrer">Portfolio</a>
   </div>
 </nav>
 
@@ -78,7 +79,7 @@ curl -H "X-API-Key: YOUR_KEY" \
 
 <footer>
   <p>
-    Built by <a href="https://YOUR_DOMAIN">YOUR_NAME</a> ·
+    Built by <a href="https://fmfalgun.github.io">Falgun Marothia</a> ·
     <a href="/">Back to Analyzer</a>
   </p>
 </footer>
@@ -95,6 +96,12 @@ curl -H "X-API-Key: YOUR_KEY" \
   async function register() {
     const email = document.getElementById("email").value.trim();
     if (!email) return;
+
+    // Guard: backend not deployed yet
+    if (!API_BASE) {
+      setStatus("[!] Live backend not deployed yet. Self-host the FastAPI backend and set apiBase in PA_CONFIG to use this form. See: https://github.com/fmfalgun/port-analyzer/blob/master/docs/api.md", "error");
+      return;
+    }
 
     document.getElementById("submit-btn").disabled = true;
     setStatus("[>] generating key…", "loading");
@@ -145,6 +152,28 @@ curl -H "X-API-Key: YOUR_KEY" \
       setTimeout(() => btn.textContent = "Copy example", 1500);
     });
   }
+</script>
+
+<script>
+  // Show a static notice when no backend is configured
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!API_BASE) {
+      var notice = document.createElement("p");
+      notice.innerHTML = '⚠ API key registration requires a self-hosted backend. <a href="https://github.com/fmfalgun/port-analyzer/blob/master/docs/api.md" target="_blank" rel="noopener">Deploy instructions →</a>';
+      notice.style.cssText = [
+        "font-family:var(--font-mono)",
+        "font-size:0.8rem",
+        "color:var(--amber)",
+        "margin-top:0.75rem",
+        "padding:0.6rem 0.75rem",
+        "border:1px solid var(--amber)",
+        "border-radius:4px",
+        "opacity:0.9"
+      ].join(";");
+      var form = document.getElementById("register-form");
+      form.parentNode.insertBefore(notice, form.nextSibling);
+    }
+  });
 </script>
 </body>
 </html>
