@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-15T11:07:57Z",
+    "generated_at": "2026-06-15T16:31:44Z",
     "port_count": 77,
     "sources": [
       "IANA",
@@ -1867,14 +1867,18 @@
     "port": 8080,
     "service_name": "http-alt",
     "transport": [
-      "UDP",
-      "TCP"
+      "TCP",
+      "UDP"
     ],
     "iana_status": "Assigned",
     "description": "HTTP Alternate (see port 80)",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1883,7 +1887,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:10:07Z"
+        "fetched_at": "2026-06-15T16:30:25Z"
       },
       {
         "technique_id": "T1071.001",
@@ -1891,9 +1895,10 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-15T10:10:07Z"
+        "fetched_at": "2026-06-15T16:30:25Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Same as port 80 + check /manager (Tomcat), /console (JBoss)",
       "Tools: gobuster, nikto, burpsuite, nuclei"
