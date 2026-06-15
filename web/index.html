@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Port Analyzer — Cybersecurity Intelligence</title>
+  <meta name="description" content="Instant cybersecurity intelligence for any port — CVEs, ATT&CK techniques, CISA KEV, EPSS exploitation scores, pentest notes." />
+
+  <!-- Fonts — matches portfolio exactly -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- API base URL — change this to your deployed backend URL -->
+  <script>
+    window.PA_CONFIG = {
+      apiBase: ""  // empty = same origin; set to "https://your-backend.railway.app" after deploy
+    };
+  </script>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">PORT ANALYZER</a>
+  <div class="nav-links">
+    <a href="/docs" target="_blank" rel="noopener">API Docs</a>
+    <a href="register.html">Get API Key</a>
+    <a href="https://YOUR_DOMAIN" target="_blank" rel="noopener noreferrer">Portfolio</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Port <span>Intelligence</span></h1>
+  <p>CVEs · ATT&CK Techniques · CISA KEV · EPSS · Pentest Notes — for any port</p>
+
+  <div class="search-wrap">
+    <input
+      id="port-input"
+      type="text"
+      placeholder="22  or  22,443,8080  or  8080-8090"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <button id="search-btn">ANALYZE</button>
+  </div>
+  <p class="search-hint">single port · comma list · range · mixed: 22,80-90,443</p>
+
+  <div id="key-banner">
+    <span style="color:var(--dim)">API key:</span>
+    <span></span>
+    <button id="clear-key" title="Remove key">✕</button>
+  </div>
+</div>
+
+<main>
+  <div id="status"></div>
+  <div id="results"></div>
+</main>
+
+<footer>
+  <p>
+    Built by <a href="https://YOUR_DOMAIN">YOUR_NAME</a> ·
+    Sources: NVD · CISA KEV · EPSS · MITRE ATT&CK · IANA ·
+    <a href="register.html">Get API Key</a> ·
+    <a href="/docs">API Docs</a>
+  </p>
+</footer>
+
+<script src="assets/js/analyzer.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get API Key — Port Analyzer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <script>
+    window.PA_CONFIG = {
+      apiBase: ""  // set to your deployed backend URL after deploy
+    };
+  </script>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">PORT ANALYZER</a>
+  <div class="nav-links">
+    <a href="/">Analyzer</a>
+    <a href="/docs" target="_blank" rel="noopener">API Docs</a>
+    <a href="https://YOUR_DOMAIN" target="_blank" rel="noopener noreferrer">Portfolio</a>
+  </div>
+</nav>
+
+<div class="register-wrap">
+  <div class="register-card">
+    <h2>Get Your API Key</h2>
+    <p>
+      Free tier — 1,000 requests/day.<br/>
+      Use the <code>X-API-Key</code> header on all API calls.
+    </p>
+
+    <form id="register-form" onsubmit="return false;">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+      </div>
+      <button class="btn-primary" id="submit-btn" onclick="register()">GENERATE KEY</button>
+    </form>
+
+    <div id="status" style="margin-top:1rem"></div>
+
+    <div class="key-result" id="key-result">
+      <p>Your API key — save this, it won't be shown again:</p>
+      <code id="key-display"></code>
+      <button class="copy-btn" onclick="copyKey()">Copy key</button>
+      <p style="margin-top:0.5rem">Usage:</p>
+      <code id="usage-example"></code>
+      <button class="copy-btn" onclick="copyUsage()">Copy example</button>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1rem;background:var(--card);border:1px solid var(--border);border-radius:6px">
+    <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--dim);margin-bottom:0.75rem">QUICK START</p>
+    <pre style="font-family:var(--font-mono);font-size:0.8rem;color:var(--cream);overflow-x:auto;line-height:1.7"># Single port
+curl -H "X-API-Key: YOUR_KEY" \
+     https://your-backend/api/v1/port/22
+
+# Multiple ports
+curl -H "X-API-Key: YOUR_KEY" \
+     "https://your-backend/api/v1/ports?q=22,443,8080"
+
+# Port range
+curl -H "X-API-Key: YOUR_KEY" \
+     "https://your-backend/api/v1/ports?q=8080-8090"
+
+# Search by service name
+curl -H "X-API-Key: YOUR_KEY" \
+     "https://your-backend/api/v1/search?service=ssh"</pre>
+  </div>
+</div>
+
+<footer>
+  <p>
+    Built by <a href="https://YOUR_DOMAIN">YOUR_NAME</a> ·
+    <a href="/">Back to Analyzer</a>
+  </p>
+</footer>
+
+<script>
+  const API_BASE = (window.PA_CONFIG && window.PA_CONFIG.apiBase) || "";
+
+  function setStatus(msg, type) {
+    const el = document.getElementById("status");
+    el.textContent = msg;
+    el.className = type;
+  }
+
+  async function register() {
+    const email = document.getElementById("email").value.trim();
+    if (!email) return;
+
+    document.getElementById("submit-btn").disabled = true;
+    setStatus("[>] generating key…", "loading");
+
+    try {
+      const resp = await fetch(API_BASE + "/api/v1/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.detail || `HTTP ${resp.status}`);
+
+      setStatus("[+] key generated successfully", "info");
+
+      const keyEl   = document.getElementById("key-display");
+      const usageEl = document.getElementById("usage-example");
+      keyEl.textContent   = data.api_key;
+      usageEl.textContent = `curl -H "X-API-Key: ${data.api_key}" ${API_BASE || window.location.origin}/api/v1/port/22`;
+
+      document.getElementById("key-result").classList.add("show");
+
+      // Also store in localStorage so the analyzer page picks it up
+      localStorage.setItem("pa_api_key", data.api_key);
+
+    } catch (e) {
+      setStatus(`[!] ${e.message}`, "error");
+    } finally {
+      document.getElementById("submit-btn").disabled = false;
+    }
+  }
+
+  function copyKey() {
+    const key = document.getElementById("key-display").textContent;
+    navigator.clipboard.writeText(key).then(() => {
+      const btn = event.target;
+      btn.textContent = "Copied!";
+      setTimeout(() => btn.textContent = "Copy key", 1500);
+    });
+  }
+
+  function copyUsage() {
+    const usage = document.getElementById("usage-example").textContent;
+    navigator.clipboard.writeText(usage).then(() => {
+      const btn = event.target;
+      btn.textContent = "Copied!";
+      setTimeout(() => btn.textContent = "Copy example", 1500);
+    });
+  }
+</script>
+</body>
+</html>
