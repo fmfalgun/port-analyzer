@@ -13,7 +13,47 @@ async function loadStaticData() {
   const resp = await fetch(STATIC_DATA_URL);
   if (!resp.ok) throw new Error(`Static data not available (${resp.status})`);
   _staticCache = await resp.json();
+  renderPortsInfoPanel();
   return _staticCache;
+}
+
+// ── available-ports info panel ────────────────────────────────────
+
+function getStaticPortKeys() {
+  if (!_staticCache) return [];
+  return Object.keys(_staticCache)
+    .filter(k => k !== "_meta")
+    .sort((a, b) => Number(a) - Number(b));
+}
+
+function renderPortsInfoPanel() {
+  const panel = $("ports-info-panel");
+  if (!panel) return;
+  const keys = getStaticPortKeys();
+  const count = keys.length;
+  if (count === 0) { panel.innerHTML = ""; return; }
+  const portList = keys.map(esc).join(", ");
+  panel.innerHTML = `
+    <div class="ports-info-card">
+      <div class="ports-info-heading">
+        <span class="ports-info-label">STATIC DATASET</span>
+        <span class="ports-info-count">${esc(String(count))} ports pre-built</span>
+      </div>
+      <details class="ports-info-details">
+        <summary>Browse all ${esc(String(count))} available ports</summary>
+        <p class="ports-info-list">${portList}</p>
+      </details>
+    </div>`;
+}
+
+function hidePortsInfoPanel() {
+  const panel = $("ports-info-panel");
+  if (panel) panel.style.display = "none";
+}
+
+function showPortsInfoPanel() {
+  const panel = $("ports-info-panel");
+  if (panel) panel.style.display = "";
 }
 
 // ── XSS mitigation ───────────────────────────────────────────────
@@ -83,6 +123,41 @@ async function apiFetch(path) {
   return resp.json();
 }
 
+// ── not-in-dataset helper ─────────────────────────────────────────
+
+function renderNotInDataset(searchedPorts) {
+  const keys = getStaticPortKeys();
+  const count = keys.length;
+  const portList = keys.map(esc).join(", ");
+
+  const countLine = count
+    ? `<p class="nid-meta"><span class="nid-highlight">${esc(String(count))}</span> ports are pre-built and searchable here.</p>`
+    : "";
+
+  const browseSection = count
+    ? `<details class="nid-details">
+        <summary>Browse all ${esc(String(count))} available ports</summary>
+        <p class="nid-port-list">${portList}</p>
+      </details>`
+    : "";
+
+  const container = $("results");
+  container.innerHTML = `
+    <div class="nid-card">
+      <div class="section-title">Port not in static dataset</div>
+      <p class="nid-reason">This tool pre-builds data for a curated set of ports.
+        Arbitrary ports require the live backend — not available on this static deployment.</p>
+      ${countLine}
+      <div class="nid-cli-block">
+        <span class="nid-cli-label">Use the CLI instead:</span>
+        <code>python -m port_analyzer.cli ${esc(searchedPorts)}</code><br/>
+        <code>python -m port_analyzer.cli --help</code>
+      </div>
+      ${browseSection}
+    </div>`;
+  showPortsInfoPanel();
+}
+
 // ── main query ────────────────────────────────────────────────────
 
 async function query(input) {
@@ -106,9 +181,10 @@ async function query(input) {
       }
       clearStatus();
       if (results.every(r => r._not_in_dataset)) {
-        setStatus(`[!] Port(s) not in static dataset. Deploy a backend for live queries.`, "error");
+        renderNotInDataset(input);
         return;
       }
+      hidePortsInfoPanel();
       renderResults(results.filter(r => !r._not_in_dataset));
       return;
     }
@@ -157,6 +233,7 @@ function buildCard(r) {
         <span class="port-transport">[${transport}]</span>
       </div>
       <div style="display:flex;align-items:center;gap:0.75rem">
+        <button class="dl-report-btn" title="Download markdown report">&#8595; Report</button>
         <span class="risk-badge ${riskClass}">${riskLevel}</span>
         <span class="collapse-icon">▾</span>
       </div>
@@ -170,6 +247,13 @@ function buildCard(r) {
       ${noteSection("DEFENSIVE RECOMMENDATIONS", r.defensive_notes)}
     </div>
   `;
+
+  // Wire download button without inline onclick (keeps r in closure, avoids JSON injection)
+  card.querySelector(".dl-report-btn").addEventListener("click", e => {
+    e.stopPropagation(); // prevent card collapse toggle
+    downloadReport(r);
+  });
+
   return card;
 }
 
@@ -280,6 +364,106 @@ function toggleCard(header) {
   header.closest(".port-card").classList.toggle("collapsed");
 }
 
+// ── markdown export ───────────────────────────────────────────────
+
+function generateMarkdown(r) {
+  const port       = r.port;
+  const svc        = (r.service_name || `port-${port}`).toLowerCase();
+  const risk       = r.risk_level || "LOW";
+  const transports = (r.transport || ["TCP"]).join(", ");
+  const iana       = r.iana_status || "—";
+  const cveCount   = r.cve_count ?? 0;
+  const kevCount   = r.kev_count ?? 0;
+  const desc       = r.description || "";
+
+  const lines = [];
+
+  // Title
+  lines.push(`# Port ${port} — ${svc} (${risk} RISK)`);
+  lines.push("");
+
+  // Overview table
+  lines.push("## Overview");
+  lines.push("| Field | Value |");
+  lines.push("|---|---|");
+  lines.push(`| Port | ${port} |`);
+  lines.push(`| Service | ${svc} |`);
+  lines.push(`| Transport | ${transports} |`);
+  lines.push(`| IANA Status | ${iana} |`);
+  lines.push(`| Risk Level | ${risk} |`);
+  lines.push(`| CVE Count | ${cveCount} |`);
+  lines.push(`| KEV Count | ${kevCount} |`);
+  lines.push("");
+
+  // Description
+  if (desc) {
+    lines.push("## Description");
+    lines.push(desc);
+    lines.push("");
+  }
+
+  // Top CVEs
+  const topCves = r.top_cves || [];
+  if (topCves.length) {
+    lines.push("## Top CVEs");
+    lines.push("| CVE ID | CVSS | EPSS | KEV |");
+    lines.push("|---|---|---|---|");
+    for (const c of topCves) {
+      const score = c.cvss_score != null ? `${c.cvss_score.toFixed(1)} ${c.cvss_severity || "?"}` : "N/A";
+      const epss  = c.epss_score  != null ? c.epss_score.toFixed(2) : "—";
+      const kev   = c.exploited_in_wild ? "Yes" : "No";
+      lines.push(`| ${c.cve_id || "—"} | ${score} | ${epss} | ${kev} |`);
+    }
+    lines.push("");
+  }
+
+  // MITRE ATT&CK techniques
+  const techs = r.techniques || [];
+  if (techs.length) {
+    lines.push("## MITRE ATT&CK Techniques");
+    lines.push("| Technique | Name | Tactic |");
+    lines.push("|---|---|---|");
+    for (const t of techs) {
+      lines.push(`| ${t.technique_id || "—"} | ${t.name || "—"} | ${t.tactic || "—"} |`);
+    }
+    lines.push("");
+  }
+
+  // Pentest notes
+  const pentest = r.pentest_notes || [];
+  if (pentest.length) {
+    lines.push("## Pentest Notes");
+    for (const n of pentest) lines.push(`- ${n}`);
+    lines.push("");
+  }
+
+  // Defensive notes
+  const defensive = r.defensive_notes || [];
+  if (defensive.length) {
+    lines.push("## Defensive Notes");
+    for (const n of defensive) lines.push(`- ${n}`);
+    lines.push("");
+  }
+
+  lines.push("---");
+  lines.push("*Generated by Port Analyzer — https://github.com/fmfalgun/port-analyzer*");
+
+  return lines.join("\n");
+}
+
+function downloadReport(r) {
+  const md   = generateMarkdown(r);
+  const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = `port-${r.port}-report.md`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 // ── event wiring ──────────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -293,6 +477,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const clearBtn = $("clear-key");
   if (clearBtn) clearBtn.addEventListener("click", () => { setKey(""); });
+
+  // Pre-load static data so the info panel is ready immediately (no-backend mode)
+  if (!API_BASE) {
+    loadStaticData().catch(() => {});
+  }
 
   // Support ?port= in URL for portfolio embedding
   const params = new URLSearchParams(window.location.search);

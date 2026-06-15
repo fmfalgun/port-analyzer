@@ -25,7 +25,8 @@ console = Console()
 @click.option("--no-live", is_flag=True, help="Skip live API calls; use cache only")
 @click.option("--db", default=None, help="Path to SQLite DB (overrides DB_PATH env var)")
 @click.option("--top", default=5, show_default=True, help="Number of CVEs to show per port")
-def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int):
+@click.option("--report", "report_path", default=None, metavar="PATH", help="Save a markdown report to PATH")
+def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int, report_path: str | None):
     """
     Port Analyzer — cybersecurity intelligence for any port or port range.
 
@@ -113,6 +114,17 @@ def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int)
         click.echo(json.dumps(results, indent=2, default=str))
     else:
         renderer.render_ports(results)
+
+    if report_path:
+        sections = [renderer.render_markdown(r) for r in results]
+        report_text = "\n\n---\n\n".join(sections)
+        with open(report_path, "w", encoding="utf-8") as fh:
+            fh.write(report_text + "\n")
+        from rich.text import Text
+        t = Text()
+        t.append("[✓] ", style="green")
+        t.append(f"Report saved to {report_path}")
+        console.print(t)
 
 
 if __name__ == "__main__":

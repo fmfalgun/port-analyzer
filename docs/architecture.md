@@ -19,13 +19,14 @@
    - 5.7 [Static JSON Structure](#57-static-json-structure)
    - 5.8 [JS Fallback Decision Tree](#58-js-fallback-decision-tree)
 6. [Request Flow — Per Surface](#6-request-flow--per-surface)
-7. [SQLite Schema Design](#7-sqlite-schema-design)
-8. [Security Architecture](#8-security-architecture)
-9. [Deployment Architecture](#9-deployment-architecture)
-10. [File Ownership Map](#10-file-ownership-map)
-11. [Data Refresh Cycle](#11-data-refresh-cycle)
-12. [Extension Points](#12-extension-points)
-13. [Known Limitations](#13-known-limitations)
+7. [Available-Ports Panel and Markdown Export](#7-available-ports-panel-and-markdown-export)
+8. [SQLite Schema Design](#8-sqlite-schema-design)
+9. [Security Architecture](#9-security-architecture)
+10. [Deployment Architecture](#10-deployment-architecture)
+11. [File Ownership Map](#11-file-ownership-map)
+12. [Data Refresh Cycle](#12-data-refresh-cycle)
+13. [Extension Points](#13-extension-points)
+14. [Known Limitations](#14-known-limitations)
 
 ---
 
@@ -693,7 +694,30 @@ File is updated by: GitHub Actions build-data.yml (commits daily)
 
 ---
 
-## 7. SQLite Schema Design
+## 7. Available-Ports Panel and Markdown Export
+
+### 7.1 Available-Ports Panel (Web UI)
+
+When a user submits a port that is absent from `_staticCache` (i.e. not in the pre-built `ports.json`), `analyzer.js` shows a structured fallback message instead of a bare error:
+
+- A notice pointing the user to the CLI: `python -m port_analyzer.cli <port>`
+- A collapsible list of every port that *is* available in the static dataset
+
+The list of available ports is derived at runtime from the keys of `_staticCache` — the in-memory object populated by `loadStaticData()` after the first successful `fetch("data/ports.json")`. No port list is hardcoded in JavaScript: whatever keys exist in the JSON file at deploy time are exactly what the panel displays. This means the panel stays accurate automatically as ports are added to or removed from `PORT_LIST` in `scripts/build_data.py`.
+
+This fallback only applies in **static mode** (`apiBase` is empty). In live mode the backend can query any port 0–65535, so the panel is never shown.
+
+### 7.2 Markdown Report Export
+
+**Web UI (client-side):** Each result card rendered by `buildCard()` includes a **↓ Report** button. Clicking it constructs a markdown string in JavaScript — using the same field structure (`port`, `service_name`, `risk_level`, `top_cves`, `techniques`, `pentest_notes`, `defensive_notes`) that the CLI renderer produces — and triggers a browser file download (`port-{N}-report.md`) via a temporary `<a>` element with a `data:text/markdown` blob URL. No request is sent to the backend; the data is already present in the rendered result object.
+
+**CLI (`--report PATH`):** The `--report PATH` flag saves the rendered markdown to a file. For a single port the file contains one report; for multiple ports (comma list or range) all individual reports are written to the same file with `---` separators between them. The markdown content uses the same field rendering as the terminal output, re-serialised as markdown rather than Rich console markup.
+
+Both surfaces produce equivalent content — the web button and the CLI flag are interchangeable for any port that is accessible in the current mode.
+
+---
+
+## 8. SQLite Schema Design
 
 Database: `db/port_analyzer.db` (WAL mode for concurrent reads)
 
@@ -775,9 +799,9 @@ rate_limit_ip (
 
 ---
 
-## 8. Security Architecture
+## 9. Security Architecture
 
-### 8.1 API Authentication Flow
+### 9.1 API Authentication Flow
 
 ```
 Client request → backend/routers/ports.py: _auth(request)
@@ -794,7 +818,7 @@ Client request → backend/routers/ports.py: _auth(request)
                                   → ok: proceed (anonymous tier)
 ```
 
-### 8.2 API Key Generation
+### 9.2 API Key Generation
 
 ```
 POST /api/v1/register {"email": "user@example.com"}
@@ -806,7 +830,7 @@ POST /api/v1/register {"email": "user@example.com"}
   → return {api_key, email, rate_limit, message}
 ```
 
-### 8.3 XSS Mitigation (Web UI)
+### 9.3 XSS Mitigation (Web UI)
 
 All API-sourced strings go through `esc()` before innerHTML injection:
 
@@ -823,7 +847,7 @@ function esc(str) {
 
 MITRE ATT&CK URLs validated before use as `href` (must start with `https://attack.mitre.org/`).
 
-### 8.4 CORS Guard
+### 9.4 CORS Guard
 
 `backend/main.py` refuses to start if `CORS_ORIGINS` is unset or `*`:
 
@@ -836,7 +860,7 @@ if not _cors_env or _cors_env.strip() == "*":
 
 Production must set `CORS_ORIGINS=https://YOUR_USERNAME.github.io`.
 
-### 8.5 SQL Injection Prevention
+### 9.5 SQL Injection Prevention
 
 All SQLite queries use parameterized statements:
 
@@ -848,9 +872,9 @@ db.execute("INSERT INTO api_keys ... VALUES (?, ?, ?, ...)", (key, email, ...))
 
 ---
 
-## 9. Deployment Architecture
+## 10. Deployment Architecture
 
-### 9.1 Production Layout
+### 10.1 Production Layout
 
 ```
 GitHub Repository (fmfalgun/port-analyzer)
@@ -875,7 +899,7 @@ GitHub Repository (fmfalgun/port-analyzer)
         env:  NVD_API_KEY, CORS_ORIGINS, DB_PATH, ADMIN_SECRET
 ```
 
-### 9.2 Data Flow in Production (Live Mode)
+### 10.2 Data Flow in Production (Live Mode)
 
 ```
 User browser (GitHub Pages)
@@ -900,7 +924,7 @@ User browser
   8. renderResults() → buildCard() → displays port intelligence
 ```
 
-### 9.3 Data Flow in Static Mode (GitHub Pages Only)
+### 10.3 Data Flow in Static Mode (GitHub Pages Only)
 
 ```
 User browser (GitHub Pages)
@@ -919,7 +943,7 @@ User browser
   6. data["22"] found → renderResults() → same UI as live mode
 ```
 
-### 9.4 GitHub Actions Triggers
+### 10.4 GitHub Actions Triggers
 
 ```
 Push to master (web/** changed)
@@ -944,7 +968,7 @@ Manual redeploy
 
 ---
 
-## 10. File Ownership Map
+## 11. File Ownership Map
 
 | File | Layer | Responsibility |
 |------|-------|----------------|
@@ -971,7 +995,7 @@ Manual redeploy
 
 ---
 
-## 11. Data Refresh Cycle
+## 12. Data Refresh Cycle
 
 ```
 Timeline:
@@ -1010,7 +1034,7 @@ GitHub Actions free tier: 2000 min/month → using ~90 min/month (~5% of free ti
 
 ---
 
-## 12. Extension Points
+## 13. Extension Points
 
 ### Add a new port to the static dataset
 
@@ -1063,7 +1087,7 @@ The JS automatically uses live mode when `apiBase` is non-empty.
 
 ---
 
-## 13. Known Limitations
+## 14. Known Limitations
 
 ### Static mode: pre-built port set only
 
@@ -1074,7 +1098,7 @@ The GitHub Pages static mode serves `web/data/ports.json` which is built from `P
 - **WELL_KNOWN** — ports 0–1023 commonly exploited during pentests (22, 23, 25, 53, 80, 443, 445, etc.)
 - **REGISTERED** — ports 1024–49151 for common services (databases, message queues, web frameworks, k8s, industrial protocols, etc.)
 
-To add a port, see [Section 12](#12-extension-points).
+To add a port, see [Section 13](#13-extension-points).
 
 ### workflow_run: no artifact sharing
 

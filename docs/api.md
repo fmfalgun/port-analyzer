@@ -851,4 +851,36 @@ fetch("https://fmfalgun.github.io/port-analyzer/data/ports.json")
 
 ---
 
-*Document version: 1.0 — Generated 2026-06-15*
+### 16. Web UI Features — Pre-Built Ports and Markdown Download
+
+#### Available-ports panel
+
+The web UI operates in static mode by default (no backend required). When a queried port is not present in the pre-built dataset, the UI shows a descriptive message rather than a bare error, pointing the user to the CLI for live queries:
+
+```
+python -m port_analyzer.cli <port>
+```
+
+It also displays a collapsible panel listing every port that is available in the current static dataset (~118 ports). The list is derived at runtime from the loaded `ports.json` keys — no separate configuration is needed.
+
+#### Per-port markdown download
+
+Each result card in the web UI includes a **↓ Report** button. Clicking it generates a complete markdown intelligence report for that port (covering CVEs, MITRE ATT&CK techniques, pentest notes, and defensive recommendations) and downloads it as `port-{N}-report.md`. The generation is entirely client-side — no additional API request is made.
+
+#### CLI equivalent — `--report PATH`
+
+For scripted or offline use, the CLI `--report PATH` flag produces the same markdown content and writes it to a file:
+
+```bash
+# Single port
+python -m port_analyzer.cli 22 --report /tmp/port22.md
+
+# Multiple ports — all reports concatenated with --- separators
+python -m port_analyzer.cli 22,80,443 --report /tmp/report.md
+```
+
+The `--report` flag can be combined with `--no-live` (reads from local cache) or `--json` (JSON goes to stdout; markdown goes to the file path).
+
+---
+
+*Document version: 1.1 — Updated 2026-06-15*

@@ -150,8 +150,21 @@ python run.py --serve        # starts backend on :8000
 | `--json` | off | Print raw JSON instead of rich terminal output |
 | `--no-live` | off | Skip all API calls; serve from local cache only |
 | `--top N` | 5 | Number of top CVEs to display per port |
+| `--report PATH` | off | Save a full markdown report to a file |
 | `--db PATH` | `$DB_PATH` | Override the SQLite database path |
 | `-h / --help` | — | Show help |
+
+**Saving markdown reports:**
+
+The `--report PATH` flag writes a full markdown intelligence report to a file instead of (or in addition to) terminal output. When multiple ports are analyzed, all reports are concatenated in the file with `---` separators.
+
+```bash
+# Save a single-port report
+python -m port_analyzer 22 --report /tmp/port22.md
+
+# Save a multi-port report (all ports concatenated into one file)
+python -m port_analyzer 22,80,443 --report /tmp/report.md
+```
 
 Port ranges are capped at 1000 ports per invocation. All ports must be in the range 0–65535.
 
@@ -182,6 +195,10 @@ The API is then available at `http://localhost:8000`. Interactive docs are at `/
 When the backend is running, the web UI is served automatically from `/` (the `web/` directory is mounted as static files by `backend/main.py`).
 
 Open `http://localhost:8000` in a browser. Enter a port number, comma-separated list, or range in the search box and click **ANALYZE**. Results render inline without a page reload.
+
+**Available ports panel:** If you search for a port that is not in the pre-built static dataset, the UI shows a helpful message pointing you to the CLI (`python -m port_analyzer.cli <port>`) and displays a collapsible panel listing all ~118 pre-built ports so you can see what is available at a glance.
+
+**Markdown report download:** Each result card includes a **↓ Report** button that generates a markdown intelligence report for that port and downloads it as `port-{N}-report.md` directly in the browser — no server round-trip required.
 
 To use an API key in the web UI, click **Get API Key** in the navigation bar to register, then paste the key into the UI — it is stored in `localStorage` and sent automatically with each request.
 
