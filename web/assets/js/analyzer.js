@@ -4,6 +4,18 @@
 const API_BASE = (window.PA_CONFIG && window.PA_CONFIG.apiBase) || "";
 const KEY_STORAGE = "pa_api_key";
 
+// Static data fallback — used when API_BASE is empty (GitHub Pages without backend)
+const STATIC_DATA_URL = (window.PA_CONFIG && window.PA_CONFIG.staticDataUrl) || "data/ports.json";
+let _staticCache = null;
+
+async function loadStaticData() {
+  if (_staticCache) return _staticCache;
+  const resp = await fetch(STATIC_DATA_URL);
+  if (!resp.ok) throw new Error(`Static data not available (${resp.status})`);
+  _staticCache = await resp.json();
+  return _staticCache;
+}
+
 // ── XSS mitigation ───────────────────────────────────────────────
 // Escape API-sourced strings before injecting into innerHTML.
 function esc(str) {
@@ -82,6 +94,25 @@ async function query(input) {
   setStatus(`[>] querying port(s): ${input} …`, "loading");
 
   try {
+    // NEW: static fallback when no backend is configured
+    if (!API_BASE) {
+      const data = await loadStaticData();
+      const ports = input.split(",").map(p => p.trim()).filter(Boolean);
+      const results = [];
+      for (const p of ports) {
+        const entry = data[p] || data[p.replace(/\s/g, "")];
+        if (entry) results.push(entry);
+        else results.push({ port: parseInt(p) || p, service_name: "unknown", risk_level: "LOW", cve_count: 0, kev_count: 0, top_cves: [], techniques: [], pentest_notes: [], defensive_notes: [], _not_in_dataset: true });
+      }
+      clearStatus();
+      if (results.every(r => r._not_in_dataset)) {
+        setStatus(`[!] Port(s) not in static dataset. Deploy a backend for live queries.`, "error");
+        return;
+      }
+      renderResults(results.filter(r => !r._not_in_dataset));
+      return;
+    }
+    // EXISTING live-API code below — untouched
     // Decide endpoint: single port or multi
     let data;
     if (/^[0-9]+$/.test(input)) {
