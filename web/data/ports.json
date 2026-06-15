@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-15T18:07:18Z",
+    "generated_at": "2026-06-15T18:11:03Z",
     "port_count": 77,
     "sources": [
       "IANA",
@@ -2585,8 +2585,8 @@
     "port": 8765,
     "service_name": "ultraseek-http",
     "transport": [
-      "UDP",
-      "TCP"
+      "TCP",
+      "UDP"
     ],
     "iana_status": "Assigned",
     "description": "Ultraseek HTTP",
