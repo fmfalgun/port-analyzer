@@ -155,7 +155,7 @@ python run.py --serve        # starts backend on :8000
 | `--no-live` | off | Skip all API calls; serve from local cache only |
 | `--top N` | 5 | Number of top CVEs to display per port |
 | `--report PATH` | off | Save a full markdown report to a file |
-| `--sync` | off | Push the result to the GitHub Pages dataset via the GitHub Contents API (requires `GITHUB_PAT`) |
+| `--sync` | off | Push results to GitHub Pages — uploads `web/data/ports/{port}.json` (all CVEs) and updates `web/data/ports.json` summary index (requires `GITHUB_PAT`) |
 | `--db PATH` | `$DB_PATH` | Override the SQLite database path |
 | `-h / --help` | — | Show help |
 
@@ -175,7 +175,14 @@ Port ranges are capped at 1000 ports per invocation. All ports must be in the ra
 
 **Pushing results to the live GitHub Pages dataset (`--sync`):**
 
-The `--sync` flag pushes the analyzed port result directly to the GitHub Pages static dataset so that the live site reflects it immediately — no manual step required. After analysis completes, the CLI fetches the current `web/data/ports.json` from GitHub, merges the new port data in, and commits the updated file back via the GitHub Contents API. Because a Personal Access Token (PAT) — not the automatic `GITHUB_TOKEN` — is used, the push triggers a real push event and the `deploy-pages.yml` workflow fires automatically. The site typically updates within ~30 seconds.
+The `--sync` flag pushes the analyzed port data to GitHub Pages so the live site reflects it immediately. It commits two files per port:
+
+| File | Contents |
+|---|---|
+| `web/data/ports/{port}.json` | **Full data** — all CVEs (e.g. all 1,369 for port 22), every field, PoC URLs, VARIoT entries, techniques, pentest/defensive notes |
+| `web/data/ports.json` | **Summary index** — one lean entry per port (counts + top CVEs only); what the homepage loads |
+
+After sync, the port's detail page (`ports.html?p=22`) loads all CVEs from its dedicated file, so the full CVE explorer is available in the browser. Because a Personal Access Token (PAT) — not the automatic `GITHUB_TOKEN` — is used, the push triggers a real push event and `deploy-pages.yml` fires automatically. The site typically updates within ~30 seconds.
 
 **One-time setup — create a GitHub Fine-grained Personal Access Token:**
 
@@ -239,9 +246,25 @@ When the backend is running, the web UI is served automatically from `/` (the `w
 
 Open `http://localhost:8000` in a browser. Enter a port number, comma-separated list, or range in the search box and click **ANALYZE**. Results render inline without a page reload.
 
-**Available ports panel:** If you search for a port that is not in the pre-built static dataset, the UI shows a helpful message pointing you to the CLI (`python -m port_analyzer.cli <port>`) and displays a collapsible panel listing all ~118 pre-built ports so you can see what is available at a glance.
+**Available ports panel:** If you search for a port that is not in the pre-built static dataset, the UI shows a helpful message pointing you to the CLI (`python -m port_analyzer.cli <port>`) and displays a collapsible panel listing all pre-built ports.
 
-**Markdown report download:** Each result card includes a **↓ Report** button that generates a markdown intelligence report for that port and downloads it as `port-{N}-report.md` directly in the browser — no server round-trip required. The downloaded report contains the same clickable CVE links (to NVD) and MITRE technique links (to ATT&CK) as CLI `--report` output, and ends with a `## References` section listing all data sources with per-CVE and per-technique links.
+**Markdown report download:** Each result card includes a **↓ Report** button that generates a markdown intelligence report for that port and downloads it as `port-{N}-report.md` directly in the browser — no server round-trip required.
+
+**CVE Explorer (`ports.html`):** Each port card shows a **Browse CVEs ↗** button (visible in static/GitHub Pages mode after `--sync` has been run for that port). Clicking it opens `ports.html?p=22` — a dedicated full CVE explorer page with:
+
+- **Paginated CVE table** — 25 rows per page across all CVEs (up to 1,369+ for port 22)
+- **Filters** — by severity (CRITICAL / HIGH / MEDIUM / LOW), KEV-only, PoC-only
+- **Sort** — by CVSS score, EPSS probability, or CVE ID
+- **Search** — partial CVE ID search (e.g. type `2024` to filter to CVEs from 2024)
+- **Downloads** — export the current filtered view as CSV or JSON
+- **VARIoT, ATT&CK, pentest/defensive sections** below the table
+
+The page loads `data/ports/{port}.json` (the full file synced by `--sync`) and falls back to the summary `ports.json` if the per-port file is not yet available.
+
+```
+# Direct URL to port 22 CVE explorer (after syncing port 22):
+https://fmfalgun.github.io/port-analyzer/ports.html?p=22
+```
 
 To use an API key in the web UI, click **Get API Key** in the navigation bar to register, then paste the key into the UI — it is stored in `localStorage` and sent automatically with each request.
 
