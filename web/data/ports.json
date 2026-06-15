@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "generated_at": "2026-06-15T10:10:26Z",
-    "port_count": 75,
+    "generated_at": "2026-06-15T11:07:57Z",
+    "port_count": 77,
     "sources": [
       "IANA",
       "NVD",
@@ -717,8 +717,8 @@
     "port": 443,
     "service_name": "https",
     "transport": [
-      "SCTP",
       "UDP",
+      "SCTP",
       "TCP"
     ],
     "iana_status": "Assigned",
@@ -734,7 +734,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:08:59Z"
+        "fetched_at": "2026-06-15T10:49:04Z"
       },
       {
         "technique_id": "T1071.001",
@@ -742,7 +742,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-15T10:08:59Z"
+        "fetched_at": "2026-06-15T10:49:04Z"
       },
       {
         "technique_id": "T1573",
@@ -750,7 +750,7 @@
         "name": "Encrypted Channel",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1573/",
-        "fetched_at": "2026-06-15T10:08:59Z"
+        "fetched_at": "2026-06-15T10:49:04Z"
       }
     ],
     "pentest_notes": [
@@ -2196,6 +2196,46 @@
     "search_terms": [
       "hadoop",
       "hdfs"
+    ]
+  },
+  "8765": {
+    "port": 8765,
+    "service_name": "ultraseek-http",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Ultraseek HTTP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ultraseek-http"
+    ]
+  },
+  "8766": {
+    "port": 8766,
+    "service_name": "amcs",
+    "transport": [
+      "TCP",
+      "UDP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Agilent Connectivity Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "top_cves": [],
+    "techniques": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "amcs"
     ]
   }
 }
