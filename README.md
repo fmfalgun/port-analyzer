@@ -180,18 +180,23 @@ The `--sync` flag pushes the analyzed port result directly to the GitHub Pages s
 3. Under **Repository access**, select the `port-analyzer` repository only.
 4. Under **Permissions → Repository permissions**, set **Contents** to **Read and write**.
 5. Generate the token and copy it immediately (it is shown only once).
-6. Export it in your shell (or add it to `.env`):
+6. Set it in your shell:
 
+**fish shell** (persists universally — recommended):
+```fish
+set -Ux GITHUB_PAT ghp_your_token_here
+```
+
+**bash / zsh** (add to `~/.bashrc` or `~/.zshenv` to persist):
 ```bash
 export GITHUB_PAT=ghp_your_token_here
 ```
 
+> **Note:** `export VAR=value` is bash syntax and does not work in fish. Use `set -Ux` in fish (`-U` = universal/persistent, `-x` = exported to subprocesses).
+
 **Usage:**
 
 ```bash
-# One-time setup
-export GITHUB_PAT=ghp_your_token_here
-
 # Analyze and push to the live site
 python -m port_analyzer 31337 --sync
 python -m port_analyzer 8080,4444 --sync

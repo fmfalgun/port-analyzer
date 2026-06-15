@@ -911,11 +911,19 @@ GitHub Actions' built-in `GITHUB_TOKEN` cannot trigger other workflows. A PAT pu
 3. Under **Repository access**, select only the `port-analyzer` repository.
 4. Under **Permissions**, set **Contents → Read and write**.
 5. Generate and copy the token.
-6. Export it in your shell (add to `~/.bashrc` or `~/.zshenv` to persist):
+6. Set it in your shell:
 
+**fish shell** (persists universally — recommended):
+```fish
+set -Ux GITHUB_PAT ghp_your_token_here
+```
+
+**bash / zsh** (add to `~/.bashrc` or `~/.zshenv` to persist):
 ```bash
 export GITHUB_PAT=ghp_your_token_here
 ```
+
+> **Note:** `export VAR=value` is bash/zsh syntax and does not work in fish shell. Use `set -Ux` in fish (`-U` = universal/persistent across all sessions, `-x` = exported to child processes).
 
 The `GITHUB_REPO` variable defaults to `fmfalgun/port-analyzer`. Set it only if you are working with a fork:
 
