@@ -1,0 +1,34 @@
+{
+  "port": 162,
+  "service_name": "snmptrap",
+  "transport": [
+    "TCP",
+    "UDP"
+  ],
+  "iana_status": "Assigned",
+  "description": "SNMPTRAP",
+  "wiki_description": "Simple Network Management Protocol Trap (SNMPTRAP)",
+  "popularity_freq": 0.103346,
+  "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+  "nmap_tcp_freq": 1.3e-05,
+  "nmap_udp_freq": 0.103346,
+  "nmap_sctp_freq": null,
+  "nmap_service_name": "snmptrap",
+  "nmap_comment": "snmp-trap",
+  "risk_level": "LOW",
+  "cve_count": 0,
+  "kev_count": 0,
+  "poc_count": 0,
+  "attackerkb_hits": 0,
+  "exploitdb_hits": 0,
+  "shadowserver_hits": 0,
+  "top_cves": [],
+  "all_cves": [],
+  "techniques": [],
+  "variot_vulns": [],
+  "pentest_notes": [],
+  "defensive_notes": [],
+  "search_terms": [
+    "snmptrap"
+  ]
+}
