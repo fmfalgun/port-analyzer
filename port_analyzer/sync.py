@@ -146,10 +146,14 @@ def sync_ports(results: list[dict], token: str = None, repo: str = None) -> tupl
 
     port_labels = ", ".join(str(r["port"]) for r in valid_results)
     commit_urls: list[str] = []
+    failed_ports: list[str] = []
 
     # ------------------------------------------------------------------ #
     # 1. Push each port's full data to web/data/ports/{port}.json         #
+    #    A single port's network hiccup must not abort the whole batch — #
+    #    skip it and keep going, report failures at the end.             #
     # ------------------------------------------------------------------ #
+    pushed_results: list[dict] = []
     for r in valid_results:
         port = r["port"]
         per_port_path = f"web/data/ports/{port}.json"
@@ -157,11 +161,7 @@ def sync_ports(results: list[dict], token: str = None, repo: str = None) -> tupl
 
         try:
             sha = _get_sha(per_port_url, hdrs)
-        except RuntimeError as exc:
-            return False, str(exc)
-
-        content_bytes = json.dumps(r, indent=2).encode("utf-8")
-        try:
+            content_bytes = json.dumps(r, indent=2).encode("utf-8")
             resp_json = _put_file(
                 per_port_url,
                 hdrs,
@@ -170,14 +170,20 @@ def sync_ports(results: list[dict], token: str = None, repo: str = None) -> tupl
                 f"data: sync port {port} full dataset",
             )
         except RuntimeError as exc:
-            return False, str(exc)
+            failed_ports.append(f"{port} ({exc})")
+            continue
 
+        pushed_results.append(r)
         commit_url = resp_json.get("commit", {}).get("html_url", "")
         if commit_url:
             commit_urls.append(commit_url)
 
+    if not pushed_results:
+        return False, f"All {len(valid_results)} port push(es) failed:\n    " + "\n    ".join(failed_ports)
+
     # ------------------------------------------------------------------ #
     # 2. Fetch current ports.json, merge summary-only data, push back     #
+    #    Only summarise ports that actually pushed successfully above.   #
     # ------------------------------------------------------------------ #
     summary_url = f"{_GITHUB_API}/repos/{repo}/contents/{_DATA_PATH}"
 
@@ -191,7 +197,7 @@ def sync_ports(results: list[dict], token: str = None, repo: str = None) -> tupl
             "_meta": {"generated_at": "", "port_count": 0, "sources": _SOURCES}
         }
 
-    for r in valid_results:
+    for r in pushed_results:
         current_data[str(r["port"])] = _build_summary(r)
 
     # Refresh _meta
@@ -218,8 +224,9 @@ def sync_ports(results: list[dict], token: str = None, repo: str = None) -> tupl
     if commit_url:
         commit_urls.append(commit_url)
 
+    pushed_labels = ", ".join(str(r["port"]) for r in pushed_results)
     summary_line = "\n    ".join(commit_urls)
-    return (
-        True,
-        f"Synced port(s) {port_labels} → {repo} | deploy in ~30s\n    {summary_line}",
-    )
+    msg = f"Synced port(s) {pushed_labels} → {repo} | deploy in ~30s\n    {summary_line}"
+    if failed_ports:
+        msg += "\n  [!] Failed (not synced — safe to retry by re-running --sync):\n    " + "\n    ".join(failed_ports)
+    return True, msg
