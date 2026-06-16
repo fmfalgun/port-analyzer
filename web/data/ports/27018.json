@@ -1,0 +1,33 @@
+{
+  "port": 27018,
+  "service_name": "port-27018",
+  "transport": [
+    "TCP"
+  ],
+  "iana_status": "Unknown",
+  "description": "",
+  "wiki_description": "Unturned , a survival game",
+  "popularity_freq": 0.000654,
+  "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+  "nmap_tcp_freq": 7.6e-05,
+  "nmap_udp_freq": 0.000654,
+  "nmap_sctp_freq": null,
+  "nmap_service_name": "mongod",
+  "nmap_comment": "http://docs.mongodb.org/manual/reference/default-mongodb-port/",
+  "risk_level": "LOW",
+  "cve_count": 0,
+  "kev_count": 0,
+  "poc_count": 0,
+  "attackerkb_hits": 0,
+  "exploitdb_hits": 0,
+  "shadowserver_hits": 0,
+  "top_cves": [],
+  "all_cves": [],
+  "techniques": [],
+  "variot_vulns": [],
+  "pentest_notes": [],
+  "defensive_notes": [],
+  "search_terms": [
+    "mongodb"
+  ]
+}
