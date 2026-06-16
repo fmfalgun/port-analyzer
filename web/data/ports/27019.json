@@ -1,0 +1,33 @@
+{
+  "port": 27019,
+  "service_name": "port-27019",
+  "transport": [
+    "TCP"
+  ],
+  "iana_status": "Unknown",
+  "description": "",
+  "wiki_description": null,
+  "popularity_freq": 7.6e-05,
+  "wiki_url": null,
+  "nmap_tcp_freq": 7.6e-05,
+  "nmap_udp_freq": null,
+  "nmap_sctp_freq": null,
+  "nmap_service_name": "mongod",
+  "nmap_comment": "http://docs.mongodb.org/manual/reference/default-mongodb-port/",
+  "risk_level": "LOW",
+  "cve_count": 0,
+  "kev_count": 0,
+  "poc_count": 0,
+  "attackerkb_hits": 0,
+  "exploitdb_hits": 0,
+  "shadowserver_hits": 0,
+  "top_cves": [],
+  "all_cves": [],
+  "techniques": [],
+  "variot_vulns": [],
+  "pentest_notes": [],
+  "defensive_notes": [],
+  "search_terms": [
+    "27019"
+  ]
+}
