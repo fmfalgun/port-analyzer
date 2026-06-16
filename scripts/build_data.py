@@ -49,7 +49,8 @@ DEFAULT_OUTPUT   = REPO_ROOT / "web" / "data" / "ports.json"
 DEFAULT_PORTS_DIR = REPO_ROOT / "web" / "data" / "ports"
 DEFAULT_DB       = REPO_ROOT / "db" / "port_analyzer.db"
 
-SOURCES = ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK"]
+SOURCES = ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK", "PoC-in-GitHub",
+           "VARIoT", "AttackerKB", "Exploit-DB", "Wikipedia", "nmap-services"]
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

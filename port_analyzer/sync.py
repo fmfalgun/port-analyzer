@@ -21,7 +21,8 @@ from datetime import datetime, timezone
 _GITHUB_API = "https://api.github.com"
 _DEFAULT_REPO = "fmfalgun/port-analyzer"
 _DATA_PATH = "web/data/ports.json"
-_SOURCES = ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK"]
+_SOURCES = ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK", "PoC-in-GitHub",
+            "VARIoT", "AttackerKB", "Exploit-DB", "Wikipedia", "nmap-services"]
 
 
 def _headers(token: str) -> dict:

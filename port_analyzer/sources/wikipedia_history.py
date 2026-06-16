@@ -34,21 +34,27 @@ def _fetch_and_parse() -> dict:
         if not rows:
             continue
         header_cells = [c.get_text(strip=True).lower() for c in rows[0].find_all(["th", "td"])]
-        port_col = next((i for i, h in enumerate(header_cells) if "port" in h), None)
-        desc_col = next((i for i, h in enumerate(header_cells) if "description" in h or "use" in h), None)
-        if port_col is None or desc_col is None:
+        has_port = any("port" in h for h in header_cells)
+        has_desc = any("description" in h or "use" in h for h in header_cells)
+        if not (has_port and has_desc):
             continue
 
+        # Don't trust header-matched column *indices* for cell access: rows
+        # often merge blank TCP/UDP/SCTP/DCCP cells via colspan, so the cell
+        # count varies per row and a fixed index can land short or on the
+        # wrong cell. Port is reliably the first <td>; Description is
+        # reliably the last <td>, regardless of how many columns collapsed
+        # in between — index from the ends instead.
         for row in rows[1:]:
             cells = row.find_all("td")
-            if len(cells) <= max(port_col, desc_col):
+            if len(cells) < 2:
                 continue
             # Strip Wikipedia footnote/reference superscripts (e.g. [477]) before
             # extracting text — they render as "[ 477 ]" noise in get_text().
-            for sup in cells[desc_col].find_all("sup", class_="reference"):
+            for sup in cells[-1].find_all("sup", class_="reference"):
                 sup.decompose()
-            port_text = cells[port_col].get_text(" ", strip=True)
-            desc_text = cells[desc_col].get_text(" ", strip=True)
+            port_text = cells[0].get_text(" ", strip=True)
+            desc_text = cells[-1].get_text(" ", strip=True)
             desc_text = re.sub(r"\s*\[\s*\d+\s*\]", "", desc_text).strip()
             if not desc_text:
                 continue
