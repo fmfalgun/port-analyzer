@@ -18,8 +18,10 @@
    - 5.5 [Current Workflow Files](#55-current-workflow-files)
    - 5.7 [Static JSON Structure](#57-static-json-structure)
    - 5.8 [JS Fallback Decision Tree](#58-js-fallback-decision-tree)
+   - 5.9 [Per-Port JSON Files and the CVE Explorer Page](#59-per-port-json-files-and-the-cve-explorer-page)
 6. [Request Flow — Per Surface](#6-request-flow--per-surface)
 7. [Available-Ports Panel and Markdown Export](#7-available-ports-panel-and-markdown-export)
+   - 7.3 [CLI-Driven Sync (sync.py)](#73-cli-driven-sync-port_analyzersyncpy)
 8. [SQLite Schema Design](#8-sqlite-schema-design)
 9. [Security Architecture](#9-security-architecture)
 10. [Deployment Architecture](#10-deployment-architecture)
@@ -27,6 +29,8 @@
 12. [Data Refresh Cycle](#12-data-refresh-cycle)
 13. [Extension Points](#13-extension-points)
 14. [Known Limitations](#14-known-limitations)
+15. [Known External Issues](#15-known-external-issues)
+16. [Future Scope: Scaling to All 65,535 Ports](#16-future-scope-scaling-to-all-65535-ports)
 
 ---
 
@@ -261,7 +265,8 @@ Auth:   None (free public MediaWiki API)
 Fetch strategy: WHOLE-ARTICLE BLOB CACHE
   - GETs the rendered article HTML once via action=parse
   - Parses every <table class="wikitable"> with BeautifulSoup
-  - Locates the "port" and "description"/"use" columns by header text (case-insensitive)
+  - Locates the "port" and "description"/"use" header cells only to detect which
+    tables qualify (has_port AND has_desc) — NOT used for per-row cell indexing (see bug below)
   - Extracts port numbers from the port cell via regex (handles ranges/multi-port cells)
   - Strips Wikipedia footnote markers (e.g. "[477]") from the description cell
   - Builds a single dict {port_str: description_text} (description capped at 1500 chars)
@@ -271,12 +276,48 @@ Fetch strategy: WHOLE-ARTICLE BLOB CACHE
 
 Per-port logic:
   1. Load cached {port: description} dict (or fetch + parse + cache if stale/missing)
-  2. dict.get(str(port)) → if found, upsert_port_history(db, port, wiki_description=desc)
+  2. dict.get(str(port)) → if found, upsert_port_history(db, port, wiki_description=desc, wiki_url=...)
   3. Never raises — any failure (network, parse, missing table) is caught and logged; no-op
 
-Output: port_history.wiki_description
+Output: port_history.wiki_description, port_history.wiki_url
 Function: fetch_wikipedia_history_for_port(port, db=None)
 ```
+
+**Bug fixed: header-matched column indices silently dropped most rows**
+
+Wikipedia's port table HTML merges blank TCP/UDP/SCTP/DCCP cells via `colspan`
+when those columns are empty for a given port, so the actual number of `<td>`
+elements in a data row frequently does not match the header row's column
+count. The header row has 6 columns (Port / TCP / UDP / SCTP / DCCP /
+Description), but a large fraction of data rows render only 5 `<td>`
+elements because one or more of the protocol columns collapsed into the
+adjacent cell via `colspan`.
+
+The original parser located the Description column by the header-matched
+index (column 5) and read `cells[port_col]` / `cells[desc_col]` directly.
+Any row with fewer `<td>` elements than `max(port_col, desc_col)` tripped
+the skip-guard (`len(cells) <= max(port_col, desc_col)`) and the row was
+silently dropped — no exception, no log, just a missing entry. This affected
+the majority of rows: only 726 of ~1,378 parseable ports were captured,
+including a total miss on port 443.
+
+**Fix**: read the port from `cells[0]` and the description from `cells[-1]`
+— i.e. index from the ends of the row rather than from header-matched
+positions. Port is reliably the first `<td>` and Description is reliably
+the last `<td>` regardless of how many columns collapsed in between.
+Coverage went from 726 to 1,378 ports.
+
+**Secondary fix: footnote markers leaking into description text**
+
+Wikipedia's `<sup class="reference">` footnote markers (e.g. a citation
+rendered as `[477]`) were leaking into the extracted description text as
+`"[ 477 ]"` noise once `get_text()` flattened the markup. Fixed by calling
+`.decompose()` on every `<sup class="reference">` tag inside the description
+cell before extracting text, plus a regex backstop —
+`re.sub(r"\s*\[\s*\d+\s*\]", "", text)` — to strip any reference-marker
+pattern that slips through.
+
+File: `port_analyzer/sources/wikipedia_history.py`, function `_fetch_and_parse()`.
 
 ### 3.9 nmap-services popularity (`sources/nmap_services.py`)
 
@@ -292,14 +333,39 @@ Fetch strategy: WHOLE-FILE BLOB CACHE
 
 Per-port logic:
   1. Load cached raw text (or fetch + cache if stale/missing)
-  2. Regex-match every non-comment line; for lines matching the queried port,
-     take the MAX frequency value across tcp/udp/sctp entries for that port
-  3. If a frequency was found → upsert_port_history(db, port, popularity_freq=freq)
+  2. _record_for_port() scans EVERY line matching the queried port across ALL
+     protocols and returns the full per-protocol record (see below)
+  3. If any protocol matched → upsert_port_history(db, port, popularity_freq=max_freq,
+     nmap_tcp_freq=..., nmap_udp_freq=..., nmap_sctp_freq=..., nmap_service_name=..., nmap_comment=...)
   4. Never raises — any failure (network, no match) is caught and logged; no-op
 
-Output: port_history.popularity_freq (0.0–1.0, real-world internet-scan prevalence)
+Output: port_history.popularity_freq (0.0–1.0, real-world internet-scan prevalence),
+        plus the expanded per-protocol fields below
 Function: fetch_nmap_popularity_for_port(port, db=None)
 ```
+
+**Expanded from a single max-frequency scalar to a full per-protocol record**
+
+`_max_frequency_for_port()` originally collapsed all protocol lines for a
+port into one max frequency value, discarding the TCP-vs-UDP breakdown, the
+nmap-assigned service name, and any inline `#comment` on the matching line.
+It was replaced with `_record_for_port(raw_text, port) -> dict | None`,
+which scans every non-comment line in the cached nmap-services text that
+matches the queried port across `tcp`/`udp`/`sctp` and returns:
+
+```python
+{"tcp": float | None, "udp": float | None, "sctp": float | None,
+ "service_name": str | None, "comment": str | None}
+```
+
+`service_name` is taken from the first matching line's leading column;
+`comment` is taken from the first matching line that has inline `# text`
+after the frequency value. `popularity_freq` (the max across the three
+protocol frequencies) is still computed by the caller and stored
+separately, preserving backward compatibility with code and cached data
+that predates this change.
+
+File: `port_analyzer/sources/nmap_services.py`.
 
 ---
 
@@ -399,19 +465,39 @@ For every `analyze_port(port)` call:
     YES → GET Wikipedia "List of TCP and UDP port numbers" via MediaWiki API,
           parse all wikitable elements into {port: description}, cache whole blob
     NO  → use cached blob
-    → look up this port's description → upsert_port_history(port, wiki_description=...)
+    → look up this port's description → upsert_port_history(port, wiki_description=..., wiki_url=...)
     → never raises; no-ops gracefully on any failure
 
 12. fetch_nmap_popularity_for_port(port)
                                     → nmap_services_cache stale (720h/30d)?
     YES → GET raw nmap-services text file from GitHub, cache whole blob
     NO  → use cached blob
-    → parse this port's max frequency across tcp/udp/sctp → upsert_port_history(port, popularity_freq=...)
+    → _record_for_port() scans this port's lines across tcp/udp/sctp →
+      upsert_port_history(port, popularity_freq=max_freq, nmap_tcp_freq=...,
+      nmap_udp_freq=..., nmap_sctp_freq=..., nmap_service_name=..., nmap_comment=...)
     → never raises; no-ops gracefully on any failure
 
 13. read everything from SQLite (including history_row = get_port_history(db, port))
     → assemble result dict → return
 ```
+
+**Pitfall: three independent result-building code paths must stay in sync**
+
+`analyze_port()` in `engine.py` (the live path used by the CLI and the
+FastAPI backend), the `--no-live` branch in `cli.py` (reads cache only, no
+network calls), and `_cache_only_result()` in `scripts/build_data.py` (used
+when building the static dataset) each independently construct the result
+dict from the same underlying tables. There is no shared "build result"
+function — each one repeats the same field list by hand. Whenever a new
+field is added to the result schema (as happened with `wiki_description` /
+`popularity_freq` originally, and again with the six fields added in
+3.8/3.9 above), it must be added to all three call sites or the field will
+silently be `None`/missing in whichever surface was forgotten. This has
+already happened once in this project's history — the first round of
+`wiki_description`/`popularity_freq` only landed in `engine.py` and had to
+be patched into the `cli.py` `--no-live` branch and `build_data.py`
+afterward as a follow-up fix. Treat any new `port_history`/`cves` column
+exposed in the result schema as a 3-file change, not a 1-file change.
 
 ---
 
@@ -695,7 +781,13 @@ jobs:
     "transport": ["TCP", "UDP", "SCTP"],
     "iana_status": "...",
     "wiki_description": "The Secure Shell (SSH) Protocol...",
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
     "popularity_freq": 0.978,
+    "nmap_tcp_freq": 0.978,
+    "nmap_udp_freq": 0.012,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ssh",
+    "nmap_comment": "Secure Shell Login",
     "risk_level": "HIGH",
     "cve_count": 45,
     "kev_count": 3,
@@ -757,6 +849,70 @@ result      "port not in static
             dataset — deploy
             backend for live"
 ```
+
+### 5.9 Per-Port JSON Files and the CVE Explorer Page
+
+`web/data/ports.json` (the summary index) deliberately strips `all_cves`
+down to `top_cves` (the highest-CVSS subset) to stay small enough for the
+landing page's initial fetch. Ports with large CVE counts (port 443, port
+22, etc.) can have CVE datasets running into the multi-megabyte range —
+too large to embed wholesale in the summary index without bloating every
+page load on the site.
+
+To give access to the *full* CVE list per port without paying that cost on
+every page, each port additionally gets its own static file:
+
+```
+web/data/ports/{port}.json     ← full record including all_cves (can be several MB)
+web/data/ports.json            ← summary index, all_cves stripped to top_cves
+```
+
+**`web/ports.html`** ("CVE Explorer") is a dedicated page, separate from
+`index.html`, that renders the full per-port CVE table with client-side
+filtering, sorting, pagination, and CSV/JSON download — driven by
+`web/assets/js/ports.js`. It reads the port number from the `?p=` (or
+`?port=`) query string:
+
+```javascript
+const port = new URLSearchParams(location.search).get("p") || params.get("port");
+```
+
+Fetch order in `ports.js` (`DOMContentLoaded` handler):
+
+```
+1. fetch(`data/ports/${port}.json`)        ← full file, has all_cves
+   resp.ok? → entry = full record
+   not ok?  → fall back:
+2. fetch("data/ports.json")                ← summary index
+   entry = summary[port] (only top_cves available, not all_cves)
+3. !entry → showError("Port not in dataset", with CLI sync hint)
+4. allCves = entry.all_cves || entry.top_cves || []
+```
+
+This means the explorer page degrades gracefully: a port with a per-port
+file shows every CVE; a port that only exists in the summary index (e.g.
+synced before this feature existed, or the per-port file failed to push)
+still shows its top CVEs instead of erroring out.
+
+**Linking in from the main UI**: `web/assets/js/analyzer.js` renders a
+"Browse CVEs ↗" link/button on each result card and in the techniques
+panel whenever running in static mode with `cve_count > 0`:
+
+```javascript
+const browseBtn = (!API_BASE && r.cve_count > 0)
+  ? `<a class="browse-cves-btn" href="ports.html?p=${esc(String(r.port))}" ...>Browse CVEs ↗</a>`
+  : "";
+```
+
+The link is only shown in static mode (`API_BASE` empty) — live API mode
+has no per-port static file to browse, since the backend can answer any
+port on demand.
+
+**Sync-side implications** (see `sync.py` in Section 11): pushing a port
+now writes *two* files instead of one — the per-port full file and an
+update to the shared summary index — which is why `sync_ports()` (Section
+8/`sync.py`) had to add per-port resilience and the 1MB Contents API
+inline-content limit had to be worked around (see `_get_sha()` below).
 
 ---
 
@@ -866,6 +1022,69 @@ This fallback only applies in **static mode** (`apiBase` is empty). In live mode
 
 Both surfaces produce equivalent content — the web button and the CLI flag are interchangeable for any port that is accessible in the current mode.
 
+### 7.3 CLI-Driven Sync (`port_analyzer/sync.py`)
+
+`python -m port_analyzer.cli <port> --sync` pushes the analyzed result(s)
+straight to the GitHub Pages dataset via the GitHub Contents API, as an
+alternative to waiting for the daily `build-data.yml` cron run. It requires
+`GITHUB_PAT` (a Personal Access Token with `contents: write` scope) in the
+environment or `.env`; `GITHUB_REPO` defaults to `fmfalgun/port-analyzer`.
+Unlike the GitHub Actions bot's `GITHUB_TOKEN` push (Section 5.3), a
+PAT-authenticated push fires a real `push` event, so `deploy-pages.yml`
+redeploys automatically without needing the `workflow_run` indirection.
+
+`sync_ports(results)` writes two kinds of file per call:
+
+```
+web/data/ports/{port}.json   ← full record including all_cves (one PUT per port)
+web/data/ports.json          ← summary index, all_cves stripped (one shared PUT)
+```
+
+**Bug fixed — GitHub Contents API 1MB inline-content limit.** `_get_file()`
+always GETs a file and base64-decodes its `content` field to JSON. GitHub's
+Contents API returns an *empty* `content` field for files larger than
+~1MB, regardless of status code. The original per-port sync step called
+`_get_file()` purely to retrieve the file's current `sha` (required for the
+PUT to update rather than fail with a conflict) — the decoded content was
+discarded at the call site. For any port with a large CVE dataset (port 443
+at ~11.7MB, port 22 at similar scale), this meant `json.loads("")` on the
+empty content string, crashing with `JSONDecodeError` before the PUT ever
+ran.
+
+Fix: added `_get_sha(url, hdrs) -> str | None`, which fetches and returns
+only the `sha` field and never attempts to decode `content`. The per-port
+sync loop now calls `_get_sha()` exclusively. `_get_file()` (full decode)
+is still used for the summary `ports.json` PUT path, which stays well under
+1MB by design (it never holds `all_cves`).
+
+**Timeout scaling for large PUTs.** `_put_file()`'s timeout was a fixed 30
+seconds, too short for multi-megabyte base64-encoded payloads at realistic
+upload speeds. It now scales with payload size: `timeout = max(30,
+int(size_mb * 15))` seconds, where `size_mb` is the size of the
+base64-encoded body (not the raw JSON) being PUT.
+
+**Per-port resilience — abort-all became skip-and-continue.** Previously,
+`sync_ports()` returned `False` immediately on the first port's push
+failure within a multi-port batch (e.g. `--sync` on a comma-list or
+range), leaving every subsequent port in the batch unattempted with no
+record of partial progress. Fixed: per-port push failures (network errors,
+GitHub API errors — both surfaced as `RuntimeError` from `_get_sha()` /
+`_put_file()`) are now caught individually inside the per-port loop, logged
+into a `failed_ports` list, and the loop continues to the next port. Only
+ports that pushed successfully (`pushed_results`) are merged into the
+summary index update. The final `(success, message)` return reports both
+the ports that synced and any that failed, and notes that re-running
+`--sync` is safe — already-pushed per-port files just get redundantly
+overwritten with identical content (idempotent).
+
+**Network-error wrapping.** `_get_file()`, `_get_sha()`, and `_put_file()`
+each wrap their `requests` call in `try/except
+requests.exceptions.RequestException`, converting raw network exceptions
+(timeouts, DNS failures, connection resets) into a clean `RuntimeError`
+instead of letting an unhandled traceback surface in the CLI.
+
+File: `port_analyzer/sync.py`.
+
 ---
 
 ## 8. SQLite Schema Design
@@ -955,14 +1174,48 @@ cisa_kev_cache (
 )
 
 -- Port usage & history enrichment (Wikipedia description + nmap popularity)
--- Updated independently by two sources via COALESCE so neither clobbers the other
+-- Updated independently by two sources via COALESCE so neither clobbers the other.
+-- Schema v2: 6 columns added via the _migrate() ALTER-TABLE pattern (cache.py)
+-- to expand Wikipedia + nmap-services coverage without dropping existing data.
 port_history (
-    port              INTEGER PRIMARY KEY,
-    wiki_description  TEXT,    -- from Wikipedia "List of TCP and UDP port numbers"
-    popularity_freq   REAL,    -- from nmap-services, 0.0-1.0 internet-scan prevalence
-    updated_at        TEXT
+    port               INTEGER PRIMARY KEY,
+    wiki_description   TEXT,    -- from Wikipedia "List of TCP and UDP port numbers"
+    popularity_freq    REAL,    -- from nmap-services, 0.0-1.0 internet-scan prevalence (max across protocols)
+    updated_at         TEXT,
+    -- v2 additions (_migrate(), see below)
+    wiki_url           TEXT,    -- source article URL (constant, same for every port)
+    nmap_tcp_freq      REAL,    -- nmap-services per-protocol frequency, 0.0-1.0
+    nmap_udp_freq      REAL,
+    nmap_sctp_freq     REAL,
+    nmap_service_name  TEXT,    -- nmap-assigned service name for this port
+    nmap_comment       TEXT     -- inline "#comment" from the matching nmap-services line, if any
 )
+```
 
+`_migrate(db)` in `cache.py` adds these via `ALTER TABLE ... ADD COLUMN` if
+missing, the same pattern already used for `cves.poc_count`,
+`cves.attackerkb_score`, `cves.exploitdb_count`, etc. — additive only,
+never destructive, safe to run against an existing populated database.
+
+`upsert_port_history()` accepts all 6 new columns as optional kwargs in
+addition to the original `wiki_description`/`popularity_freq`, each
+independently `COALESCE`-upserted against the existing row value:
+
+```sql
+wiki_url          = COALESCE(excluded.wiki_url,          port_history.wiki_url),
+nmap_tcp_freq     = COALESCE(excluded.nmap_tcp_freq,     port_history.nmap_tcp_freq),
+nmap_udp_freq     = COALESCE(excluded.nmap_udp_freq,     port_history.nmap_udp_freq),
+nmap_sctp_freq    = COALESCE(excluded.nmap_sctp_freq,    port_history.nmap_sctp_freq),
+nmap_service_name = COALESCE(excluded.nmap_service_name, port_history.nmap_service_name),
+nmap_comment      = COALESCE(excluded.nmap_comment,      port_history.nmap_comment),
+```
+
+This preserves the original design intent: the Wikipedia source and the
+nmap-services source write to disjoint sets of columns on the same row and
+must never clobber each other's fields when both call
+`upsert_port_history()` for the same port in the same `analyze_port()` run.
+
+```sql
 -- Wikipedia port-history article blob (one row, replaced every 720h/30d)
 wikipedia_ports_cache (
     id         INTEGER PRIMARY KEY CHECK (id = 1),
@@ -1184,15 +1437,19 @@ Manual redeploy
 | `port_analyzer/sources/nmap_services.py` | Data | nmap-services popularity blob fetch/parse, 30d cache |
 | `port_analyzer/engine.py` | Logic | Orchestration + PENTEST_NOTES + DEFENSIVE_NOTES |
 | `port_analyzer/renderer.py` | CLI UI | Rich terminal output, web-vapt style |
-| `port_analyzer/cli.py` | CLI UI | Click CLI, flag parsing, --no-live mode |
+| `port_analyzer/cli.py` | CLI UI | Click CLI, flag parsing, --no-live mode, --sync flag |
+| `port_analyzer/sync.py` | Pipeline | Push per-port + summary JSON to GitHub Pages via Contents API |
 | `backend/main.py` | API | FastAPI app, CORS guard, docs toggle, static mount |
 | `backend/routers/ports.py` | API | Route handlers, auth/rate-limit check |
 | `backend/routers/auth.py` | API | API key registration, key info |
 | `web/index.html` | Web UI | Main page, PA_CONFIG (apiBase + staticDataUrl) |
+| `web/ports.html` | Web UI | CVE Explorer page — full per-port CVE table, filter/sort/paginate/download |
+| `web/assets/js/ports.js` | Web UI | CVE Explorer logic — fetch per-port JSON, render table, CSV/JSON export |
 | `web/register.html` | Web UI | API key self-registration page |
-| `web/assets/js/analyzer.js` | Web UI | Fetch, static fallback, render, XSS protection |
+| `web/assets/js/analyzer.js` | Web UI | Fetch, static fallback, render, XSS protection, Browse-CVEs links |
 | `web/assets/css/style.css` | Web UI | Dark cyber theme (portfolio palette) |
-| `web/data/ports.json` | Web Data | Pre-built static port intelligence (generated) |
+| `web/data/ports.json` | Web Data | Pre-built static summary index (generated, all_cves stripped) |
+| `web/data/ports/{port}.json` | Web Data | Pre-built full per-port dataset including all_cves (generated) |
 | `scripts/build_data.py` | Pipeline | Fetches all sources for PORT_LIST → ports.json |
 | `.github/workflows/deploy-pages.yml` | CI/CD | Deploys web/ to GitHub Pages on push |
 | `.github/workflows/build-data.yml` | CI/CD | Cron: fetches data, commits ports.json |
@@ -1327,4 +1584,53 @@ Swagger UI (`/docs`) and ReDoc (`/redoc`) are disabled by default. Set `ENABLE_D
 
 ---
 
-*Document version: 1.2 — Updated 2026-06-16*
+## 15. Known External Issues
+
+### VARIoT (variot.eu) — DNS delegation broken upstream
+
+Reports that VARIoT data never appears in any output were investigated and
+confirmed to be an external outage, not a code bug. An independent
+DNS-over-HTTPS lookup against Cloudflare's resolver (bypassing
+local/sandbox DNS, to rule out a local network issue) returns `SERVFAIL`
+for `variot.eu` — "No Reachable Authority at delegation variot.eu". The
+domain's DNS delegation is currently broken at the registrar/nameserver
+level, entirely outside this project's network or code.
+
+`fetch_variot_for_port()`'s existing graceful-degradation behavior (catches
+`requests.RequestException` per search term, continues to the next term,
+stores 0 results for the port) is working exactly as designed under this
+condition — the absence of VARIoT data is the correct, intended outcome of
+an unreachable upstream, not a malfunction.
+
+If/when `variot.eu`'s DNS delegation is restored, no code changes are
+needed — the existing fetch/cache/degrade logic in
+`port_analyzer/sources/variot.py` will resume working unmodified. This note
+exists so a future debugging session doesn't re-investigate the same dead
+end from scratch.
+
+---
+
+## 16. Future Scope: Scaling to All 65,535 Ports
+
+The current static dataset (GitHub Pages + this repo) works for the
+curated ~115-port list (~50MB total across summary + per-port files), but
+breaks down at full port-range scale:
+
+| Constraint | Limit | At 65,535 ports |
+|---|---|---|
+| GitHub Pages deploy size | ~1GB | Likely several GB (even mostly-empty ports add up) |
+| Contents API write rate | 5,000 req/hr | 65k+ ports × 2 writes each = hours of sequential syncing |
+| Files per repo | ~10k comfortable | 65,535 individual JSON files |
+
+**Planned mitigation**: introduce a pluggable sync backend in `sync.py`, selected via a `SYNC_BACKEND` environment variable:
+
+- `SYNC_BACKEND=github` (current/default) — unchanged, GitHub Contents API.
+- `SYNC_BACKEND=r2` (future) — uploads to a Cloudflare R2 bucket (10GB free tier, zero egress fees, S3-compatible API via `boto3`) instead of committing to git. Same file layout (`ports/{port}.json`, `ports.json`), just a different transport.
+
+The website requires no code changes for this — only `window.PA_CONFIG.staticDataUrl` in `index.html`/`ports.html` needs to point at the R2 bucket's public URL instead of the relative `data/ports.json` path.
+
+Not implemented — deferred until there's a concrete need to scan past the curated port list.
+
+---
+
+*Document version: 1.3 — Updated 2026-06-16*

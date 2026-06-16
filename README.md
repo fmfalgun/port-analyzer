@@ -19,7 +19,10 @@ Enter one or more ports and get back: CVEs ranked by CVSS score, CISA KEV exploi
 - [API Quick Reference](#api-quick-reference)
 - [Deployment](#deployment)
 - [Port Coverage](#port-coverage)
+- [Recent Updates](#recent-updates)
+- [Future Scope](#future-scope)
 - [Extending the Tool](#extending-the-tool)
+- [Operations & Performance Notes](docs/operations.md) — running large batch syncs, rate-limit budget, why a GPU wouldn't help
 
 ---
 
@@ -364,6 +367,31 @@ For IoT-facing ports, VARIoT supplements NVD with vendor-specific vulnerabilitie
 OpenVPN (1194), SOCKS proxy (1080)
 
 For any port not in the explicit list, Port Analyzer falls back to the IANA service name as the NVD search keyword. Pentest and defensive notes are currently hand-curated for the highest-value ports; all other ports still receive CVE, KEV, EPSS, and IANA data.
+
+---
+
+## Recent Updates
+
+**Usage & History (Wikipedia + nmap-services).** Every port analysis now includes a `USAGE & HISTORY` section — no API key, fetched live from two free sources: Wikipedia's "List of TCP and UDP port numbers" article (historical and malware context) and the nmap project's `nmap-services` file (real-world open-port popularity from internet-wide scan data). Both are cached whole for ~30 days. The section shows a full per-protocol breakdown (TCP/UDP/SCTP %), the nmap service name, any inline comment, and clickable links back to the primary sources — visible in the CLI, markdown reports, REST API, and the website.
+
+**CVE Explorer page (`ports.html`).** Full per-port CVE browsing, not just the top 8 — paginated, filterable by severity/KEV/PoC, sortable, with CSV/JSON export. Backed by a per-port JSON file (`web/data/ports/{port}.json`) synced separately from the lean summary index (`web/data/ports.json`) that the homepage loads.
+
+**Bugs found and fixed:**
+- Wikipedia's port table merges blank cells via HTML `colspan`, so a row's actual cell count often didn't match the header's column count — this silently dropped ~47% of rows (726 of 1,378 ports), including port 443. Fixed by reading values from fixed cell positions instead of header-matched indices.
+- GitHub's Contents API returns empty content for files over ~1MB (port 443's full CVE file is 11.7MB) — a sync step that fetched the existing file just to read its `sha` crashed trying to parse the empty response as JSON. Fixed with a lightweight sha-only fetch.
+- Large file uploads to GitHub were timing out at a fixed 30s; the timeout now scales with payload size.
+- A `--sync` run across multiple ports would previously abort entirely if even one port hit a network hiccup. It now skips the failed port, continues with the rest, and reports failures at the end — safe to retry by re-running `--sync`.
+- VARIoT showing no data was investigated and traced to an **upstream outage** (variot.eu's DNS is currently broken — confirmed independently, not a code issue). The tool already degrades gracefully with an empty section and no error; it will resume working once VARIoT's DNS is restored.
+
+**Removed:** the "Live Recon Feed" hacker-terminal sidebar animation on the website. It was a cosmetic-only demo with no underlying data and has been removed entirely (HTML, JS, CSS).
+
+---
+
+## Future Scope
+
+**Scaling beyond the curated port list.** The static dataset currently lives in this GitHub repo (`web/data/ports.json` + `web/data/ports/{port}.json`), which works fine for the ~115 curated ports (~50MB total). If the project expands toward scanning all 65,535 ports, GitHub stops being viable: repo/Pages size limits (~1GB), Contents API rate limits, and tens of thousands of individual files in one repo.
+
+The planned path is **Cloudflare R2** (10GB free tier, zero egress fees, S3-compatible API) as a second pluggable sync backend — selected via a `SYNC_BACKEND` environment variable (`github` today, `r2` later), with the website's `staticDataUrl` config simply pointed at the R2 bucket URL instead. No website code changes would be needed beyond that config value. Not implemented yet — deferred until there's a concrete need to scan past the curated list.
 
 ---
 

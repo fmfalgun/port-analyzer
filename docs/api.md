@@ -131,7 +131,13 @@ curl -H "X-API-Key: pa-your-key-here" \
   "cve_count": 47,
   "kev_count": 3,
   "wiki_description": "The Secure Shell Protocol (SSH) is a cryptographic network protocol for operating network services securely over an unsecured network.",
+  "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
   "popularity_freq": 0.978692,
+  "nmap_tcp_freq": 0.978692,
+  "nmap_udp_freq": 0.004538,
+  "nmap_sctp_freq": 0.0,
+  "nmap_service_name": "ssh",
+  "nmap_comment": null,
   "top_cves": [
     {
       "cve_id": "CVE-2023-38408",
@@ -420,7 +426,13 @@ Every endpoint that returns port data uses the same object shape. All fields are
 | `kev_count` | integer | Number of CVEs on the CISA Known Exploited Vulnerabilities (KEV) catalogue |
 | `poc_count` | integer | Number of port's CVEs with at least one public PoC on PoC-in-GitHub |
 | `wiki_description` | string \| null | Human-readable description of the port from Wikipedia's "List of TCP and UDP port numbers" article; often includes historical/malware association notes (e.g. port 31337 mentions the Back Orifice trojan). `null` if Wikipedia has no entry for this port, or the lookup hasn't run yet |
-| `popularity_freq` | number \| null | Frequency (0.0–1.0) with which this port shows up open across internet-wide scans, sourced from the nmap-services flat file (e.g. `0.978692` for SSH/22 means ~97.9%). `null` if nmap-services has no entry for this port, or the lookup hasn't run yet |
+| `wiki_url` | string \| null | Link to the source Wikipedia article the `wiki_description` was extracted from. `null` if Wikipedia has no entry for this port, or the lookup hasn't run yet |
+| `popularity_freq` | number \| null | Frequency (0.0–1.0) with which this port shows up open across internet-wide scans, sourced from the nmap-services flat file (e.g. `0.978692` for SSH/22 means ~97.9%). Kept as the max frequency across protocols, for backward compatibility. `null` if nmap-services has no entry for this port, or the lookup hasn't run yet |
+| `nmap_tcp_freq` | number \| null | TCP-specific open-port frequency (0.0–1.0) from nmap-services. `null` if nmap-services has no TCP entry for this port, or the lookup hasn't run yet |
+| `nmap_udp_freq` | number \| null | UDP-specific open-port frequency (0.0–1.0) from nmap-services. `null` if nmap-services has no UDP entry for this port, or the lookup hasn't run yet |
+| `nmap_sctp_freq` | number \| null | SCTP-specific open-port frequency (0.0–1.0) from nmap-services. `null` if nmap-services has no SCTP entry for this port, or the lookup hasn't run yet |
+| `nmap_service_name` | string \| null | Service name nmap-services assigns to this port; may differ from this object's own `service_name` field, which comes from IANA. `null` if nmap-services has no entry for this port, or the lookup hasn't run yet |
+| `nmap_comment` | string \| null | Inline comment from the nmap-services file, if present. `null` if nmap-services has no entry or comment for this port, or the lookup hasn't run yet |
 | `top_cves` | CVE[] | Up to 8 highest-severity CVEs (see CVE object below) |
 | `variot_vulns` | VARIoT[] | IoT-specific vulnerabilities from VARIoT matching this port's service (see VARIoT object below) |
 | `techniques` | Technique[] | Associated MITRE ATT&CK techniques (see Technique object below) |
