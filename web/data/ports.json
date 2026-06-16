@@ -1,30 +1,101 @@
 {
   "_meta": {
-    "generated_at": "2026-06-16T05:12:05Z",
-    "port_count": 77,
+    "generated_at": "2026-06-16T07:37:15Z",
+    "port_count": 124,
     "sources": [
       "IANA",
       "NVD",
       "CISA KEV",
       "EPSS",
-      "MITRE ATT&CK"
+      "MITRE ATT&CK",
+      "PoC-in-GitHub",
+      "VARIoT",
+      "AttackerKB",
+      "Exploit-DB",
+      "Wikipedia",
+      "nmap-services"
+    ]
+  },
+  "8": {
+    "port": 8,
+    "service_name": "port-8",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Unassigned",
+    "wiki_description": null,
+    "popularity_freq": 1.3e-05,
+    "wiki_url": null,
+    "nmap_tcp_freq": 1.3e-05,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "unknown",
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1018",
+        "port": 8,
+        "name": "Remote System Discovery",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1018/",
+        "fetched_at": "2026-06-16T07:23:34Z"
+      },
+      {
+        "technique_id": "T1595.001",
+        "port": 8,
+        "name": "Active Scanning: Scanning IP Blocks",
+        "tactic": "reconnaissance",
+        "url": "https://attack.mitre.org/techniques/T1595/001/",
+        "fetched_at": "2026-06-16T07:23:34Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "icmp",
+      "ping",
+      "echo"
     ]
   },
   "20": {
     "port": 20,
     "service_name": "ftp-data",
     "transport": [
-      "SCTP",
       "UDP",
+      "SCTP",
       "TCP"
     ],
     "iana_status": "Assigned",
     "description": "FTP",
+    "wiki_description": "File Transfer Protocol (FTP) data transfer",
+    "popularity_freq": 0.001878,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001079,
+    "nmap_udp_freq": 0.001878,
+    "nmap_sctp_freq": 0.0,
+    "nmap_service_name": "ftp-data",
+    "nmap_comment": "File Transfer [Default Data] | FTP",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -35,15 +106,27 @@
     "port": 21,
     "service_name": "ftp",
     "transport": [
-      "SCTP",
       "UDP",
+      "SCTP",
       "TCP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path>",
     "description": "FTP",
+    "wiki_description": "File Transfer Protocol (FTP) control (command)",
+    "popularity_freq": 0.197667,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.197667,
+    "nmap_udp_freq": 0.004844,
+    "nmap_sctp_freq": 0.0,
+    "nmap_service_name": "ftp",
+    "nmap_comment": "File Transfer [Control] | File Transfer Protocol [Control]",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -52,7 +135,7 @@
         "name": "SMB/Windows Admin Shares",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-15T10:08:18Z"
+        "fetched_at": "2026-06-16T07:23:50Z"
       },
       {
         "technique_id": "T1078",
@@ -60,7 +143,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-15T10:08:18Z"
+        "fetched_at": "2026-06-16T07:23:50Z"
       },
       {
         "technique_id": "T1190",
@@ -68,9 +151,10 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:08:18Z"
+        "fetched_at": "2026-06-16T07:23:50Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Anonymous login: ftp <host> (user: anonymous)",
       "Banner grab: nc -nv <host> 21",
@@ -93,141 +177,28 @@
     "port": 22,
     "service_name": "ssh",
     "transport": [
-      "TCP",
       "UDP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password>",
     "description": "SSH",
-    "risk_level": "CRITICAL",
-    "cve_count": 1369,
-    "kev_count": 6,
+    "wiki_description": "Secure Shell (SSH), secure logins, file transfers ( scp , sftp ) and port forwarding",
+    "popularity_freq": 0.182286,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.182286,
+    "nmap_udp_freq": 0.003905,
+    "nmap_sctp_freq": 0.0,
+    "nmap_service_name": "ssh",
+    "nmap_comment": "Secure Shell Login | The Secure Shell (SSH) Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
     "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 91,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-1999-0248",
-        "port": 22,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.01603,
-        "epss_percentile": 0.7259,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "A race condition in the authentication agent mechanism of sshd 1.2.17 allows an attacker to steal another user's credentials.",
-        "published_at": "1999-01-01T05:00:00.000",
-        "fetched_at": "2026-06-15T17:01:45Z",
-        "epss_updated_at": "2026-06-15T17:02:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:02:54Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-0547",
-        "port": 22,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02042,
-        "epss_percentile": 0.7857,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "An SSH server allows authentication through the .rhosts file.",
-        "published_at": "1999-01-01T05:00:00.000",
-        "fetched_at": "2026-06-15T17:01:45Z",
-        "epss_updated_at": "2026-06-15T17:02:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:02:55Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2000-0525",
-        "port": 22,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02626,
-        "epss_percentile": 0.83455,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "OpenSSH does not properly drop privileges when the UseLogin option is enabled, which allows local users to execute arbitrary commands by providing the command to the ssh daemon.",
-        "published_at": "2000-06-08T04:00:00.000",
-        "fetched_at": "2026-06-15T17:02:21Z",
-        "epss_updated_at": "2026-06-15T17:02:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:02:56Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2000-0784",
-        "port": 22,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.03123,
-        "epss_percentile": 0.86117,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "sshd program in the Rapidstream 2.1 Beta VPN appliance has a hard-coded \"rsadmin\" account with a null password, which allows remote attackers to execute arbitrary commands via ssh.",
-        "published_at": "2000-10-20T04:00:00.000",
-        "fetched_at": "2026-06-15T17:11:07Z",
-        "epss_updated_at": "2026-06-15T17:02:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:02:57Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2000-0999",
-        "port": 22,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.11936,
-        "epss_percentile": 0.95566,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Format string vulnerabilities in OpenBSD ssh program (and possibly other BSD-based operating systems) allow attackers to gain root privileges.",
-        "published_at": "2000-12-11T05:00:00.000",
-        "fetched_at": "2026-06-15T17:01:45Z",
-        "epss_updated_at": "2026-06-15T17:02:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:02:58Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [
       {
         "technique_id": "T1021.004",
@@ -235,7 +206,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-15T07:15:45Z"
+        "fetched_at": "2026-06-16T07:24:01Z"
       },
       {
         "technique_id": "T1110.001",
@@ -243,7 +214,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-15T07:15:45Z"
+        "fetched_at": "2026-06-16T07:24:01Z"
       },
       {
         "technique_id": "T1098.004",
@@ -251,7 +222,7 @@
         "name": "Account Manipulation: SSH Authorized Keys",
         "tactic": "persistence",
         "url": "https://attack.mitre.org/techniques/T1098/004/",
-        "fetched_at": "2026-06-15T07:15:45Z"
+        "fetched_at": "2026-06-16T07:24:01Z"
       }
     ],
     "variot_vulns": [],
@@ -280,140 +251,27 @@
     "port": 23,
     "service_name": "telnet",
     "transport": [
-      "TCP",
-      "UDP"
+      "UDP",
+      "TCP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password>",
     "description": "Telnet",
-    "risk_level": "CRITICAL",
-    "cve_count": 579,
-    "kev_count": 4,
+    "wiki_description": "Telnet protocol\u2014unencrypted text communications",
+    "popularity_freq": 0.221265,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.221265,
+    "nmap_udp_freq": 0.006211,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "telnet",
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
     "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 74,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-1999-0073",
-        "port": 23,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.03113,
-        "epss_percentile": 0.86064,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Telnet allows a remote client to specify environment variables including LD_LIBRARY_PATH, allowing an attacker to bypass the normal system libraries and gain root access.",
-        "published_at": "1995-10-13T04:00:00.000",
-        "fetched_at": "2026-06-15T17:04:23Z",
-        "epss_updated_at": "2026-06-15T17:04:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:04:48Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-0192",
-        "port": 23,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.09854,
-        "epss_percentile": 0.94935,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Buffer overflow in telnet daemon tgetent routing allows remote attackers to gain root access via the TERMCAP environmental variable.",
-        "published_at": "1997-10-18T04:00:00.000",
-        "fetched_at": "2026-06-15T17:04:23Z",
-        "epss_updated_at": "2026-06-15T17:04:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:04:49Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 2,
-        "exploitdb_ids": "[19464, 19465]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-0919",
-        "port": 23,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02514,
-        "epss_percentile": 0.82689,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "A memory leak in a Motorola CableRouter allows remote attackers to conduct a denial of service via a large number of telnet connections.",
-        "published_at": "1998-05-10T04:00:00.000",
-        "fetched_at": "2026-06-15T17:04:23Z",
-        "epss_updated_at": "2026-06-15T17:04:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:04:50Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-0285",
-        "port": 23,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.06567,
-        "epss_percentile": 0.92932,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Denial of service in telnet from the Windows NT Resource Kit, by opening then immediately closing a connection.",
-        "published_at": "1999-01-01T05:00:00.000",
-        "fetched_at": "2026-06-15T17:04:23Z",
-        "epss_updated_at": "2026-06-15T17:04:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:04:51Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-0571",
-        "port": 23,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.01855,
-        "epss_percentile": 0.76343,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "A router's configuration service or management interface (such as a web server or telnet) is configured to allow connections from arbitrary hosts.",
-        "published_at": "1999-01-01T05:00:00.000",
-        "fetched_at": "2026-06-15T17:04:23Z",
-        "epss_updated_at": "2026-06-15T17:04:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T17:04:52Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [
       {
         "technique_id": "T1021.002",
@@ -421,7 +279,7 @@
         "name": "Remote Services: Telnet",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-15T17:04:20Z"
+        "fetched_at": "2026-06-16T07:24:11Z"
       },
       {
         "technique_id": "T1110.001",
@@ -429,7 +287,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-15T17:04:20Z"
+        "fetched_at": "2026-06-16T07:24:11Z"
       }
     ],
     "variot_vulns": [],
@@ -455,9 +313,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Simple Mail Transfer",
+    "wiki_description": "Simple Mail Transfer Protocol (SMTP), used for email routing between mail servers",
+    "popularity_freq": 0.131314,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.131314,
+    "nmap_udp_freq": 0.001285,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "smtp",
+    "nmap_comment": "Simple Mail Transfer",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -466,7 +336,7 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-15T10:08:25Z"
+        "fetched_at": "2026-06-16T07:24:14Z"
       },
       {
         "technique_id": "T1071.003",
@@ -474,9 +344,10 @@
         "name": "Application Layer Protocol: Mail Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/003/",
-        "fetched_at": "2026-06-15T10:08:25Z"
+        "fetched_at": "2026-06-16T07:24:14Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Banner grab: nc -nv <host> 25 \u2192 EHLO test",
       "Check open relay: RCPT TO external address",
@@ -494,6 +365,99 @@
       "exim"
     ]
   },
+  "43": {
+    "port": 43,
+    "service_name": "nicname",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Who Is",
+    "wiki_description": "WHOIS protocol",
+    "popularity_freq": 0.000314,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000314,
+    "nmap_udp_freq": 0.000313,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "whois",
+    "nmap_comment": "nicname | Who Is",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1590",
+        "port": 43,
+        "name": "Gather Victim Network Information",
+        "tactic": "reconnaissance",
+        "url": "https://attack.mitre.org/techniques/T1590/",
+        "fetched_at": "2026-06-16T07:24:24Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "whois"
+    ]
+  },
+  "49": {
+    "port": 49,
+    "service_name": "tacacs",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Login Host Protocol (TACACS)",
+    "wiki_description": "TACACS Login Host protocol. TACACS+ , still in draft which is an improved but distinct version of TACACS, only uses TCP 49.",
+    "popularity_freq": 0.01402,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000665,
+    "nmap_udp_freq": 0.01402,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "tacacs",
+    "nmap_comment": "Login Host Protocol (TACACS)",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1078",
+        "port": 49,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-16T07:24:27Z"
+      },
+      {
+        "technique_id": "T1556",
+        "port": 49,
+        "name": "Modify Authentication Process",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1556/",
+        "fetched_at": "2026-06-16T07:24:27Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "tacacs",
+      "tacacs+"
+    ]
+  },
   "53": {
     "port": 53,
     "service_name": "domain",
@@ -503,9 +467,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Domain Name Server",
+    "wiki_description": "Domain Name System (DNS)",
+    "popularity_freq": 0.213496,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.048463,
+    "nmap_udp_freq": 0.213496,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "domain",
+    "nmap_comment": "Domain Name Server",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -514,7 +490,7 @@
         "name": "Application Layer Protocol: DNS",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/004/",
-        "fetched_at": "2026-06-15T10:08:28Z"
+        "fetched_at": "2026-06-16T07:24:34Z"
       },
       {
         "technique_id": "T1568",
@@ -522,7 +498,7 @@
         "name": "Dynamic Resolution",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1568/",
-        "fetched_at": "2026-06-15T10:08:28Z"
+        "fetched_at": "2026-06-16T07:24:34Z"
       },
       {
         "technique_id": "T1048.001",
@@ -530,9 +506,10 @@
         "name": "Exfiltration Over Alternative Protocol: DNS",
         "tactic": "exfiltration",
         "url": "https://attack.mitre.org/techniques/T1048/001/",
-        "fetched_at": "2026-06-15T10:08:28Z"
+        "fetched_at": "2026-06-16T07:24:34Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Zone transfer: dig axfr @<host> <domain>",
       "DNS version: dig version.bind chaos txt @<host>",
@@ -561,11 +538,24 @@
     ],
     "iana_status": "Defined TXT keys: None",
     "description": "Bootstrap Protocol Server",
+    "wiki_description": "Bootstrap Protocol (BOOTP) server; also used by Dynamic Host Configuration Protocol (DHCP)",
+    "popularity_freq": 0.22801,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 1.3e-05,
+    "nmap_udp_freq": 0.22801,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "dhcps",
+    "nmap_comment": "bootps | DHCP/Bootstrap Protocol Server | Bootstrap Protocol Server",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -582,30 +572,147 @@
     ],
     "iana_status": "Assigned",
     "description": "Trivial File Transfer",
+    "wiki_description": "Trivial File Transfer Protocol (TFTP)",
+    "popularity_freq": 0.102835,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 3.8e-05,
+    "nmap_udp_freq": 0.102835,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "tftp",
+    "nmap_comment": "Trivial File Transfer",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "tftp"
     ]
   },
+  "70": {
+    "port": 70,
+    "service_name": "gopher",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Gopher",
+    "wiki_description": "Gopher protocol",
+    "popularity_freq": 0.000544,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000226,
+    "nmap_udp_freq": 0.000544,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "gopher",
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 70,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:24:54Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "gopher"
+    ]
+  },
+  "79": {
+    "port": 79,
+    "service_name": "finger",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Finger",
+    "wiki_description": "Finger protocol",
+    "popularity_freq": 0.006022,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.006022,
+    "nmap_udp_freq": 0.000956,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "finger",
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1592",
+        "port": 79,
+        "name": "Gather Victim Host Information",
+        "tactic": "reconnaissance",
+        "url": "https://attack.mitre.org/techniques/T1592/",
+        "fetched_at": "2026-06-16T07:24:58Z"
+      },
+      {
+        "technique_id": "T1589",
+        "port": 79,
+        "name": "Gather Victim Identity Information",
+        "tactic": "reconnaissance",
+        "url": "https://attack.mitre.org/techniques/T1589/",
+        "fetched_at": "2026-06-16T07:24:58Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "finger"
+    ]
+  },
   "80": {
     "port": 80,
     "service_name": "http",
     "transport": [
-      "SCTP",
       "UDP",
+      "SCTP",
       "TCP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path to document>",
     "description": "HTTP",
+    "wiki_description": "Hypertext Transfer Protocol (HTTP) uses TCP in versions 1.x and 2. HTTP/3 uses QUIC , a transport protocol on top of UDP.",
+    "popularity_freq": 0.484143,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.484143,
+    "nmap_udp_freq": 0.035767,
+    "nmap_sctp_freq": 0.0,
+    "nmap_service_name": "http",
+    "nmap_comment": "www-http | www | World Wide Web HTTP",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -614,7 +721,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:08:35Z"
+        "fetched_at": "2026-06-16T07:25:01Z"
       },
       {
         "technique_id": "T1059.007",
@@ -622,7 +729,7 @@
         "name": "Command and Scripting Interpreter: JavaScript",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1059/007/",
-        "fetched_at": "2026-06-15T10:08:35Z"
+        "fetched_at": "2026-06-16T07:25:01Z"
       },
       {
         "technique_id": "T1071.001",
@@ -630,9 +737,10 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-15T10:08:35Z"
+        "fetched_at": "2026-06-16T07:25:01Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Directory brute: gobuster dir -u http://<host> -w wordlist.txt",
       "Vuln scan: nikto -h <host>",
@@ -652,6 +760,86 @@
       "iis"
     ]
   },
+  "88": {
+    "port": 88,
+    "service_name": "kerberos",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Kerberos",
+    "wiki_description": "Kerberos authentication system",
+    "popularity_freq": 0.013476,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.006072,
+    "nmap_udp_freq": 0.013476,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "kerberos-sec",
+    "nmap_comment": "kerberos | Kerberos (v5) | Kerberos",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1558",
+        "port": 88,
+        "name": "Steal or Forge Kerberos Tickets",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1558/",
+        "fetched_at": "2026-06-16T07:25:11Z"
+      },
+      {
+        "technique_id": "T1558.003",
+        "port": 88,
+        "name": "Steal or Forge Kerberos Tickets: Kerberoasting",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1558/003/",
+        "fetched_at": "2026-06-16T07:25:11Z"
+      },
+      {
+        "technique_id": "T1558.004",
+        "port": 88,
+        "name": "Steal or Forge Kerberos Tickets: AS-REP Roasting",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1558/004/",
+        "fetched_at": "2026-06-16T07:25:11Z"
+      },
+      {
+        "technique_id": "T1550.003",
+        "port": 88,
+        "name": "Use Alternate Authentication Material: Pass the Ticket",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1550/003/",
+        "fetched_at": "2026-06-16T07:25:11Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "Kerberoasting: GetUserSPNs.py -request -dc-ip <dc> <domain>/<user>",
+      "AS-REP Roasting: GetNPUsers.py <domain>/ -usersfile users.txt -no-pass",
+      "Pass-the-Ticket: mimikatz sekurlsa::tickets /export \u2192 kerberos::ptt",
+      "Golden Ticket: mimikatz kerberos::golden /user:Administrator /domain:<d> /sid:<s> /krbtgt:<h>",
+      "Tools: impacket, mimikatz, Rubeus, kerbrute"
+    ],
+    "defensive_notes": [
+      "Enforce Kerberos pre-authentication (disable AS-REP roasting surface)",
+      "Set strong service account passwords (25+ chars) to defeat Kerberoasting",
+      "Monitor for TGS requests to service accounts \u2014 high volume = Kerberoasting",
+      "Limit Kerberos delegation \u2014 avoid unconstrained delegation",
+      "Alert on anomalous TGT/TGS requests from non-DCs (Event IDs 4768, 4769, 4771)"
+    ],
+    "search_terms": [
+      "kerberos",
+      "krb5",
+      "kdc"
+    ]
+  },
   "110": {
     "port": 110,
     "service_name": "pop3",
@@ -661,9 +849,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Post Office Protocol - Version 3",
+    "wiki_description": "Post Office Protocol, version 3 (POP3)",
+    "popularity_freq": 0.077142,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.077142,
+    "nmap_udp_freq": 0.001104,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "pop3",
+    "nmap_comment": "PostOffice V.3 | Post Office Protocol - Version 3",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -672,9 +872,10 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-15T10:08:38Z"
+        "fetched_at": "2026-06-16T07:25:21Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Banner grab: nc -nv <host> 110 \u2192 USER test PASS test",
       "Check for plaintext credential transmission"
@@ -694,16 +895,73 @@
     ],
     "iana_status": "Assigned",
     "description": "SUN Remote Procedure Call",
+    "wiki_description": "Open Network Computing Remote Procedure Call (ONC RPC, sometimes referred to as Sun RPC)",
+    "popularity_freq": 0.093988,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.030034,
+    "nmap_udp_freq": 0.093988,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "rpcbind",
+    "nmap_comment": "sunrpc | portmapper, rpcbind | SUN Remote Procedure Call",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "rpcbind",
       "portmap"
+    ]
+  },
+  "113": {
+    "port": 113,
+    "service_name": "ident",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Authentication Service",
+    "wiki_description": "Ident , authentication service/identification protocol, used by IRC servers to identify users",
+    "popularity_freq": 0.01237,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.01237,
+    "nmap_udp_freq": 0.003031,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ident",
+    "nmap_comment": "auth | ident, tap, Authentication Service | Authentication Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1592",
+        "port": 113,
+        "name": "Gather Victim Host Information",
+        "tactic": "reconnaissance",
+        "url": "https://attack.mitre.org/techniques/T1592/",
+        "fetched_at": "2026-06-16T07:25:34Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ident",
+      "auth",
+      "identd"
     ]
   },
   "119": {
@@ -715,11 +973,24 @@
     ],
     "iana_status": "Assigned",
     "description": "Network News Transfer Protocol",
+    "wiki_description": "Network News Transfer Protocol (NNTP), retrieval of newsgroup messages",
+    "popularity_freq": 0.003262,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.003262,
+    "nmap_udp_freq": 0.000428,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "nntp",
+    "nmap_comment": "Network News Transfer Protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -735,11 +1006,24 @@
     ],
     "iana_status": "Assigned",
     "description": "Network Time Protocol",
+    "wiki_description": "Network Time Protocol (NTP), used for time synchronization",
+    "popularity_freq": 0.330879,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000138,
+    "nmap_udp_freq": 0.330879,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ntp",
+    "nmap_comment": "Network Time Protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -756,11 +1040,24 @@
     ],
     "iana_status": "Assigned",
     "description": "DCE endpoint resolution",
+    "wiki_description": "DCE endpoint resolution",
+    "popularity_freq": 0.244452,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.047798,
+    "nmap_udp_freq": 0.244452,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "msrpc",
+    "nmap_comment": "epmap | Microsoft RPC services | DCE endpoint resolution",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -778,11 +1075,24 @@
     ],
     "iana_status": "Assigned",
     "description": "NETBIOS Name Service",
+    "wiki_description": "NetBIOS Name Service, used for name registration and resolution",
+    "popularity_freq": 0.365163,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 3.8e-05,
+    "nmap_udp_freq": 0.365163,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "netbios-ns",
+    "nmap_comment": "NETBIOS Name Service",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -799,11 +1109,24 @@
     ],
     "iana_status": "Assigned",
     "description": "NETBIOS Datagram Service",
+    "wiki_description": "NetBIOS Datagram Service",
+    "popularity_freq": 0.29783,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 2.5e-05,
+    "nmap_udp_freq": 0.29783,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "netbios-dgm",
+    "nmap_comment": "NETBIOS Datagram Service",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -819,11 +1142,24 @@
     ],
     "iana_status": "Assigned",
     "description": "NETBIOS Session Service",
+    "wiki_description": "NetBIOS Session Service",
+    "popularity_freq": 0.193726,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.050809,
+    "nmap_udp_freq": 0.193726,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "netbios-ssn",
+    "nmap_comment": "NETBIOS Session Service",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [
       "Enum: enum4linux -a <host>",
       "Null session: smbclient -L <host> -N",
@@ -845,9 +1181,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Internet Message Access Protocol",
+    "wiki_description": "Internet Message Access Protocol (IMAP), management of electronic mail messages on a server",
+    "popularity_freq": 0.05042,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.05042,
+    "nmap_udp_freq": 0.000659,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "imap",
+    "nmap_comment": "Interim Mail Access Protocol v2 | Internet Message Access Protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -856,9 +1204,10 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-15T10:08:52Z"
+        "fetched_at": "2026-06-16T07:26:23Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Banner grab: nc -nv <host> 143",
       "Check for plaintext credential transmission"
@@ -879,9 +1228,21 @@
     ],
     "iana_status": "Assigned",
     "description": "SNMP",
+    "wiki_description": "Simple Network Management Protocol (SNMP)",
+    "popularity_freq": 0.433467,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00079,
+    "nmap_udp_freq": 0.433467,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "snmp",
+    "nmap_comment": "Simple Net Mgmt Proto",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -890,7 +1251,7 @@
         "name": "Data from Configuration Repository: SNMP MIB Dump",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1602/001/",
-        "fetched_at": "2026-06-15T10:08:55Z"
+        "fetched_at": "2026-06-16T07:26:32Z"
       },
       {
         "technique_id": "T1040",
@@ -898,9 +1259,10 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-15T10:08:55Z"
+        "fetched_at": "2026-06-16T07:26:32Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -916,15 +1278,147 @@
     ],
     "iana_status": "Assigned",
     "description": "SNMPTRAP",
+    "wiki_description": "Simple Network Management Protocol Trap (SNMPTRAP)",
+    "popularity_freq": 0.103346,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 1.3e-05,
+    "nmap_udp_freq": 0.103346,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "snmptrap",
+    "nmap_comment": "snmp-trap",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "snmptrap"
+    ]
+  },
+  "177": {
+    "port": 177,
+    "service_name": "xdmcp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "X Display Manager Control Protocol",
+    "wiki_description": "X Display Manager Control Protocol (XDMCP), used for remote logins to an X Display Manager server [ self-published source ]",
+    "popularity_freq": 0.018551,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 2.5e-05,
+    "nmap_udp_freq": 0.018551,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "xdmcp",
+    "nmap_comment": "X Display Mgr. Control Proto | X Display Manager Control Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021",
+        "port": 177,
+        "name": "Remote Services",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/",
+        "fetched_at": "2026-06-16T07:26:39Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "xdmcp",
+      "x display manager"
+    ]
+  },
+  "194": {
+    "port": 194,
+    "service_name": "irc",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Internet Relay Chat Protocol",
+    "wiki_description": "Internet Relay Chat (IRC)",
+    "popularity_freq": 0.000643,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 3.8e-05,
+    "nmap_udp_freq": 0.000643,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "irc",
+    "nmap_comment": "Internet Relay Chat | Internet Relay Chat Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1071.003",
+        "port": 194,
+        "name": "Application Layer Protocol: Mail Protocols",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/003/",
+        "fetched_at": "2026-06-16T07:26:45Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "irc",
+      "internet relay chat"
+    ]
+  },
+  "264": {
+    "port": 264,
+    "service_name": "bgmp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "BGMP",
+    "wiki_description": "Border Gateway Multicast Protocol (BGMP)",
+    "popularity_freq": 0.001029,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001029,
+    "nmap_udp_freq": 0.000461,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "bgmp",
+    "nmap_comment": "FW1 secureremote alternate",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "bgmp"
     ]
   },
   "389": {
@@ -936,9 +1430,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Lightweight Directory Access Protocol",
+    "wiki_description": "Lightweight Directory Access Protocol (LDAP)",
+    "popularity_freq": 0.004717,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.004717,
+    "nmap_udp_freq": 0.0043,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ldap",
+    "nmap_comment": "Lightweight Directory Access Protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -947,7 +1453,7 @@
         "name": "Account Discovery: Domain Account",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1087/002/",
-        "fetched_at": "2026-06-15T10:08:57Z"
+        "fetched_at": "2026-06-16T07:26:54Z"
       },
       {
         "technique_id": "T1482",
@@ -955,9 +1461,10 @@
         "name": "Domain Trust Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1482/",
-        "fetched_at": "2026-06-15T10:08:57Z"
+        "fetched_at": "2026-06-16T07:26:54Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -969,143 +1476,28 @@
     "port": 443,
     "service_name": "https",
     "transport": [
-      "TCP",
       "UDP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "HTTPS",
-    "wiki_description": null,
+    "wiki_description": "Hypertext Transfer Protocol Secure (HTTPS) uses TCP in versions 1.x and 2. HTTP/3 uses QUIC, a transport protocol on top of UDP.",
     "popularity_freq": 0.208669,
-    "risk_level": "CRITICAL",
-    "cve_count": 9749,
-    "kev_count": 82,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.208669,
+    "nmap_udp_freq": 0.01084,
+    "nmap_sctp_freq": 0.0,
+    "nmap_service_name": "https",
+    "nmap_comment": "http protocol over TLS/SSL",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
     "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 415,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-2001-1574",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.03616,
-        "epss_percentile": 0.87984,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Buffer overflow in (1) HttpSaveCVP.dll and (2) HttpSaveCSP.dll in Trend Micro InterScan VirusWall 3.5.1 allows remote attackers to execute arbitrary code.",
-        "published_at": "2001-12-31T05:00:00.000",
-        "fetched_at": "2026-06-15T17:50:17Z",
-        "epss_updated_at": "2026-06-15T16:55:20Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T16:58:18Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2005-3059",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02237,
-        "epss_percentile": 0.80451,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Multiple unspecified vulnerabilities in Opera 8.50 on Linux and Windows have unknown impact and attack vectors, related to (1) \" handling of must-revalidate cache directive for HTTPS pages\" or (2) a \"display issue with cookie comment encoding.\"",
-        "published_at": "2005-09-26T19:03:00.000",
-        "fetched_at": "2026-06-15T17:50:32Z",
-        "epss_updated_at": "2026-06-15T16:55:20Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T16:58:19Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2006-5347",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.0231,
-        "epss_percentile": 0.81073,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7 and Oracle Collaboration Suite 9.0.4.2 has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS04.",
-        "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-15T17:50:36Z",
-        "epss_updated_at": "2026-06-15T16:55:20Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T16:58:19Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2006-5348",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.0231,
-        "epss_percentile": 0.81072,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7, Oracle Collaboration Suite 9.0.4.2, and Oracle E-Business Suite and Applications 11.5.10CU2 has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS05.",
-        "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-15T17:50:36Z",
-        "epss_updated_at": "2026-06-15T16:55:20Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T16:58:20Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2006-5349",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.0231,
-        "epss_percentile": 0.81077,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7, when running on HP Tru64 UNIX, has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS07.",
-        "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-15T17:50:36Z",
-        "epss_updated_at": "2026-06-15T16:55:20Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-15T16:58:21Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [
       {
         "technique_id": "T1190",
@@ -1113,7 +1505,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:49:04Z"
+        "fetched_at": "2026-06-16T07:27:01Z"
       },
       {
         "technique_id": "T1071.001",
@@ -1121,7 +1513,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-15T10:49:04Z"
+        "fetched_at": "2026-06-16T07:27:01Z"
       },
       {
         "technique_id": "T1573",
@@ -1129,7 +1521,7 @@
         "name": "Encrypted Channel",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1573/",
-        "fetched_at": "2026-06-15T10:49:04Z"
+        "fetched_at": "2026-06-16T07:27:01Z"
       }
     ],
     "variot_vulns": [],
@@ -1162,9 +1554,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Microsoft-DS",
+    "wiki_description": "Microsoft-DS (Directory Services) Active Directory , Windows shares",
+    "popularity_freq": 0.253118,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.056944,
+    "nmap_udp_freq": 0.253118,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "microsoft-ds",
+    "nmap_comment": "SMB directly over IP",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1173,7 +1577,7 @@
         "name": "Remote Services: SMB/Windows Admin Shares",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-15T10:09:04Z"
+        "fetched_at": "2026-06-16T07:27:13Z"
       },
       {
         "technique_id": "T1110.002",
@@ -1181,7 +1585,7 @@
         "name": "Brute Force: Password Spraying",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/002/",
-        "fetched_at": "2026-06-15T10:09:04Z"
+        "fetched_at": "2026-06-16T07:27:13Z"
       },
       {
         "technique_id": "T1569.002",
@@ -1189,9 +1593,10 @@
         "name": "System Services: Service Execution",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1569/002/",
-        "fetched_at": "2026-06-15T10:09:04Z"
+        "fetched_at": "2026-06-16T07:27:13Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Enum: smbmap -H <host>",
       "Check EternalBlue: nmap --script smb-vuln-ms17-010",
@@ -1218,16 +1623,94 @@
     ],
     "iana_status": "Assigned",
     "description": "Message Submission over TLS protocol",
+    "wiki_description": "Message Submission over TLS protocol",
+    "popularity_freq": 0.013888,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.013888,
+    "nmap_udp_freq": 0.000527,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "smtps",
+    "nmap_comment": "submissions | igmpv3lite | urd | smtp protocol over TLS/SSL (was ssmtp) | URL Rendesvous Directory for SSM | IGMP over UDP for SSM | URL Rendezvous Directory for SSM | Message Submission over TLS protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "smtps",
       "smtp"
+    ]
+  },
+  "500": {
+    "port": 500,
+    "service_name": "isakmp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "isakmp",
+    "wiki_description": "Internet Security Association and Key Management Protocol (ISAKMP) / Internet Key Exchange (IKE)",
+    "popularity_freq": 0.163742,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001129,
+    "nmap_udp_freq": 0.163742,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "isakmp",
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1572",
+        "port": 500,
+        "name": "Protocol Tunneling",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1572/",
+        "fetched_at": "2026-06-16T07:27:28Z"
+      },
+      {
+        "technique_id": "T1133",
+        "port": 500,
+        "name": "External Remote Services",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1133/",
+        "fetched_at": "2026-06-16T07:27:28Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "IKE aggressive mode scan: ike-scan --aggressive <host>",
+      "Identify PSK hashes: ike-scan -M --aggressive -P out.txt <host>",
+      "Crack PSK offline: psk-crack -d wordlist.txt out.txt",
+      "Identify transforms: ike-scan --showbackoff <host>",
+      "Tools: ike-scan, psk-crack, strongswan, ikeprobe"
+    ],
+    "defensive_notes": [
+      "Use IKEv2 instead of IKEv1 (eliminates aggressive mode risk)",
+      "Prefer certificate-based auth over PSK",
+      "If PSK required: use long random keys (32+ chars)",
+      "Restrict VPN endpoints to known IPs via firewall",
+      "Disable weak encryption transforms (DES, 3DES, MD5)"
+    ],
+    "search_terms": [
+      "ike",
+      "ipsec",
+      "isakmp",
+      "vpn"
     ]
   },
   "502": {
@@ -1239,9 +1722,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Modbus Application Protocol",
+    "wiki_description": "Modbus Protocol",
+    "popularity_freq": 0.001318,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000151,
+    "nmap_udp_freq": 0.001318,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "mbap",
+    "nmap_comment": "Modbus Application Protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1250,7 +1745,7 @@
         "name": "Scripting",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T0853/",
-        "fetched_at": "2026-06-15T10:09:09Z"
+        "fetched_at": "2026-06-16T07:27:38Z"
       },
       {
         "technique_id": "T0855",
@@ -1258,13 +1753,135 @@
         "name": "Unauthorized Command Message",
         "tactic": "impair-process-control",
         "url": "https://attack.mitre.org/techniques/T0855/",
-        "fetched_at": "2026-06-15T10:09:09Z"
+        "fetched_at": "2026-06-16T07:27:38Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "modbus"
+    ]
+  },
+  "512": {
+    "port": 512,
+    "service_name": "exec",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "remote process execution; authentication performed using passwords and UNIX login names",
+    "wiki_description": "Rexec , Remote Process Execution",
+    "popularity_freq": 0.002142,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000841,
+    "nmap_udp_freq": 0.002142,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "exec",
+    "nmap_comment": "biff | comsat | BSD rexecd(8) | remote process execution; authentication performed using passwords and UNIX login names | used by mail system to notify users of new mail received; currently receives messages only from processes on the same machine",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.004",
+        "port": 512,
+        "name": "Remote Services: SSH",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/004/",
+        "fetched_at": "2026-06-16T07:27:41Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 512,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-16T07:27:41Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "rexec executes commands with minimal auth \u2014 try null/weak credentials",
+      "r-services trust .rhosts \u2014 check for + + wildcard entries",
+      "Scan: nmap -p 512,513,514 --script rexec-brute <host>",
+      "Tools: nmap --script rexec*, rsh, netcat"
+    ],
+    "defensive_notes": [
+      "Disable r-services (rexec, rlogin, rsh) \u2014 use SSH instead",
+      "Remove .rhosts and /etc/hosts.equiv files",
+      "Block ports 512-514 at the perimeter"
+    ],
+    "search_terms": [
+      "rexec",
+      "r-exec"
+    ]
+  },
+  "513": {
+    "port": 513,
+    "service_name": "login",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "remote login a la telnet; automatic authentication performed based on priviledged port numbers and distributed data bases which identify \"authentication domains\"",
+    "wiki_description": "rlogin",
+    "popularity_freq": 0.005595,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.005595,
+    "nmap_udp_freq": 0.002323,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "login",
+    "nmap_comment": "who | BSD rlogind(8) | remote login a la telnet; automatic authentication performed based on priviledged port numbers and distributed data bases which identify \"authentication domains\" | maintains data bases showing who's logged in to machines on a local net and the load average of the machine",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.004",
+        "port": 513,
+        "name": "Remote Services: SSH",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/004/",
+        "fetched_at": "2026-06-16T07:27:48Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 513,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-16T07:27:48Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "rlogin bypasses password if .rhosts or /etc/hosts.equiv allows source IP",
+      ".rhosts + + = passwordless login from any host",
+      "rlogin -l root <host> (try from trusted IP)",
+      "Tools: rlogin, rsh, nmap --script rlogin-brute"
+    ],
+    "defensive_notes": [
+      "Disable r-services \u2014 use SSH instead",
+      "Remove .rhosts and /etc/hosts.equiv files",
+      "Block ports 512-514 at the perimeter"
+    ],
+    "search_terms": [
+      "rlogin",
+      "r-login",
+      "rsh"
     ]
   },
   "514": {
@@ -1276,11 +1893,24 @@
     ],
     "iana_status": "Assigned",
     "description": "cmd like exec, but automatic authentication is performed as for login server",
+    "wiki_description": "Remote Shell , used to execute non-interactive commands on a remote system (Remote Shell, rsh, remsh)",
+    "popularity_freq": 0.119804,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.011078,
+    "nmap_udp_freq": 0.119804,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "shell",
+    "nmap_comment": "syslog | BSD rshd(8) | cmd like exec, but automatic authentication is performed as for login server",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1296,16 +1926,200 @@
     ],
     "iana_status": "Assigned",
     "description": "spooler",
+    "wiki_description": "Line Printer Daemon (LPD), print service",
+    "popularity_freq": 0.011022,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.007214,
+    "nmap_udp_freq": 0.011022,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "printer",
+    "nmap_comment": "spooler (lpd) | spooler",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "lpd",
       "cups"
+    ]
+  },
+  "520": {
+    "port": 520,
+    "service_name": "efs",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "extended file name server",
+    "wiki_description": "efs, extended file name server",
+    "popularity_freq": 0.139376,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.0,
+    "nmap_udp_freq": 0.139376,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "efs",
+    "nmap_comment": "router | extended file name server | local routing process (on site); uses variant of Xerox NS routing information protocol - RIP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1557",
+        "port": 520,
+        "name": "Adversary-in-the-Middle",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1557/",
+        "fetched_at": "2026-06-16T07:28:07Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "rip",
+      "routing information protocol"
+    ]
+  },
+  "540": {
+    "port": 540,
+    "service_name": "uucp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "uucpd",
+    "wiki_description": "Unix-to-Unix Copy Protocol ( UUCP )",
+    "popularity_freq": 0.000791,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000138,
+    "nmap_udp_freq": 0.000791,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "uucp",
+    "nmap_comment": "uucpd",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "uucp"
+    ]
+  },
+  "548": {
+    "port": 548,
+    "service_name": "afpovertcp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path>",
+    "description": "AFP over TCP",
+    "wiki_description": "Apple Filing Protocol (AFP) over TCP",
+    "popularity_freq": 0.012395,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.012395,
+    "nmap_udp_freq": 0.000774,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "afp",
+    "nmap_comment": "afpovertcp | AFP over TCP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1039",
+        "port": 548,
+        "name": "Data from Network Shared Drive",
+        "tactic": "collection",
+        "url": "https://attack.mitre.org/techniques/T1039/",
+        "fetched_at": "2026-06-16T07:28:17Z"
+      },
+      {
+        "technique_id": "T1021",
+        "port": 548,
+        "name": "Remote Services",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/",
+        "fetched_at": "2026-06-16T07:28:17Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "afp",
+      "apple filing protocol",
+      "netatalk"
+    ]
+  },
+  "554": {
+    "port": 554,
+    "service_name": "rtsp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Real Time Streaming Protocol (RTSP)",
+    "wiki_description": "Real Time Streaming Protocol (RTSP)",
+    "popularity_freq": 0.008104,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.008104,
+    "nmap_udp_freq": 0.000593,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "rtsp",
+    "nmap_comment": "Real Time Stream Control Protocol | Real Time Streaming Protocol (RTSP)",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1040",
+        "port": 554,
+        "name": "Network Sniffing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1040/",
+        "fetched_at": "2026-06-16T07:28:25Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "rtsp",
+      "real time streaming"
     ]
   },
   "587": {
@@ -1317,16 +2131,93 @@
     ],
     "iana_status": "Assigned",
     "description": "Message Submission",
+    "wiki_description": "Email Message Submission (No longer preferred; see port 465.)",
+    "popularity_freq": 0.019721,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.019721,
+    "nmap_udp_freq": 0.000692,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "submission",
+    "nmap_comment": "Message Submission",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "smtp",
       "submission"
+    ]
+  },
+  "623": {
+    "port": 623,
+    "service_name": "oob-ws-http",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "DMTF out-of-band web services management protocol",
+    "wiki_description": "ASF Remote Management and Control Protocol (ASF- RMCP ) & IPMI Remote Management Protocol",
+    "popularity_freq": 0.007929,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000151,
+    "nmap_udp_freq": 0.007929,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "oob-ws-http",
+    "nmap_comment": "asf-rmcp | DMTF out-of-band web services management protocol | ASF Remote Management and Control Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1110",
+        "port": 623,
+        "name": "Brute Force",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1110/",
+        "fetched_at": "2026-06-16T07:28:38Z"
+      },
+      {
+        "technique_id": "T1552",
+        "port": 623,
+        "name": "Unsecured Credentials",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1552/",
+        "fetched_at": "2026-06-16T07:28:38Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "IPMI Cipher Zero auth bypass: ipmitool -I lanplus -C 0 -H <host> -U admin -P anything chassis status",
+      "Dump IPMI hashes: metasploit auxiliary/scanner/ipmi/ipmi_dumphashes",
+      "Identify IPMI version: metasploit auxiliary/scanner/ipmi/ipmi_version",
+      "Crack hashes offline with hashcat mode 7300",
+      "Tools: ipmitool, metasploit ipmi modules, hashcat -m 7300"
+    ],
+    "defensive_notes": [
+      "Isolate IPMI/BMC on a dedicated management VLAN",
+      "Patch IPMI firmware to address cipher zero vulnerability",
+      "Change default credentials immediately",
+      "Restrict IPMI access to known management IPs only",
+      "Consider disabling IPMI over network if not needed \u2014 use physical console"
+    ],
+    "search_terms": [
+      "ipmi",
+      "rmcp",
+      "baseboard management"
     ]
   },
   "631": {
@@ -1338,11 +2229,24 @@
     ],
     "iana_status": "Assigned",
     "description": "Internet Printing Protocol over HTTPS",
+    "wiki_description": "Internet Printing Protocol (IPP)",
+    "popularity_freq": 0.450281,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00616,
+    "nmap_udp_freq": 0.450281,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ipp",
+    "nmap_comment": "ipps | Internet Printing Protocol -- for one implementation see http://www.cups.org (Common UNIX Printing System) | IPP (Internet Printing Protocol) | Internet Printing Protocol over HTTPS",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1359,16 +2263,166 @@
     ],
     "iana_status": "Assigned",
     "description": "ldap protocol over TLS/SSL (was sldap)",
+    "wiki_description": "Lightweight Directory Access Protocol over TLS/SSL (LDAPS)",
+    "popularity_freq": 0.002083,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.002083,
+    "nmap_udp_freq": 0.000661,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ldapssl",
+    "nmap_comment": "ldaps | LDAP over SSL | ldap protocol over TLS/SSL (was sldap)",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "ldaps",
       "ldap"
+    ]
+  },
+  "694": {
+    "port": 694,
+    "service_name": "ha-cluster",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "ha-cluster",
+    "wiki_description": "Linux-HA high-availability heartbeat",
+    "popularity_freq": 0.000661,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 3.8e-05,
+    "nmap_udp_freq": 0.000661,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ha-cluster",
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1499",
+        "port": 694,
+        "name": "Endpoint Denial of Service",
+        "tactic": "impact",
+        "url": "https://attack.mitre.org/techniques/T1499/",
+        "fetched_at": "2026-06-16T07:29:01Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ha heartbeat",
+      "cluster heartbeat"
+    ]
+  },
+  "749": {
+    "port": 749,
+    "service_name": "kerberos-adm",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "kerberos administration",
+    "wiki_description": "Kerberos administration",
+    "popularity_freq": 0.000939,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000326,
+    "nmap_udp_freq": 0.000939,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "kerberos-adm",
+    "nmap_comment": "Kerberos 5 admin/changepw | kerberos administration",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1558",
+        "port": 749,
+        "name": "Steal or Forge Kerberos Tickets",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1558/",
+        "fetched_at": "2026-06-16T07:29:07Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 749,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-16T07:29:07Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "kerberos admin",
+      "kadmin"
+    ]
+  },
+  "853": {
+    "port": 853,
+    "service_name": "domain-s",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "DNS query-response protocol run over TLS",
+    "wiki_description": "DNS over TLS (RFC 7858)",
+    "popularity_freq": 0.00033,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 2.5e-05,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "domain-s",
+    "nmap_comment": "DNS query-response protocol run over TLS/DTLS | DNS query-response protocol run over TLS | DNS query-response protocol run over DTLS or QUIC",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1071.004",
+        "port": 853,
+        "name": "Application Layer Protocol: DNS",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/004/",
+        "fetched_at": "2026-06-16T07:29:13Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "dns over tls",
+      "dot"
     ]
   },
   "873": {
@@ -1380,11 +2434,24 @@
     ],
     "iana_status": "Assigned",
     "description": "rsync",
+    "wiki_description": "rsync file synchronization protocol",
+    "popularity_freq": 0.0034,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.0034,
+    "nmap_udp_freq": 0.000661,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "rsync",
+    "nmap_comment": "Rsync server ( http://rsync.samba.org )",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1400,15 +2467,148 @@
     ],
     "iana_status": "Assigned",
     "description": "self documenting Telnet Door",
+    "wiki_description": "VMware ESXi",
+    "popularity_freq": 0.001982,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001468,
+    "nmap_udp_freq": 0.001982,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "iss-realsecure",
+    "nmap_comment": "ideafarm-door | ISS RealSecure Sensor | self documenting Telnet Door | self documenting Door: send 0x00 for info",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "vmware"
+    ]
+  },
+  "989": {
+    "port": 989,
+    "service_name": "ftps-data",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "ftp protocol, data, over TLS/SSL",
+    "wiki_description": "FTPS Protocol (data), FTP over TLS/SSL",
+    "popularity_freq": 0.006277,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 6.3e-05,
+    "nmap_udp_freq": 0.006277,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ftps-data",
+    "nmap_comment": "ftp protocol, data, over TLS/SSL",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1048",
+        "port": 989,
+        "name": "Exfiltration Over Alternative Protocol",
+        "tactic": "exfiltration",
+        "url": "https://attack.mitre.org/techniques/T1048/",
+        "fetched_at": "2026-06-16T07:29:26Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ftps",
+      "ftp data ssl"
+    ]
+  },
+  "990": {
+    "port": 990,
+    "service_name": "ftps",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "ftp protocol, control, over TLS/SSL",
+    "wiki_description": "FTPS Protocol (control), FTP over TLS/SSL",
+    "popularity_freq": 0.00557,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00557,
+    "nmap_udp_freq": 0.004625,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ftps",
+    "nmap_comment": "ftp protocol, control, over TLS/SSL",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1048",
+        "port": 990,
+        "name": "Exfiltration Over Alternative Protocol",
+        "tactic": "exfiltration",
+        "url": "https://attack.mitre.org/techniques/T1048/",
+        "fetched_at": "2026-06-16T07:29:32Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ftps",
+      "ftp ssl"
+    ]
+  },
+  "992": {
+    "port": 992,
+    "service_name": "telnets",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "telnet protocol over TLS/SSL",
+    "wiki_description": "Telnet protocol over TLS/SSL",
+    "popularity_freq": 0.000903,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000903,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "telnets",
+    "nmap_comment": "telnet protocol over TLS/SSL",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "telnet ssl",
+      "telnets"
     ]
   },
   "993": {
@@ -1420,11 +2620,24 @@
     ],
     "iana_status": "Assigned",
     "description": "IMAP over TLS protocol",
+    "wiki_description": "Internet Message Access Protocol over TLS/SSL (IMAPS)",
+    "popularity_freq": 0.027199,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.027199,
+    "nmap_udp_freq": 0.000661,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "imaps",
+    "nmap_comment": "imap4 protocol over TLS/SSL | IMAP over TLS protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1442,11 +2655,24 @@
     ],
     "iana_status": "Assigned",
     "description": "POP3 over TLS protocol",
+    "wiki_description": "Post Office Protocol 3 over TLS/SSL (POP3S)",
+    "popularity_freq": 0.029921,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.029921,
+    "nmap_udp_freq": 0.000991,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "pop3s",
+    "nmap_comment": "POP3 protocol over TLS/SSL | pop3 protocol over TLS/SSL (was spop3) | POP3 over TLS protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1463,16 +2689,92 @@
     ],
     "iana_status": "Assigned",
     "description": "Socks",
+    "wiki_description": "SOCKS proxy",
+    "popularity_freq": 0.002685,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001518,
+    "nmap_udp_freq": 0.002685,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "socks",
+    "nmap_comment": null,
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "socks",
       "proxy"
+    ]
+  },
+  "1099": {
+    "port": 1099,
+    "service_name": "rmiregistry",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "RMI Registry",
+    "wiki_description": "rmiregistry, Java remote method invocation (RMI) registry",
+    "popularity_freq": 0.000661,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00038,
+    "nmap_udp_freq": 0.000661,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "rmiregistry",
+    "nmap_comment": "RMI Registry",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1203",
+        "port": 1099,
+        "name": "Exploitation for Client Execution",
+        "tactic": "execution",
+        "url": "https://attack.mitre.org/techniques/T1203/",
+        "fetched_at": "2026-06-16T07:30:07Z"
+      },
+      {
+        "technique_id": "T1190",
+        "port": 1099,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:30:07Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "Java RMI deserialization \u2192 RCE via ysoserial payload",
+      "List RMI objects: nmap --script rmi-dumpregistry -p 1099 <host>",
+      "Exploit: java -jar ysoserial.jar CommonsCollections1 'cmd' | nc <host> 1099",
+      "Tools: ysoserial, nmap rmi scripts, rmg (remote-method-guesser), beanshooter"
+    ],
+    "defensive_notes": [
+      "Firewall Java RMI port \u2014 never expose to internet",
+      "Enable RMI over SSL (RMISocketFactory)",
+      "Use Java security manager to restrict deserialization classes",
+      "Patch JDK and all commons-collections/spring/etc dependencies",
+      "Filter incoming Java serialized objects at application boundary"
+    ],
+    "search_terms": [
+      "java rmi",
+      "rmi registry",
+      "ysoserial"
     ]
   },
   "1194": {
@@ -1484,11 +2786,24 @@
     ],
     "iana_status": "Assigned",
     "description": "OpenVPN",
+    "wiki_description": "OpenVPN",
+    "popularity_freq": 0.00033,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "openvpn",
+    "nmap_comment": null,
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1504,9 +2819,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Microsoft-SQL-Server",
+    "wiki_description": "Microsoft SQL Server database management system (MSSQL) server",
+    "popularity_freq": 0.036821,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.007929,
+    "nmap_udp_freq": 0.036821,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ms-sql-s",
+    "nmap_comment": "Microsoft-SQL-Server",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1515,7 +2842,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:09:28Z"
+        "fetched_at": "2026-06-16T07:30:21Z"
       },
       {
         "technique_id": "T1078",
@@ -1523,7 +2850,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-15T10:09:28Z"
+        "fetched_at": "2026-06-16T07:30:21Z"
       },
       {
         "technique_id": "T1505.001",
@@ -1531,9 +2858,10 @@
         "name": "Server Software Component: SQL Stored Procedures",
         "tactic": "persistence",
         "url": "https://attack.mitre.org/techniques/T1505/001/",
-        "fetched_at": "2026-06-15T10:09:28Z"
+        "fetched_at": "2026-06-16T07:30:21Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Default creds: SA / (blank)",
       "Xp_cmdshell if enabled = RCE",
@@ -1550,6 +2878,58 @@
       "microsoft sql"
     ]
   },
+  "1434": {
+    "port": 1434,
+    "service_name": "ms-sql-m",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Microsoft-SQL-Monitor",
+    "wiki_description": "Microsoft SQL Server database management system (MSSQL) monitor",
+    "popularity_freq": 0.293184,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000201,
+    "nmap_udp_freq": 0.293184,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ms-sql-m",
+    "nmap_comment": "Microsoft-SQL-Monitor",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1046",
+        "port": 1434,
+        "name": "Network Service Discovery",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1046/",
+        "fetched_at": "2026-06-16T07:30:31Z"
+      },
+      {
+        "technique_id": "T1190",
+        "port": 1434,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:30:31Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "mssql",
+      "sql server browser",
+      "ms-sql-m"
+    ]
+  },
   "1521": {
     "port": 1521,
     "service_name": "ncube-lm",
@@ -1559,11 +2939,24 @@
     ],
     "iana_status": "Assigned",
     "description": "nCube License Manager",
+    "wiki_description": "nCUBE License Manager",
+    "popularity_freq": 0.001568,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001568,
+    "nmap_udp_freq": 0.000873,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "oracle",
+    "nmap_comment": "ncube-lm | Oracle Database | nCube License Manager",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [
       "Default SIDs: XE, ORCL",
       "Tools: odat, nmap --script oracle*"
@@ -1572,6 +2965,68 @@
     "search_terms": [
       "oracle",
       "oracle database"
+    ]
+  },
+  "1723": {
+    "port": 1723,
+    "service_name": "pptp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "pptp",
+    "wiki_description": "Point-to-Point Tunneling Protocol (PPTP)",
+    "popularity_freq": 0.032468,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.032468,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "pptp",
+    "nmap_comment": "Point-to-point tunnelling protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1572",
+        "port": 1723,
+        "name": "Protocol Tunneling",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1572/",
+        "fetched_at": "2026-06-16T07:30:47Z"
+      },
+      {
+        "technique_id": "T1133",
+        "port": 1723,
+        "name": "External Remote Services",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1133/",
+        "fetched_at": "2026-06-16T07:30:47Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "PPTP MS-CHAPv2 is cryptographically broken \u2014 capture and crack handshake",
+      "Capture: setup PPTP MitM with chapcrack or use asleap",
+      "Crack: chapcrack capture.cap \u2192 john/hashcat",
+      "PPTP provides no forward secrecy \u2014 avoid in all modern environments",
+      "Tools: asleap, chapcrack, thc-pptp-bruter, pptpcrack"
+    ],
+    "defensive_notes": [
+      "Migrate from PPTP to IKEv2 or OpenVPN \u2014 PPTP MS-CHAPv2 is broken",
+      "Block port 1723 at perimeter if PPTP is not needed",
+      "PPTP is deprecated \u2014 no remediation can make MS-CHAPv2 secure"
+    ],
+    "search_terms": [
+      "pptp",
+      "vpn",
+      "point-to-point tunneling"
     ]
   },
   "1883": {
@@ -1583,9 +3038,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Message Queuing Telemetry Transport Protocol",
+    "wiki_description": "MQTT (formerly MQ Telemetry Transport)",
+    "popularity_freq": 0.00033,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "mqtt",
+    "nmap_comment": "Message Queuing Telemetry Transport Protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1594,7 +3061,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-15T10:09:32Z"
+        "fetched_at": "2026-06-16T07:30:56Z"
       },
       {
         "technique_id": "T1557",
@@ -1602,9 +3069,10 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-15T10:09:32Z"
+        "fetched_at": "2026-06-16T07:30:56Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1616,21 +3084,137 @@
     "port": 2049,
     "service_name": "shilp",
     "transport": [
-      "SCTP",
       "UDP",
+      "SCTP",
       "TCP"
     ],
     "iana_status": "Defined TXT keys: path=<path to mount point>",
     "description": "Network File System",
+    "wiki_description": "Network File System (NFS)",
+    "popularity_freq": 0.044531,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00611,
+    "nmap_udp_freq": 0.044531,
+    "nmap_sctp_freq": 0.0,
+    "nmap_service_name": "nfs",
+    "nmap_comment": "shilp | Network File System | Network File System - Sun Microsystems",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "nfs"
+    ]
+  },
+  "2082": {
+    "port": 2082,
+    "service_name": "infowave",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Infowave Mobility Server",
+    "wiki_description": "cPanel default",
+    "popularity_freq": 0.00033,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "infowave",
+    "nmap_comment": "Infowave Mobility Server",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 2082,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:31:06Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 2082,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-16T07:31:06Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "cpanel",
+      "whm"
+    ]
+  },
+  "2083": {
+    "port": 2083,
+    "service_name": "radsec",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "The TCP port 2083 was already\n      previously assigned by IANA for \"RadSec\", an early implementation\n      of RADIUS/TLS, prior to issuance of this RFC.  This early\n      implementation can be configured to be compatible to RADIUS/TLS as\n      specified by the IETF.  See [RFC6614],\n      Appendix A for details.",
+    "description": "Secure Radius Service",
+    "wiki_description": "Secure RADIUS Service (radsec)",
+    "popularity_freq": 0.000661,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.000661,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "radsec",
+    "nmap_comment": "Secure Radius Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 2083,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:31:12Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 2083,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-16T07:31:12Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "cpanel",
+      "cpanel ssl",
+      "whm ssl"
     ]
   },
   "2181": {
@@ -1642,15 +3226,80 @@
     ],
     "iana_status": "Assigned",
     "description": "eforward",
+    "wiki_description": "EForward-document transport system",
+    "popularity_freq": 0.0,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.0,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "eforward",
+    "nmap_comment": null,
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "zookeeper"
+    ]
+  },
+  "2222": {
+    "port": 2222,
+    "service_name": "EtherNet-IP-1",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "New contact added for port 2222 on 2008-02-01\nThis entry is an alias to \"EtherNet-IP-1\".\nThis entry is now historic, not usable for use with many\ncommon service discovery mechanisms.",
+    "description": "EtherNet/IP I/O",
+    "wiki_description": "EtherNet/IP implicit messaging for IO data",
+    "popularity_freq": 0.047902,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000608,
+    "nmap_udp_freq": 0.047902,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "EtherNetIP-1",
+    "nmap_comment": "EtherNet/IP-1 | EtherNet-IP-1 | EtherNet/IP I/O",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.004",
+        "port": 2222,
+        "name": "Remote Services: SSH",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/004/",
+        "fetched_at": "2026-06-16T07:31:25Z"
+      },
+      {
+        "technique_id": "T1110.001",
+        "port": 2222,
+        "name": "Brute Force: Password Guessing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1110/001/",
+        "fetched_at": "2026-06-16T07:31:25Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ssh",
+      "openssh",
+      "alternate ssh"
     ]
   },
   "2375": {
@@ -1662,9 +3311,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Docker REST API (plain text)",
+    "wiki_description": "Docker REST API (plain)",
+    "popularity_freq": 7.6e-05,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "docker",
+    "nmap_comment": "docker.com | Docker REST API (plain text)",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1673,7 +3334,7 @@
         "name": "Deploy Container",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1610/",
-        "fetched_at": "2026-06-15T10:09:36Z"
+        "fetched_at": "2026-06-16T07:31:34Z"
       },
       {
         "technique_id": "T1190",
@@ -1681,17 +3342,22 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:09:36Z"
+        "fetched_at": "2026-06-16T07:31:34Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Unauthenticated Docker API = instant RCE",
       "curl http://<host>:2375/v1.41/containers/json",
-      "Escape container: mount host filesystem"
+      "Escape container: mount host filesystem",
+      "RCE: docker -H tcp://<host>:2375 run -v /:/mnt alpine chroot /mnt sh",
+      "Tools: docker cli, dockerscan, metasploit docker modules"
     ],
     "defensive_notes": [
       "NEVER expose Docker API without TLS + mutual auth",
-      "Use unix socket only, or bind to 127.0.0.1"
+      "Use unix socket only, or bind to 127.0.0.1",
+      "Enable TLS: use --tlsverify --tlscacert --tlscert --tlskey flags",
+      "Audit running containers regularly for unauthorized images"
     ],
     "search_terms": [
       "docker"
@@ -1705,11 +3371,24 @@
     ],
     "iana_status": "Assigned",
     "description": "Docker REST API (ssl)",
+    "wiki_description": "Docker REST API (SSL)",
+    "popularity_freq": 7.6e-05,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "docker",
+    "nmap_comment": "docker-s | docker.com | Docker REST API (ssl)",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1725,17 +3404,134 @@
     ],
     "iana_status": "This entry records an unassigned but widespread use",
     "description": "RemoteWare Client",
+    "wiki_description": "Ruby on Rails development default",
+    "popularity_freq": 0.004115,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.004115,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ppp",
+    "nmap_comment": "remoteware-cl | hbci | User-level ppp daemon, or chili!soft asp | HBCI | RemoteWare Client",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "grafana",
       "nodejs",
       "express"
+    ]
+  },
+  "3268": {
+    "port": 3268,
+    "service_name": "msft-gc",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Microsoft Global Catalog",
+    "wiki_description": "msft-gc, Microsoft Global Catalog ( LDAP service which contains data from Active Directory forests)",
+    "popularity_freq": 0.001229,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001229,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "globalcatLDAP",
+    "nmap_comment": "msft-gc | Global Catalog LDAP | Microsoft Global Catalog",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1087.002",
+        "port": 3268,
+        "name": "Account Discovery: Domain Account",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1087/002/",
+        "fetched_at": "2026-06-16T07:31:50Z"
+      },
+      {
+        "technique_id": "T1482",
+        "port": 3268,
+        "name": "Domain Trust Discovery",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1482/",
+        "fetched_at": "2026-06-16T07:31:50Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ldap",
+      "global catalog",
+      "active directory"
+    ]
+  },
+  "3269": {
+    "port": 3269,
+    "service_name": "msft-gc-ssl",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Microsoft Global Catalog with LDAP/SSL",
+    "wiki_description": "msft-gc-ssl, Microsoft Global Catalog over SSL (similar to port 3268, LDAP over SSL )",
+    "popularity_freq": 0.001142,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001142,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "globalcatLDAPssl",
+    "nmap_comment": "msft-gc-ssl | Global Catalog LDAP over ssl | Microsoft Global Catalog with LDAP/SSL",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1087.002",
+        "port": 3269,
+        "name": "Account Discovery: Domain Account",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1087/002/",
+        "fetched_at": "2026-06-16T07:31:59Z"
+      },
+      {
+        "technique_id": "T1482",
+        "port": 3269,
+        "name": "Domain Trust Discovery",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1482/",
+        "fetched_at": "2026-06-16T07:31:59Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ldaps",
+      "ldap ssl",
+      "global catalog ssl"
     ]
   },
   "3306": {
@@ -1747,9 +3543,21 @@
     ],
     "iana_status": "Assigned",
     "description": "MySQL",
+    "wiki_description": "MySQL database system",
+    "popularity_freq": 0.04539,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.04539,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "mysql",
+    "nmap_comment": null,
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1758,7 +3566,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:09:40Z"
+        "fetched_at": "2026-06-16T07:32:09Z"
       },
       {
         "technique_id": "T1078",
@@ -1766,9 +3574,10 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-15T10:09:40Z"
+        "fetched_at": "2026-06-16T07:32:09Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Default: root / (blank or root)",
       "Check skip-grant-tables",
@@ -1793,9 +3602,21 @@
     ],
     "iana_status": "Assigned",
     "description": "MS WBT Server",
+    "wiki_description": "Microsoft Terminal Server ( RDP ) officially registered as Windows Based Terminal (WBT)",
+    "popularity_freq": 0.083904,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.083904,
+    "nmap_udp_freq": 0.004955,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ms-wbt-server",
+    "nmap_comment": "Microsoft Remote Display Protocol (aka ms-term-serv, microsoft-rdp) | MS WBT Server",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1804,7 +3625,7 @@
         "name": "Remote Services: Remote Desktop Protocol",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/001/",
-        "fetched_at": "2026-06-15T10:09:42Z"
+        "fetched_at": "2026-06-16T07:32:16Z"
       },
       {
         "technique_id": "T1110.001",
@@ -1812,7 +3633,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-15T10:09:42Z"
+        "fetched_at": "2026-06-16T07:32:16Z"
       },
       {
         "technique_id": "T1563.002",
@@ -1820,9 +3641,10 @@
         "name": "Remote Service Session Hijacking: RDP Hijacking",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1563/002/",
-        "fetched_at": "2026-06-15T10:09:42Z"
+        "fetched_at": "2026-06-16T07:32:16Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "BlueKeep check: nmap --script rdp-vuln-ms12-020",
       "Brute force: hydra -l administrator -P wordlist.txt rdp://<host>",
@@ -1849,16 +3671,82 @@
     ],
     "iana_status": "Assigned",
     "description": "Subversion",
+    "wiki_description": "Subversion (SVN) version control system",
+    "popularity_freq": 0.001597,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001597,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "svn",
+    "nmap_comment": "Subversion",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "svn",
       "subversion"
+    ]
+  },
+  "4369": {
+    "port": 4369,
+    "service_name": "epmd",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Erlang Port Mapper Daemon",
+    "wiki_description": null,
+    "popularity_freq": 0.00033,
+    "wiki_url": null,
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "epmd",
+    "nmap_comment": "Erlang Port Mapper Daemon",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 4369,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:32:33Z"
+      },
+      {
+        "technique_id": "T1046",
+        "port": 4369,
+        "name": "Network Service Discovery",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1046/",
+        "fetched_at": "2026-06-16T07:32:33Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "erlang",
+      "epmd",
+      "rabbitmq",
+      "beam"
     ]
   },
   "4443": {
@@ -1870,16 +3758,90 @@
     ],
     "iana_status": "Assigned",
     "description": "Pharos",
+    "wiki_description": null,
+    "popularity_freq": 0.00076,
+    "wiki_url": null,
+    "nmap_tcp_freq": 0.00076,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "pharos",
+    "nmap_comment": null,
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "https",
       "ssl"
+    ]
+  },
+  "4444": {
+    "port": 4444,
+    "service_name": "krb524",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "NV Video default",
+    "wiki_description": "Oracle WebCenter Content: Content Server\u2014Intradoc Socket port. (formerly known as Oracle Universal Content Management ).",
+    "popularity_freq": 0.016343,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001041,
+    "nmap_udp_freq": 0.016343,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "krb524",
+    "nmap_comment": "nv-video | Kerberos 5 to 4 ticket xlator | NV Video default",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1219",
+        "port": 4444,
+        "name": "Remote Access Software",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1219/",
+        "fetched_at": "2026-06-16T07:32:49Z"
+      },
+      {
+        "technique_id": "T1059",
+        "port": 4444,
+        "name": "Command and Scripting Interpreter",
+        "tactic": "execution",
+        "url": "https://attack.mitre.org/techniques/T1059/",
+        "fetched_at": "2026-06-16T07:32:49Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "Default Metasploit meterpreter listener port \u2014 indicates C2 infrastructure",
+      "Check for active sessions: nc -nv <host> 4444",
+      "Port scan to confirm Metasploit framework: nmap -sV -p 4444 <host>",
+      "If found in your environment: immediate incident response required"
+    ],
+    "defensive_notes": [
+      "Block outbound port 4444 at firewall \u2014 common Metasploit default",
+      "Alert on any inbound connections to port 4444",
+      "Use EDR to detect meterpreter payloads regardless of port"
+    ],
+    "search_terms": [
+      "metasploit",
+      "meterpreter",
+      "shell listener"
     ]
   },
   "4505": {
@@ -1890,11 +3852,24 @@
     ],
     "iana_status": "Unknown",
     "description": "",
+    "wiki_description": "Salt master",
+    "popularity_freq": null,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": null,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": null,
+    "nmap_comment": null,
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1910,11 +3885,24 @@
     ],
     "iana_status": "Unknown",
     "description": "",
+    "wiki_description": "Salt master",
+    "popularity_freq": 0.00033,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": null,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "unknown",
+    "nmap_comment": null,
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1930,11 +3918,24 @@
     ],
     "iana_status": "Assigned",
     "description": "App Server - Admin HTTP",
+    "wiki_description": "Java GlassFish Application Server administration default",
+    "popularity_freq": 0.000228,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000228,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "appserv-http",
+    "nmap_comment": "App Server - Admin HTTP",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -1950,16 +3951,93 @@
     ],
     "iana_status": "Assigned",
     "description": "",
+    "wiki_description": "UPnP \u2014Windows network device interoperability",
+    "popularity_freq": 0.008913,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.006423,
+    "nmap_udp_freq": 0.008913,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "upnp",
+    "nmap_comment": "commplex-main | Universal PnP, also Free Internet Chess Server",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "flask",
       "upnp"
+    ]
+  },
+  "5353": {
+    "port": 5353,
+    "service_name": "mdns",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Multicast DNS",
+    "wiki_description": "Multicast DNS (mDNS)",
+    "popularity_freq": 0.100166,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000152,
+    "nmap_udp_freq": 0.100166,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "mdns",
+    "nmap_comment": "Multicast DNS",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1557",
+        "port": 5353,
+        "name": "Adversary-in-the-Middle",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1557/",
+        "fetched_at": "2026-06-16T07:33:17Z"
+      },
+      {
+        "technique_id": "T1040",
+        "port": 5353,
+        "name": "Network Sniffing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1040/",
+        "fetched_at": "2026-06-16T07:33:17Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "mDNS/DNS-SD service enumeration: avahi-browse -a or dns-sd -B _services._dns-sd._udp local",
+      "Responder mDNS poisoning: responder -I eth0 (captures NTLMv2 hashes)",
+      "MITM via mDNS spoofing: responder poisons A record responses",
+      "Enumerate services: nmap -p 5353 --script dns-service-discovery <host>",
+      "Tools: Responder, avahi-browse, dns-sd, nmap --script mdns*"
+    ],
+    "defensive_notes": [
+      "Disable mDNS on hosts where it is not needed (disable avahi-daemon)",
+      "Block UDP 5353 between network segments",
+      "Deploy LLMNR/mDNS poisoning detection (monitor for Responder activity)",
+      "Use DNS with DNSSEC instead of mDNS for service discovery"
+    ],
+    "search_terms": [
+      "mdns",
+      "multicast dns",
+      "bonjour",
+      "avahi"
     ]
   },
   "5432": {
@@ -1971,9 +4049,21 @@
     ],
     "iana_status": "Assigned",
     "description": "PostgreSQL Database",
+    "wiki_description": "PostgreSQL database system",
+    "popularity_freq": 0.00409,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00409,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "postgresql",
+    "nmap_comment": "PostgreSQL database server | PostgreSQL Database",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -1982,7 +4072,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:09:53Z"
+        "fetched_at": "2026-06-16T07:33:27Z"
       },
       {
         "technique_id": "T1078",
@@ -1990,9 +4080,10 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-15T10:09:53Z"
+        "fetched_at": "2026-06-16T07:33:27Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Default: postgres/postgres",
       "SQL \u2192 OS if superuser: COPY FROM PROGRAM",
@@ -2017,11 +4108,24 @@
     ],
     "iana_status": "Assigned",
     "description": "Personal Agent",
+    "wiki_description": "Oracle WebCenter Content: Inbound Refinery\u2014Intradoc Socket port. (formerly known as Oracle Universal Content Management ). Port though often changed during installation",
+    "popularity_freq": 0.001615,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.001305,
+    "nmap_udp_freq": 0.001615,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "freeciv",
+    "nmap_comment": "personal-agent | Personal Agent",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -2038,11 +4142,24 @@
     ],
     "iana_status": "Assigned",
     "description": "Enterprise Security Agent",
+    "wiki_description": "Kibana",
+    "popularity_freq": 0.0,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.0,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "esmagent",
+    "nmap_comment": "Enterprise Security Agent",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -2053,17 +4170,30 @@
     "port": 5672,
     "service_name": "amqp",
     "transport": [
-      "SCTP",
       "UDP",
+      "SCTP",
       "TCP"
     ],
     "iana_status": "Assigned",
     "description": "AMQP",
+    "wiki_description": "Advanced Message Queuing Protocol (AMQP)",
+    "popularity_freq": 7.6e-05,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": 0.0,
+    "nmap_service_name": "amqp",
+    "nmap_comment": null,
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -2080,9 +4210,21 @@
     ],
     "iana_status": "Assigned",
     "description": "Remote Framebuffer",
+    "wiki_description": "Remote Framebuffer (RFB) protocol",
+    "popularity_freq": 0.02356,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.02356,
+    "nmap_udp_freq": 0.000661,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "vnc",
+    "nmap_comment": "rfb | Virtual Network Computer display 0 | Remote Framebuffer",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -2091,7 +4233,7 @@
         "name": "Remote Services: VNC",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/005/",
-        "fetched_at": "2026-06-15T10:09:59Z"
+        "fetched_at": "2026-06-16T07:33:50Z"
       },
       {
         "technique_id": "T1110.001",
@@ -2099,9 +4241,10 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-15T10:09:59Z"
+        "fetched_at": "2026-06-16T07:33:50Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "No-auth VNC: try connect with no password",
       "Tools: vncviewer, hydra -l <blank> -P wordlist.txt vnc://<host>"
@@ -2124,15 +4267,214 @@
     ],
     "iana_status": "Unknown",
     "description": "",
+    "wiki_description": null,
+    "popularity_freq": 0.002145,
+    "wiki_url": null,
+    "nmap_tcp_freq": 0.002145,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "vnc-1",
+    "nmap_comment": "Virtual Network Computer display 1",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "5901"
+    ]
+  },
+  "5985": {
+    "port": 5985,
+    "service_name": "wsman",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "WBEM WS-Management HTTP",
+    "wiki_description": "Windows PowerShell Default psSession Port Windows Remote Management Service (WinRM-HTTP)",
+    "popularity_freq": 0.00038,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00038,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "wsman",
+    "nmap_comment": "WBEM WS-Management HTTP",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.006",
+        "port": 5985,
+        "name": "Remote Services: Windows Remote Management",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/006/",
+        "fetched_at": "2026-06-16T07:33:59Z"
+      },
+      {
+        "technique_id": "T1110.001",
+        "port": 5985,
+        "name": "Brute Force: Password Guessing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1110/001/",
+        "fetched_at": "2026-06-16T07:33:59Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "WinRM lateral movement: evil-winrm -i <host> -u <user> -p <pass>",
+      "Pass-the-hash: evil-winrm -i <host> -u <user> -H <NTLM_hash>",
+      "Check if enabled: Test-WSMan -ComputerName <host> (PowerShell)",
+      "Brute force: crackmapexec winrm <host> -u users.txt -p passwords.txt",
+      "Tools: evil-winrm, crackmapexec, impacket wmiexec, nmap --script winrm*"
+    ],
+    "defensive_notes": [
+      "Restrict WinRM access to jump hosts and management subnets only",
+      "Require Kerberos or certificate authentication \u2014 disable Basic auth",
+      "Enable HTTPS (port 5986) instead of HTTP",
+      "Log and alert on WinRM sessions (Event ID 91, 168 in WinRM channel)"
+    ],
+    "search_terms": [
+      "winrm",
+      "windows remote management",
+      "wsman"
+    ]
+  },
+  "5986": {
+    "port": 5986,
+    "service_name": "wsmans",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "WBEM WS-Management HTTP over TLS/SSL",
+    "wiki_description": "Windows PowerShell Default psSession Port Windows Remote Management Service (WinRM-HTTPS)",
+    "popularity_freq": 0.00038,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00038,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "wsmans",
+    "nmap_comment": "WBEM WS-Management HTTP over TLS/SSL",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.006",
+        "port": 5986,
+        "name": "Remote Services: Windows Remote Management",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/006/",
+        "fetched_at": "2026-06-16T07:34:09Z"
+      },
+      {
+        "technique_id": "T1573",
+        "port": 5986,
+        "name": "Encrypted Channel",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1573/",
+        "fetched_at": "2026-06-16T07:34:09Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "WinRM over HTTPS \u2014 same attacks as 5985 but TLS-wrapped",
+      "evil-winrm -i <host> -u <user> -p <pass> -S (SSL mode)",
+      "Certificate may leak hostname/org in CN field",
+      "Tools: evil-winrm, crackmapexec, curl -k https://<host>:5986/wsman"
+    ],
+    "defensive_notes": [
+      "Prefer 5986 (HTTPS) over 5985 (HTTP) for WinRM",
+      "Enforce certificate validation \u2014 avoid self-signed certs without pinning",
+      "Restrict to management VLAN; require MFA for privileged accounts"
+    ],
+    "search_terms": [
+      "winrm",
+      "winrm ssl",
+      "wsman ssl"
+    ]
+  },
+  "6000": {
+    "port": 6000,
+    "service_name": "port-6000",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "wiki_description": "X11 \u2014used between an X client and server over the network",
+    "popularity_freq": 0.005683,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.005683,
+    "nmap_udp_freq": 0.003304,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "X11",
+    "nmap_comment": "X Window server",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1021.005",
+        "port": 6000,
+        "name": "Remote Services: VNC",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T1021/005/",
+        "fetched_at": "2026-06-16T07:34:18Z"
+      },
+      {
+        "technique_id": "T1185",
+        "port": 6000,
+        "name": "Browser Session Hijacking",
+        "tactic": "collection",
+        "url": "https://attack.mitre.org/techniques/T1185/",
+        "fetched_at": "2026-06-16T07:34:18Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "X11 forwarding abuse: DISPLAY=<host>:0 xterm (open xterm on victim display)",
+      "Screenshot capture: xwd -display <host>:0 -root -silent > screen.xwd",
+      "Keylogger: xinput on target display",
+      "Check for open X11: nmap -p 6000 --script x11-access <host>",
+      "Tools: xwd, xdotool, xspy, nmap --script x11*"
+    ],
+    "defensive_notes": [
+      "Disable X11 TCP listening \u2014 use Unix sockets only (add '-nolisten tcp')",
+      "Use SSH X11 forwarding (ssh -X) with ForwardX11Trusted no",
+      "Block TCP port 6000-6063 at perimeter and between host segments",
+      "Never expose X11 to untrusted networks"
+    ],
+    "search_terms": [
+      "x11",
+      "x windows",
+      "xorg"
     ]
   },
   "6379": {
@@ -2144,9 +4486,21 @@
     ],
     "iana_status": "Assigned",
     "description": "An advanced key-value cache and store",
+    "wiki_description": "Redis key-value data store",
+    "popularity_freq": 7.6e-05,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "redis",
+    "nmap_comment": "An advanced key-value cache and store",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
@@ -2155,7 +4509,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:10:02Z"
+        "fetched_at": "2026-06-16T07:34:28Z"
       },
       {
         "technique_id": "T1059",
@@ -2163,9 +4517,10 @@
         "name": "Command and Scripting Interpreter",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1059/",
-        "fetched_at": "2026-06-15T10:10:02Z"
+        "fetched_at": "2026-06-16T07:34:28Z"
       }
     ],
+    "variot_vulns": [],
     "pentest_notes": [
       "Unauthenticated Redis = config write / SSH key injection",
       "redis-cli -h <host> INFO",
@@ -2189,11 +4544,24 @@
     ],
     "iana_status": "Assigned",
     "description": "Service Registry Default HTTPS Domain",
+    "wiki_description": "Kubernetes API server",
+    "popularity_freq": 0.0,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.0,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "sun-sr-https",
+    "nmap_comment": "Service Registry Default HTTPS Domain",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -2210,15 +4578,183 @@
     ],
     "iana_status": "Assigned",
     "description": "callbacks to cache managers",
+    "wiki_description": "Avira Server Management Console",
+    "popularity_freq": 0.001005,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000891,
+    "nmap_udp_freq": 0.001005,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "afs3-callback",
+    "nmap_comment": "callbacks to cache managers",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
       "weblogic"
+    ]
+  },
+  "8000": {
+    "port": 8000,
+    "service_name": "irdmi",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "iRDMI",
+    "wiki_description": "Deno",
+    "popularity_freq": 0.00971,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.00971,
+    "nmap_udp_freq": 0.001652,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "http-alt",
+    "nmap_comment": "irdmi | A common alternative http port | iRDMI",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 8000,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:34:41Z"
+      },
+      {
+        "technique_id": "T1071.001",
+        "port": 8000,
+        "name": "Application Layer Protocol: Web Protocols",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/001/",
+        "fetched_at": "2026-06-16T07:34:41Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "http",
+      "flask",
+      "django",
+      "python dev server"
+    ]
+  },
+  "8001": {
+    "port": 8001,
+    "service_name": "vcom-tunnel",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "VCOM Tunnel",
+    "wiki_description": null,
+    "popularity_freq": 0.001982,
+    "wiki_url": null,
+    "nmap_tcp_freq": 0.000532,
+    "nmap_udp_freq": 0.001982,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "vcom-tunnel",
+    "nmap_comment": "VCOM Tunnel",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 8001,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:34:52Z"
+      },
+      {
+        "technique_id": "T1071.001",
+        "port": 8001,
+        "name": "Application Layer Protocol: Web Protocols",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/001/",
+        "fetched_at": "2026-06-16T07:34:52Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "http",
+      "alternate http"
+    ]
+  },
+  "8008": {
+    "port": 8008,
+    "service_name": "http-alt",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "HTTP Alternate",
+    "wiki_description": "Alternative port for HTTP . See also ports 80 and 8080.",
+    "popularity_freq": 0.006843,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.006843,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "http",
+    "nmap_comment": "http-alt | IBM HTTP server | HTTP Alternate",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 8008,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:34:58Z"
+      },
+      {
+        "technique_id": "T1071.001",
+        "port": 8008,
+        "name": "Application Layer Protocol: Web Protocols",
+        "tactic": "command-and-control",
+        "url": "https://attack.mitre.org/techniques/T1071/001/",
+        "fetched_at": "2026-06-16T07:34:58Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "http",
+      "alternate http"
     ]
   },
   "8009": {
@@ -2230,11 +4766,24 @@
     ],
     "iana_status": "Assigned",
     "description": "NVMe over Fabrics Discovery Service",
+    "wiki_description": "Apache JServ Protocol ( ajp13 ) [ citation needed ]",
+    "popularity_freq": 0.004642,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.004642,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ajp13",
+    "nmap_comment": "nvme-disc | Apache JServ Protocol 1.3 | NVMe over Fabrics Discovery Service",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -2247,11 +4796,19 @@
     "port": 8080,
     "service_name": "http-alt",
     "transport": [
-      "TCP",
-      "UDP"
+      "UDP",
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "HTTP Alternate (see port 80)",
+    "wiki_description": "Alternative port for HTTP . See also ports 80 and 8008.",
+    "popularity_freq": 0.042052,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.042052,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "http-proxy",
+    "nmap_comment": "http-alt | Common HTTP proxy/second web server port | HTTP Alternate (see port 80)",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
@@ -2267,7 +4824,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T16:30:25Z"
+        "fetched_at": "2026-06-16T07:35:14Z"
       },
       {
         "technique_id": "T1071.001",
@@ -2275,7 +4832,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-15T16:30:25Z"
+        "fetched_at": "2026-06-16T07:35:14Z"
       }
     ],
     "variot_vulns": [],
@@ -2300,11 +4857,24 @@
     ],
     "iana_status": "Assigned",
     "description": "PCsync HTTPS",
+    "wiki_description": "SW Soft Plesk Control Panel",
+    "popularity_freq": 0.009986,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.009986,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "https-alt",
+    "nmap_comment": "pcsync-https | Common alternative https port | PCsync HTTPS",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
@@ -2312,275 +4882,55 @@
       "tomcat"
     ]
   },
-  "8888": {
-    "port": 8888,
-    "service_name": "ddi-tcp-1",
+  "8500": {
+    "port": 8500,
+    "service_name": "fmtp",
     "transport": [
       "UDP",
       "TCP"
     ],
     "iana_status": "Assigned",
-    "description": "NewsEDGE server TCP (TCP 1)",
+    "description": "Flight Message Transfer Protocol",
+    "wiki_description": "Adobe ColdFusion built-in web server",
+    "popularity_freq": 0.000304,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000304,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "fmtp",
+    "nmap_comment": "Flight Message Transfer Protocol",
     "risk_level": "LOW",
     "cve_count": 0,
     "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "jupyter",
-      "http"
-    ]
-  },
-  "9000": {
-    "port": 9000,
-    "service_name": "cslistener",
-    "transport": [
-      "UDP",
-      "TCP"
-    ],
-    "iana_status": "Assigned",
-    "description": "CSlistener",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "php-fpm",
-      "sonarqube"
-    ]
-  },
-  "9090": {
-    "port": 9090,
-    "service_name": "websm",
-    "transport": [
-      "UDP",
-      "TCP"
-    ],
-    "iana_status": "Assigned",
-    "description": "WebSM",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "prometheus",
-      "cockpit"
-    ]
-  },
-  "9200": {
-    "port": 9200,
-    "service_name": "wap-wsp",
-    "transport": [
-      "UDP",
-      "TCP"
-    ],
-    "iana_status": "Assigned",
-    "description": "WAP connectionless session service",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
     "top_cves": [],
     "techniques": [
       {
+        "technique_id": "T1046",
+        "port": 8500,
+        "name": "Network Service Discovery",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T1046/",
+        "fetched_at": "2026-06-16T07:35:30Z"
+      },
+      {
         "technique_id": "T1190",
-        "port": 9200,
+        "port": 8500,
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:10:17Z"
-      },
-      {
-        "technique_id": "T1213",
-        "port": 9200,
-        "name": "Data from Information Repositories",
-        "tactic": "collection",
-        "url": "https://attack.mitre.org/techniques/T1213/",
-        "fetched_at": "2026-06-15T10:10:17Z"
+        "fetched_at": "2026-06-16T07:35:30Z"
       }
     ],
-    "pentest_notes": [
-      "Unauthenticated Elasticsearch = full data dump",
-      "curl http://<host>:9200/_cat/indices",
-      "curl http://<host>:9200/_all/_search?size=100"
-    ],
-    "defensive_notes": [
-      "Bind to 127.0.0.1 or private network",
-      "Enable X-Pack security (auth + TLS)",
-      "Never expose to internet without authentication"
-    ],
-    "search_terms": [
-      "elasticsearch"
-    ]
-  },
-  "9300": {
-    "port": 9300,
-    "service_name": "vrace",
-    "transport": [
-      "UDP",
-      "TCP"
-    ],
-    "iana_status": "Assigned",
-    "description": "Virtual Racing Service",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
+    "variot_vulns": [],
     "pentest_notes": [],
     "defensive_notes": [],
     "search_terms": [
-      "elasticsearch"
-    ]
-  },
-  "10250": {
-    "port": 10250,
-    "service_name": "port-10250",
-    "transport": [
-      "TCP"
-    ],
-    "iana_status": "Unknown",
-    "description": "",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "kubelet",
-      "kubernetes"
-    ]
-  },
-  "11211": {
-    "port": 11211,
-    "service_name": "memcache",
-    "transport": [
-      "UDP",
-      "TCP"
-    ],
-    "iana_status": "Assigned",
-    "description": "Memory cache service",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "memcached"
-    ]
-  },
-  "27017": {
-    "port": 27017,
-    "service_name": "mongodb",
-    "transport": [
-      "UDP",
-      "TCP"
-    ],
-    "iana_status": "Assigned",
-    "description": "Mongo database system",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [
-      {
-        "technique_id": "T1190",
-        "port": 27017,
-        "name": "Exploit Public-Facing Application",
-        "tactic": "initial-access",
-        "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:10:22Z"
-      },
-      {
-        "technique_id": "T1213",
-        "port": 27017,
-        "name": "Data from Information Repositories",
-        "tactic": "collection",
-        "url": "https://attack.mitre.org/techniques/T1213/",
-        "fetched_at": "2026-06-15T10:10:22Z"
-      }
-    ],
-    "pentest_notes": [
-      "Unauthenticated MongoDB = full read/write access",
-      "mongo --host <host> \u2192 show dbs",
-      "Tools: mongodump, NoSQLMap"
-    ],
-    "defensive_notes": [
-      "Enable --auth flag",
-      "Bind to 127.0.0.1 or private IP",
-      "Use role-based access control"
-    ],
-    "search_terms": [
-      "mongodb"
-    ]
-  },
-  "27018": {
-    "port": 27018,
-    "service_name": "port-27018",
-    "transport": [
-      "TCP"
-    ],
-    "iana_status": "Unknown",
-    "description": "",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "mongodb"
-    ]
-  },
-  "27019": {
-    "port": 27019,
-    "service_name": "port-27019",
-    "transport": [
-      "TCP"
-    ],
-    "iana_status": "Unknown",
-    "description": "",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "27019"
-    ]
-  },
-  "50070": {
-    "port": 50070,
-    "service_name": "port-50070",
-    "transport": [
-      "TCP"
-    ],
-    "iana_status": "Unknown",
-    "description": "",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "top_cves": [],
-    "techniques": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "hadoop",
-      "hdfs"
+      "consul",
+      "hashicorp consul"
     ]
   },
   "8765": {
@@ -2680,6 +5030,726 @@
     "defensive_notes": [],
     "search_terms": [
       "amcs"
+    ]
+  },
+  "8883": {
+    "port": 8883,
+    "service_name": "secure-mqtt",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Secure MQTT",
+    "wiki_description": "Secure MQTT (MQTT over TLS)",
+    "popularity_freq": 7.6e-05,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "secure-mqtt",
+    "nmap_comment": "Secure MQTT",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1040",
+        "port": 8883,
+        "name": "Network Sniffing",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1040/",
+        "fetched_at": "2026-06-16T07:35:37Z"
+      },
+      {
+        "technique_id": "T1557",
+        "port": 8883,
+        "name": "Adversary-in-the-Middle",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1557/",
+        "fetched_at": "2026-06-16T07:35:37Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "mqtt",
+      "mqtt tls",
+      "mosquitto ssl"
+    ]
+  },
+  "8888": {
+    "port": 8888,
+    "service_name": "ddi-tcp-1",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "NewsEDGE server TCP (TCP 1)",
+    "wiki_description": "HyperVM over HTTPS [ citation needed ]",
+    "popularity_freq": 0.016522,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.016522,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "sun-answerbook",
+    "nmap_comment": "ddi-udp-1 | ddi-tcp-1 | Sun Answerbook HTTP server.  Or gnump3d streaming music server | NewsEDGE server TCP (TCP 1) | NewsEDGE server UDP (UDP 1)",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "jupyter",
+      "http"
+    ]
+  },
+  "9000": {
+    "port": 9000,
+    "service_name": "cslistener",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "CSlistener",
+    "wiki_description": "SonarQube Web Server",
+    "popularity_freq": 0.002129,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.002129,
+    "nmap_udp_freq": 0.001652,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "cslistener",
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "php-fpm",
+      "sonarqube"
+    ]
+  },
+  "9090": {
+    "port": 9090,
+    "service_name": "websm",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "WebSM",
+    "wiki_description": "Cockpit",
+    "popularity_freq": 0.002747,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.002747,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "zeus-admin",
+    "nmap_comment": "websm | Zeus admin server | WebSM",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "prometheus",
+      "cockpit"
+    ]
+  },
+  "9200": {
+    "port": 9200,
+    "service_name": "wap-wsp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "WAP connectionless session service",
+    "wiki_description": "Elasticsearch \u2014default Elasticsearch port",
+    "popularity_freq": 0.007268,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000228,
+    "nmap_udp_freq": 0.007268,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "wap-wsp",
+    "nmap_comment": "WAP connectionless session services | WAP connectionless session service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 9200,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:36:05Z"
+      },
+      {
+        "technique_id": "T1213",
+        "port": 9200,
+        "name": "Data from Information Repositories",
+        "tactic": "collection",
+        "url": "https://attack.mitre.org/techniques/T1213/",
+        "fetched_at": "2026-06-16T07:36:05Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "Unauthenticated Elasticsearch = full data dump",
+      "curl http://<host>:9200/_cat/indices",
+      "curl http://<host>:9200/_all/_search?size=100"
+    ],
+    "defensive_notes": [
+      "Bind to 127.0.0.1 or private network",
+      "Enable X-Pack security (auth + TLS)",
+      "Never expose to internet without authentication"
+    ],
+    "search_terms": [
+      "elasticsearch"
+    ]
+  },
+  "9300": {
+    "port": 9300,
+    "service_name": "vrace",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Virtual Racing Service",
+    "wiki_description": "IBM Cognos BI",
+    "popularity_freq": 0.00033,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "vrace",
+    "nmap_comment": "Virtual Racing Service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "elasticsearch"
+    ]
+  },
+  "9418": {
+    "port": 9418,
+    "service_name": "git",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "git pack transfer service",
+    "wiki_description": "git, Git pack transfer service",
+    "popularity_freq": 0.000228,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.000228,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "git",
+    "nmap_comment": "Git revision control system | git pack transfer service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1213",
+        "port": 9418,
+        "name": "Data from Information Repositories",
+        "tactic": "collection",
+        "url": "https://attack.mitre.org/techniques/T1213/",
+        "fetched_at": "2026-06-16T07:36:12Z"
+      },
+      {
+        "technique_id": "T1552.001",
+        "port": 9418,
+        "name": "Unsecured Credentials: Credentials In Files",
+        "tactic": "credential-access",
+        "url": "https://attack.mitre.org/techniques/T1552/001/",
+        "fetched_at": "2026-06-16T07:36:12Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "Anonymous git clone: git clone git://<host>/repo.git",
+      "Search commit history for credentials: truffleHog / gitleaks on cloned repo",
+      "List repos: git ls-remote git://<host>/",
+      "Credentials often accidentally committed in .env, config, or history",
+      "Tools: gitleaks, truffleHog, git-dumper"
+    ],
+    "defensive_notes": [
+      "Use authenticated git transports (SSH or HTTPS) instead of git:// protocol",
+      "Disable the git daemon if anonymous clone is not intentional",
+      "Scan repositories for hardcoded credentials before pushing",
+      "Use gitleaks or truffleHog in CI/CD pipeline"
+    ],
+    "search_terms": [
+      "git",
+      "git protocol",
+      "git daemon"
+    ]
+  },
+  "10000": {
+    "port": 10000,
+    "service_name": "ndmp",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Network Data Management Protocol",
+    "wiki_description": "Network Data Management Protocol ( NDMP ) Control stream for network backup and restore.",
+    "popularity_freq": 0.011692,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.011692,
+    "nmap_udp_freq": 0.007598,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "snet-sensor-mgmt",
+    "nmap_comment": "ndmp | SecureNet Pro Sensor https management server or apple airport admin | Network Data Management Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 10000,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:36:22Z"
+      },
+      {
+        "technique_id": "T1078",
+        "port": 10000,
+        "name": "Valid Accounts",
+        "tactic": "defense-evasion",
+        "url": "https://attack.mitre.org/techniques/T1078/",
+        "fetched_at": "2026-06-16T07:36:22Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "Webmin CVE exploitation \u2014 check version: curl http://<host>:10000/",
+      "CVE-2019-15107: unauthenticated RCE via password reset endpoint",
+      "Default creds: admin/admin or as set during install",
+      "Brute force login: hydra -l root -P wordlist.txt <host> http-form-post '/session_login.cgi:user=^USER^&pass=^PASS^:Login failed'",
+      "Tools: metasploit exploit/linux/http/webmin_backdoor, nmap --script webmin*"
+    ],
+    "defensive_notes": [
+      "Require HTTPS for Webmin (disable HTTP access)",
+      "Restrict access to known admin IPs via built-in IP access control",
+      "Apply Webmin updates immediately \u2014 CVE-2019-15107 was critical RCE",
+      "Consider replacing Webmin with purpose-built configuration management"
+    ],
+    "search_terms": [
+      "webmin",
+      "virtualmin"
+    ]
+  },
+  "10250": {
+    "port": 10250,
+    "service_name": "port-10250",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "wiki_description": null,
+    "popularity_freq": null,
+    "wiki_url": null,
+    "nmap_tcp_freq": null,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": null,
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "kubelet",
+      "kubernetes"
+    ]
+  },
+  "11211": {
+    "port": 11211,
+    "service_name": "memcache",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Memory cache service",
+    "wiki_description": "memcached",
+    "popularity_freq": 0.0,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.0,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "memcache",
+    "nmap_comment": "Memory cache service",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "memcached"
+    ]
+  },
+  "27017": {
+    "port": 27017,
+    "service_name": "mongodb",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Mongo database system",
+    "wiki_description": "MongoDB daemon process ( mongod ) and routing service ( mongos )",
+    "popularity_freq": 0.001307,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.001307,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "mongod",
+    "nmap_comment": "mongodb | http://docs.mongodb.org/manual/reference/default-mongodb-port/ | Mongo database system",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T1190",
+        "port": 27017,
+        "name": "Exploit Public-Facing Application",
+        "tactic": "initial-access",
+        "url": "https://attack.mitre.org/techniques/T1190/",
+        "fetched_at": "2026-06-16T07:36:37Z"
+      },
+      {
+        "technique_id": "T1213",
+        "port": 27017,
+        "name": "Data from Information Repositories",
+        "tactic": "collection",
+        "url": "https://attack.mitre.org/techniques/T1213/",
+        "fetched_at": "2026-06-16T07:36:37Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "Unauthenticated MongoDB = full read/write access",
+      "mongo --host <host> \u2192 show dbs",
+      "Tools: mongodump, NoSQLMap"
+    ],
+    "defensive_notes": [
+      "Enable --auth flag",
+      "Bind to 127.0.0.1 or private IP",
+      "Use role-based access control"
+    ],
+    "search_terms": [
+      "mongodb"
+    ]
+  },
+  "27018": {
+    "port": 27018,
+    "service_name": "port-27018",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "wiki_description": "Unturned , a survival game",
+    "popularity_freq": 0.000654,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": 0.000654,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "mongod",
+    "nmap_comment": "http://docs.mongodb.org/manual/reference/default-mongodb-port/",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "mongodb"
+    ]
+  },
+  "27019": {
+    "port": 27019,
+    "service_name": "port-27019",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "wiki_description": null,
+    "popularity_freq": 7.6e-05,
+    "wiki_url": null,
+    "nmap_tcp_freq": 7.6e-05,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "mongod",
+    "nmap_comment": "http://docs.mongodb.org/manual/reference/default-mongodb-port/",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "27019"
+    ]
+  },
+  "44818": {
+    "port": 44818,
+    "service_name": "EtherNet-IP-2",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "New contact added for port 44818 on 2008-02-01\nThis entry is an alias to \"EtherNet-IP-2\".\nThis entry is now historic, not usable for use with many\ncommon service discovery mechanisms.",
+    "description": "EtherNet/IP messaging",
+    "wiki_description": "EtherNet/IP explicit messaging",
+    "popularity_freq": 0.000518,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.0,
+    "nmap_udp_freq": 0.000518,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "EtherNetIP-2",
+    "nmap_comment": "EtherNet/IP-2 | EtherNet-IP-2 | EtherNet/IP messaging",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T0886",
+        "port": 44818,
+        "name": "Remote Services",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T0886/",
+        "fetched_at": "2026-06-16T07:36:49Z"
+      },
+      {
+        "technique_id": "T0855",
+        "port": 44818,
+        "name": "Unauthorized Command Message",
+        "tactic": "impair-process-control",
+        "url": "https://attack.mitre.org/techniques/T0855/",
+        "fetched_at": "2026-06-16T07:36:49Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "EtherNet/IP replay attacks: capture Wireshark ENIP frames and replay",
+      "Enumerate devices: nmap -p 44818 --script enip-info <host>",
+      "Send unauthorized CIP commands via pycomm3 or EtherNet/IP toolkit",
+      "ICS devices often lack auth \u2014 direct command execution possible",
+      "Tools: nmap enip scripts, pycomm3, metasploit auxiliary/scanner/scada/modbusdetect"
+    ],
+    "defensive_notes": [
+      "Isolate EtherNet/IP devices on dedicated OT/ICS VLAN",
+      "Deploy ICS-aware firewall/IDS (Claroty, Dragos, Nozomi)",
+      "Block TCP/UDP 44818 from IT networks to OT devices",
+      "Implement unidirectional security gateways where possible",
+      "Require authentication patches where vendor firmware supports it"
+    ],
+    "search_terms": [
+      "ethernet/ip",
+      "ethernetip",
+      "industrial protocol",
+      "rockwell"
+    ]
+  },
+  "47808": {
+    "port": 47808,
+    "service_name": "bacnet",
+    "transport": [
+      "UDP",
+      "TCP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Building Automation and Control Networks",
+    "wiki_description": "BACnet Building Automation and Control Networks (47808 10 = BAC0 16 to 47823 10 = BACF 16 )",
+    "popularity_freq": 0.001554,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.0,
+    "nmap_udp_freq": 0.001554,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "bacnet",
+    "nmap_comment": "Building Automation and Control Networks",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [
+      {
+        "technique_id": "T0886",
+        "port": 47808,
+        "name": "Remote Services",
+        "tactic": "lateral-movement",
+        "url": "https://attack.mitre.org/techniques/T0886/",
+        "fetched_at": "2026-06-16T07:37:00Z"
+      },
+      {
+        "technique_id": "T0840",
+        "port": 47808,
+        "name": "Network Connection Enumeration",
+        "tactic": "discovery",
+        "url": "https://attack.mitre.org/techniques/T0840/",
+        "fetched_at": "2026-06-16T07:37:00Z"
+      }
+    ],
+    "variot_vulns": [],
+    "pentest_notes": [
+      "BACnet device enumeration: nmap -sU -p 47808 --script bacnet-info <host>",
+      "Read properties: bacpypes BACnet/IP explorer",
+      "Unauthorized read/write of BACnet objects = building system manipulation",
+      "No native authentication in BACnet \u2014 segment from corporate network",
+      "Tools: nmap bacnet scripts, bacpypes, BACnet discovery tools"
+    ],
+    "defensive_notes": [
+      "Isolate BACnet devices on dedicated building automation VLAN",
+      "Block UDP 47808 between IT and OT/BAS networks",
+      "Deploy BACnet-aware monitoring to detect unauthorized device commands",
+      "Work with building system integrators to apply firmware updates",
+      "Document all BACnet devices and expected traffic patterns"
+    ],
+    "search_terms": [
+      "bacnet",
+      "building automation",
+      "ashrae"
+    ]
+  },
+  "50070": {
+    "port": 50070,
+    "service_name": "port-50070",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "wiki_description": null,
+    "popularity_freq": null,
+    "wiki_url": null,
+    "nmap_tcp_freq": null,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": null,
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "hadoop",
+      "hdfs"
     ]
   }
 }
