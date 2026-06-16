@@ -1,0 +1,35 @@
+{
+  "port": 20,
+  "service_name": "ftp-data",
+  "transport": [
+    "TCP",
+    "SCTP",
+    "UDP"
+  ],
+  "iana_status": "Assigned",
+  "description": "FTP",
+  "wiki_description": "File Transfer Protocol (FTP) data transfer",
+  "popularity_freq": 0.001878,
+  "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+  "nmap_tcp_freq": 0.001079,
+  "nmap_udp_freq": 0.001878,
+  "nmap_sctp_freq": 0.0,
+  "nmap_service_name": "ftp-data",
+  "nmap_comment": "File Transfer [Default Data] | FTP",
+  "risk_level": "LOW",
+  "cve_count": 0,
+  "kev_count": 0,
+  "poc_count": 0,
+  "attackerkb_hits": 0,
+  "exploitdb_hits": 0,
+  "shadowserver_hits": 0,
+  "top_cves": [],
+  "all_cves": [],
+  "techniques": [],
+  "variot_vulns": [],
+  "pentest_notes": [],
+  "defensive_notes": [],
+  "search_terms": [
+    "ftp-data"
+  ]
+}
