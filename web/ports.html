@@ -160,6 +160,38 @@
       color: var(--dim);
     }
 
+    /* ── Glossary ────────────────────────────────────────────────── */
+    .legend-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      margin: 0.75rem 0 1rem;
+    }
+
+    .legend-block summary {
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--amber);
+      letter-spacing: 0.03em;
+      outline: none;
+    }
+
+    .legend-block summary:hover { color: var(--cream); }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.5rem 1.5rem;
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--dim);
+      line-height: 1.5;
+    }
+
+    .legend-grid strong { color: var(--cream); }
+
     /* ── Filter bar ──────────────────────────────────────────────── */
     .filter-bar {
       display: flex;
@@ -260,12 +292,19 @@
     }
 
     /* ── Explorer table wrapper ──────────────────────────────────── */
+    /* No overflow-x here on purpose: setting overflow-x while leaving
+       overflow-y at its default forces the browser to compute overflow-y
+       as "auto" too (CSS spec), which turns this div into a scroll
+       container. That breaks `position: sticky` on the thead below —
+       it sticks to *this div's* scrollport instead of the viewport,
+       making the header appear to float mid-table while scrolling.
+       Horizontal scroll on narrow screens is handled by .hide-mobile
+       and the table's own font-size reduction instead. */
     #cve-table-wrap {
       background: var(--card);
       border: 1px solid var(--border);
       border-top: none;
       border-radius: 0 0 6px 6px;
-      overflow-x: auto;
       margin-bottom: 0.5rem;
     }
 
@@ -447,6 +486,22 @@
 
   <!-- Port header: number, service, risk badge, counts -->
   <div id="port-header"></div>
+
+  <!-- Glossary: abbreviation full forms -->
+  <details class="legend-block">
+    <summary>Glossary — what these abbreviations mean</summary>
+    <div class="legend-grid">
+      <div><strong>CVE</strong> — Common Vulnerabilities and Exposures (unique vulnerability ID)</div>
+      <div><strong>CVSS</strong> — Common Vulnerability Scoring System (0–10 severity score)</div>
+      <div><strong>EPSS</strong> — Exploit Prediction Scoring System (probability of real-world exploitation, 0–100%)</div>
+      <div><strong>KEV</strong> — CISA Known Exploited Vulnerabilities (confirmed active exploitation in the wild)</div>
+      <div><strong>PoC</strong> — Proof of Concept (public exploit code exists, e.g. on GitHub)</div>
+      <div><strong>EDB</strong> — Exploit-DB (count of published exploit scripts for this CVE)</div>
+      <div><strong>NVD</strong> — National Vulnerability Database (NIST's source-of-record for CVE details)</div>
+      <div><strong>VARIoT</strong> — Vulnerability and Asset Repository for IoT (CIRCL Luxembourg)</div>
+      <div><strong>ATT&amp;CK</strong> — MITRE Adversarial Tactics, Techniques &amp; Common Knowledge (attacker behavior framework)</div>
+    </div>
+  </details>
 
   <!-- Filter / sort bar -->
   <div class="filter-bar" id="filter-bar">
