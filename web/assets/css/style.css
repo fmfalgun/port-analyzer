@@ -413,6 +413,12 @@ main {
 }
 .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
+/* ── usage & history ───────────────────────────────────────────── */
+.usage-text { font-size: 0.88rem; color: var(--cream); line-height: 1.5; }
+.usage-freq { font-size: 0.85rem; color: var(--cream); }
+.usage-link a { color: var(--accent); font-size: 0.82rem; text-decoration: none; }
+.usage-link a:hover { text-decoration: underline; }
+
 /* ── CVE table ─────────────────────────────────────────────────── */
 .cve-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.82rem; }
 .cve-table th { color: var(--dim); font-weight: 400; text-align: left; padding: 0.3rem 0.5rem; border-bottom: 1px solid var(--border); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; }

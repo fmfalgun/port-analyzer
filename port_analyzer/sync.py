@@ -55,7 +55,10 @@ def _get_file(url: str, hdrs: dict) -> tuple:
     """
     import requests
 
-    resp = requests.get(url, headers=hdrs, timeout=15)
+    try:
+        resp = requests.get(url, headers=hdrs, timeout=15)
+    except requests.exceptions.RequestException as exc:
+        raise RuntimeError(f"Network error reading from GitHub ({exc.__class__.__name__}): {exc}") from exc
     if resp.status_code == 404:
         return None, None
     if not resp.ok:
@@ -79,7 +82,10 @@ def _get_sha(url: str, hdrs: dict) -> str | None:
     """
     import requests
 
-    resp = requests.get(url, headers=hdrs, timeout=15)
+    try:
+        resp = requests.get(url, headers=hdrs, timeout=15)
+    except requests.exceptions.RequestException as exc:
+        raise RuntimeError(f"Network error reading from GitHub ({exc.__class__.__name__}): {exc}") from exc
     if resp.status_code == 404:
         return None
     if not resp.ok:
@@ -93,7 +99,9 @@ def _put_file(url: str, hdrs: dict, content_bytes: bytes, sha, commit_message: s
 
     sha=None for new files (omits the sha key from the payload).
     Returns the parsed response JSON.
-    Raises RuntimeError on failure.
+    Raises RuntimeError on failure (including network-level timeouts —
+    a fixed 30s timeout fails for ports with thousands of CVEs where the
+    base64-encoded payload can be 10+ MB, so the timeout scales with size).
     """
     import requests
 
@@ -102,7 +110,14 @@ def _put_file(url: str, hdrs: dict, content_bytes: bytes, sha, commit_message: s
     if sha is not None:
         payload["sha"] = sha
 
-    resp = requests.put(url, headers=hdrs, json=payload, timeout=30)
+    size_mb = len(encoded) / (1024 * 1024)
+    timeout = max(30, int(size_mb * 15))
+
+    try:
+        resp = requests.put(url, headers=hdrs, json=payload, timeout=timeout)
+    except requests.exceptions.RequestException as exc:
+        raise RuntimeError(f"Network error pushing to GitHub ({exc.__class__.__name__}): {exc}") from exc
+
     if not resp.ok:
         raise RuntimeError(f"Push failed {resp.status_code}: {resp.text[:200]}")
     return resp.json()

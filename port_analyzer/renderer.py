@@ -153,8 +153,19 @@ def render_port(result: dict):
 
     # Usage & History (Wikipedia / nmap-services popularity)
     wiki_description = result.get("wiki_description")
+    wiki_url          = result.get("wiki_url")
     popularity_freq   = result.get("popularity_freq")
-    if wiki_description or popularity_freq is not None:
+    nmap_tcp_freq     = result.get("nmap_tcp_freq")
+    nmap_udp_freq     = result.get("nmap_udp_freq")
+    nmap_sctp_freq    = result.get("nmap_sctp_freq")
+    nmap_service_name = result.get("nmap_service_name")
+    nmap_comment      = result.get("nmap_comment")
+
+    has_nmap_data = any(
+        v is not None for v in (nmap_tcp_freq, nmap_udp_freq, nmap_sctp_freq)
+    ) or popularity_freq is not None
+
+    if wiki_description or has_nmap_data:
         console.print()
         t = Text()
         t.append("[>] ", style="cyan")
@@ -162,11 +173,35 @@ def render_port(result: dict):
         console.print(t)
         if wiki_description:
             console.print(f"    [dim]Wikipedia:[/dim] {wiki_description[:300]}")
-        if popularity_freq is not None:
-            console.print(
-                f"    [dim]Popularity:[/dim] {popularity_freq * 100:.1f}% of "
-                "internet-wide scans see this port open (nmap-services)"
-            )
+            if wiki_url:
+                console.print(f"      [dim]View full article:[/dim] {wiki_url}")
+
+        if has_nmap_data:
+            proto_parts = []
+            for label, freq in (("TCP", nmap_tcp_freq), ("UDP", nmap_udp_freq), ("SCTP", nmap_sctp_freq)):
+                if freq is not None:
+                    proto_parts.append(f"{label} {freq * 100:.1f}%")
+
+            if proto_parts:
+                service_suffix = ""
+                if nmap_service_name and nmap_service_name != result.get("service_name"):
+                    service_suffix = f', service "{nmap_service_name}"'
+                popularity_line = (
+                    f"    [dim]Popularity (nmap-services{service_suffix}):[/dim] "
+                    + " · ".join(proto_parts)
+                )
+                if nmap_comment:
+                    popularity_line += f" ({nmap_comment})"
+                console.print(popularity_line)
+                console.print(
+                    "      [dim]View source:[/dim] https://github.com/nmap/nmap/blob/master/nmap-services"
+                )
+            elif popularity_freq is not None:
+                # Backward-compat fallback (cached data predating per-protocol fields)
+                console.print(
+                    f"    [dim]Popularity:[/dim] {popularity_freq * 100:.1f}% of "
+                    "internet-wide scans see this port open (nmap-services)"
+                )
 
     # Top CVEs
     top_cves = result.get("top_cves", [])
@@ -318,18 +353,51 @@ def render_markdown(result: dict) -> str:
 
     # Usage & History (Wikipedia / nmap-services popularity)
     wiki_description = result.get("wiki_description")
+    wiki_url          = result.get("wiki_url")
     popularity_freq   = result.get("popularity_freq")
-    if wiki_description or popularity_freq is not None:
+    nmap_tcp_freq     = result.get("nmap_tcp_freq")
+    nmap_udp_freq     = result.get("nmap_udp_freq")
+    nmap_sctp_freq    = result.get("nmap_sctp_freq")
+    nmap_service_name = result.get("nmap_service_name")
+    nmap_comment      = result.get("nmap_comment")
+
+    has_nmap_data = any(
+        v is not None for v in (nmap_tcp_freq, nmap_udp_freq, nmap_sctp_freq)
+    ) or popularity_freq is not None
+
+    if wiki_description or has_nmap_data:
         lines.append("## Usage & History")
         if wiki_description:
             lines.append(f"**Wikipedia:** {wiki_description}")
+            if wiki_url:
+                lines.append(f"([view full article]({wiki_url}))")
             lines.append("")
-        if popularity_freq is not None:
-            lines.append(
-                f"**Popularity:** {popularity_freq * 100:.1f}% of internet-wide scans see this port open "
-                "([nmap-services](https://github.com/nmap/nmap/blob/master/nmap-services))"
-            )
-            lines.append("")
+
+        if has_nmap_data:
+            proto_parts = []
+            for label, freq in (("TCP", nmap_tcp_freq), ("UDP", nmap_udp_freq), ("SCTP", nmap_sctp_freq)):
+                if freq is not None:
+                    proto_parts.append(f"{label} {freq * 100:.1f}%")
+
+            if proto_parts:
+                service_suffix = ""
+                if nmap_service_name and nmap_service_name != result.get("service_name"):
+                    service_suffix = f', service "{nmap_service_name}"'
+                popularity_line = (
+                    f"**Popularity** (nmap-services{service_suffix}): " + " · ".join(proto_parts)
+                )
+                if nmap_comment:
+                    popularity_line += f" ({nmap_comment})"
+                popularity_line += " — ([view source](https://github.com/nmap/nmap/blob/master/nmap-services))"
+                lines.append(popularity_line)
+                lines.append("")
+            elif popularity_freq is not None:
+                # Backward-compat fallback (cached data predating per-protocol fields)
+                lines.append(
+                    f"**Popularity:** {popularity_freq * 100:.1f}% of internet-wide scans see this port open "
+                    "([nmap-services](https://github.com/nmap/nmap/blob/master/nmap-services))"
+                )
+                lines.append("")
 
     def _nvd_link(cve_id: str) -> str:
         return f"[{cve_id}](https://nvd.nist.gov/vuln/detail/{cve_id})"

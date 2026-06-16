@@ -170,14 +170,38 @@ function renderUsageHistory(r) {
   if (!el) return;
 
   const wiki = r.wiki_description;
-  const freq = r.popularity_freq;
-  if (!wiki && freq == null) { el.innerHTML = ""; return; }
+  const freqParts = [];
+  if (r.nmap_tcp_freq  != null) freqParts.push(`TCP ${(r.nmap_tcp_freq  * 100).toFixed(1)}%`);
+  if (r.nmap_udp_freq  != null) freqParts.push(`UDP ${(r.nmap_udp_freq  * 100).toFixed(1)}%`);
+  if (r.nmap_sctp_freq != null) freqParts.push(`SCTP ${(r.nmap_sctp_freq * 100).toFixed(1)}%`);
+  const hasNmap = freqParts.length > 0 || r.popularity_freq != null;
+
+  if (!wiki && !hasNmap) { el.innerHTML = ""; return; }
 
   const wikiBlock = wiki
-    ? `<p class="usage-text">${esc(wiki)}</p>`
+    ? `<p class="usage-text">${esc(wiki)}</p>
+       ${r.wiki_url ? `<p class="usage-link"><a href="${esc(r.wiki_url)}" target="_blank" rel="noopener noreferrer">View full Wikipedia article ↗</a></p>` : ""}`
     : "";
-  const freqBlock = (freq != null)
-    ? `<p class="usage-freq"><span style="color:var(--warn)">${esc((freq * 100).toFixed(1))}%</span> of internet-wide scans see this port open <span style="color:var(--dim);font-size:0.78rem">(nmap-services)</span></p>`
+
+  let freqText;
+  if (freqParts.length > 0) {
+    freqText = freqParts.map(p => `<span style="color:var(--warn)">${p}</span>`).join(" · ");
+  } else if (r.popularity_freq != null) {
+    freqText = `<span style="color:var(--warn)">${esc((r.popularity_freq * 100).toFixed(1))}%</span>`;
+  } else {
+    freqText = null;
+  }
+
+  const svcNote = (r.nmap_service_name && r.nmap_service_name !== r.service_name)
+    ? ` <span style="color:var(--dim);font-size:0.78rem">(nmap service: "${esc(r.nmap_service_name)}")</span>`
+    : "";
+  const commentNote = r.nmap_comment
+    ? ` <span style="color:var(--dim);font-size:0.78rem">— ${esc(r.nmap_comment)}</span>`
+    : "";
+
+  const freqBlock = freqText
+    ? `<p class="usage-freq">${freqText} of internet-wide scans see this port open <span style="color:var(--dim);font-size:0.78rem">(nmap-services)</span>${svcNote}${commentNote}
+       <br><a href="https://github.com/nmap/nmap/blob/master/nmap-services" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem">View source ↗</a></p>`
     : "";
 
   el.innerHTML = `

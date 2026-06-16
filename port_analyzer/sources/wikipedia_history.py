@@ -12,6 +12,7 @@ from port_analyzer.cache import get_wikipedia_ports_cache, set_wikipedia_ports_c
 
 WIKI_API_URL = "https://en.wikipedia.org/w/api.php"
 WIKI_PAGE = "List_of_TCP_and_UDP_port_numbers"
+WIKI_ARTICLE_URL = f"https://en.wikipedia.org/wiki/{WIKI_PAGE}"
 
 
 def _fetch_and_parse() -> dict:
@@ -89,7 +90,7 @@ def fetch_wikipedia_history_for_port(port: int, db=None) -> None:
 
         desc = cached.get(str(port))
         if desc:
-            upsert_port_history(db, port, wiki_description=desc)
+            upsert_port_history(db, port, wiki_description=desc, wiki_url=WIKI_ARTICLE_URL)
 
     except Exception as exc:
         print(f"[!] wikipedia_history: failed for port {port}: {exc}")

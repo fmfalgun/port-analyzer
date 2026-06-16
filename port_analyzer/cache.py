@@ -145,6 +145,13 @@ def _migrate(db: sqlite3.Connection):
         # Tier 2 — Shadowserver
         ("cves", "shadowserver_count",    "INTEGER"),
         ("cves", "shadowserver_updated_at", "TEXT"),
+        # Port history — full nmap-services record + Wikipedia source link
+        ("port_history", "wiki_url",          "TEXT"),
+        ("port_history", "nmap_tcp_freq",     "REAL"),
+        ("port_history", "nmap_udp_freq",     "REAL"),
+        ("port_history", "nmap_sctp_freq",    "REAL"),
+        ("port_history", "nmap_service_name", "TEXT"),
+        ("port_history", "nmap_comment",      "TEXT"),
     ]
     for table, col, typedef in new_cols:
         try:
@@ -478,21 +485,40 @@ def get_port_history(db: sqlite3.Connection, port: int) -> dict | None:
 
 def upsert_port_history(db: sqlite3.Connection, port: int,
                          wiki_description: str | None = None,
-                         popularity_freq: float | None = None):
+                         popularity_freq: float | None = None,
+                         wiki_url: str | None = None,
+                         nmap_tcp_freq: float | None = None,
+                         nmap_udp_freq: float | None = None,
+                         nmap_sctp_freq: float | None = None,
+                         nmap_service_name: str | None = None,
+                         nmap_comment: str | None = None):
     """
-    Upsert a port_history row. Only overwrites fields explicitly passed (non-None) —
-    fields not passed retain their existing stored value via COALESCE. This lets the
-    Wikipedia source and the nmap-services source each update their own field
-    independently without clobbering the other's data.
+    Upsert a port_history row. Only overwrites fields explicitly passed
+    (non-None) — fields not passed retain their existing stored value via
+    COALESCE. This lets the Wikipedia source and the nmap-services source
+    each update their own fields independently without clobbering the
+    other's data.
     """
     db.execute("""
-        INSERT INTO port_history (port, wiki_description, popularity_freq, updated_at)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO port_history (
+            port, wiki_description, popularity_freq, wiki_url,
+            nmap_tcp_freq, nmap_udp_freq, nmap_sctp_freq,
+            nmap_service_name, nmap_comment, updated_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(port) DO UPDATE SET
-            wiki_description = COALESCE(excluded.wiki_description, port_history.wiki_description),
-            popularity_freq  = COALESCE(excluded.popularity_freq,  port_history.popularity_freq),
-            updated_at       = excluded.updated_at
-    """, (port, wiki_description, popularity_freq, now_utc()))
+            wiki_description  = COALESCE(excluded.wiki_description,  port_history.wiki_description),
+            popularity_freq   = COALESCE(excluded.popularity_freq,   port_history.popularity_freq),
+            wiki_url          = COALESCE(excluded.wiki_url,          port_history.wiki_url),
+            nmap_tcp_freq     = COALESCE(excluded.nmap_tcp_freq,     port_history.nmap_tcp_freq),
+            nmap_udp_freq     = COALESCE(excluded.nmap_udp_freq,     port_history.nmap_udp_freq),
+            nmap_sctp_freq    = COALESCE(excluded.nmap_sctp_freq,    port_history.nmap_sctp_freq),
+            nmap_service_name = COALESCE(excluded.nmap_service_name, port_history.nmap_service_name),
+            nmap_comment      = COALESCE(excluded.nmap_comment,      port_history.nmap_comment),
+            updated_at        = excluded.updated_at
+    """, (port, wiki_description, popularity_freq, wiki_url,
+          nmap_tcp_freq, nmap_udp_freq, nmap_sctp_freq,
+          nmap_service_name, nmap_comment, now_utc()))
     db.commit()
 
 

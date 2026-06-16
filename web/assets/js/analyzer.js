@@ -369,14 +369,38 @@ function techniqueSection(r) {
 
 function usageHistorySection(r) {
   const wiki = r.wiki_description;
-  const freq = r.popularity_freq;
-  if (!wiki && freq == null) return "";
+  const freqParts = [];
+  if (r.nmap_tcp_freq  != null) freqParts.push(`TCP ${(r.nmap_tcp_freq  * 100).toFixed(1)}%`);
+  if (r.nmap_udp_freq  != null) freqParts.push(`UDP ${(r.nmap_udp_freq  * 100).toFixed(1)}%`);
+  if (r.nmap_sctp_freq != null) freqParts.push(`SCTP ${(r.nmap_sctp_freq * 100).toFixed(1)}%`);
+  const hasNmap = freqParts.length > 0 || r.popularity_freq != null;
+
+  if (!wiki && !hasNmap) return "";
 
   const wikiLine = wiki
-    ? `<p class="usage-text">${esc(wiki.slice(0, 400))}</p>`
+    ? `<p class="usage-text">${esc(wiki.slice(0, 400))}</p>
+       ${r.wiki_url ? `<p class="usage-link"><a href="${esc(r.wiki_url)}" target="_blank" rel="noopener noreferrer">View full Wikipedia article ↗</a></p>` : ""}`
     : "";
-  const freqLine = (freq != null)
-    ? `<p class="usage-freq"><span style="color:var(--warn)">${esc((freq * 100).toFixed(1))}%</span> of internet-wide scans see this port open <span style="color:var(--dim);font-size:0.78rem">(nmap-services)</span></p>`
+
+  let freqText;
+  if (freqParts.length > 0) {
+    freqText = freqParts.map(p => `<span style="color:var(--warn)">${p}</span>`).join(" · ");
+  } else if (r.popularity_freq != null) {
+    freqText = `<span style="color:var(--warn)">${esc((r.popularity_freq * 100).toFixed(1))}%</span>`;
+  } else {
+    freqText = null;
+  }
+
+  const svcNote = (r.nmap_service_name && r.nmap_service_name !== r.service_name)
+    ? ` <span style="color:var(--dim);font-size:0.78rem">(nmap service: "${esc(r.nmap_service_name)}")</span>`
+    : "";
+  const commentNote = r.nmap_comment
+    ? ` <span style="color:var(--dim);font-size:0.78rem">— ${esc(r.nmap_comment)}</span>`
+    : "";
+
+  const freqLine = freqText
+    ? `<p class="usage-freq">${freqText} of internet-wide scans see this port open <span style="color:var(--dim);font-size:0.78rem">(nmap-services)</span>${svcNote}${commentNote}
+       <br><a href="https://github.com/nmap/nmap/blob/master/nmap-services" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem">View source ↗</a></p>`
     : "";
 
   return `<div class="section-block">
@@ -471,15 +495,30 @@ function generateMarkdown(r) {
   }
 
   // Usage & History
-  if (r.wiki_description || r.popularity_freq != null) {
-    lines.push("## Usage & History");
-    if (r.wiki_description) {
-      lines.push(`**Wikipedia:** ${r.wiki_description}`);
-      lines.push("");
-    }
-    if (r.popularity_freq != null) {
-      lines.push(`**Popularity:** ${(r.popularity_freq * 100).toFixed(1)}% of internet-wide scans see this port open ([nmap-services](https://github.com/nmap/nmap/blob/master/nmap-services))`);
-      lines.push("");
+  {
+    const freqParts = [];
+    if (r.nmap_tcp_freq  != null) freqParts.push(`TCP ${(r.nmap_tcp_freq  * 100).toFixed(1)}%`);
+    if (r.nmap_udp_freq  != null) freqParts.push(`UDP ${(r.nmap_udp_freq  * 100).toFixed(1)}%`);
+    if (r.nmap_sctp_freq != null) freqParts.push(`SCTP ${(r.nmap_sctp_freq * 100).toFixed(1)}%`);
+    const hasNmap = freqParts.length > 0 || r.popularity_freq != null;
+
+    if (r.wiki_description || hasNmap) {
+      lines.push("## Usage & History");
+      if (r.wiki_description) {
+        lines.push(`**Wikipedia:** ${r.wiki_description}`);
+        if (r.wiki_url) lines.push(`([view full article](${r.wiki_url}))`);
+        lines.push("");
+      }
+      if (hasNmap) {
+        const freqText = freqParts.length > 0
+          ? freqParts.join(" · ")
+          : `${(r.popularity_freq * 100).toFixed(1)}%`;
+        const svcNote = (r.nmap_service_name && r.nmap_service_name !== r.service_name)
+          ? ` (nmap service: "${r.nmap_service_name}")` : "";
+        const commentNote = r.nmap_comment ? ` — ${r.nmap_comment}` : "";
+        lines.push(`**Popularity:** ${freqText} of internet-wide scans see this port open${svcNote}${commentNote} ([view source](https://github.com/nmap/nmap/blob/master/nmap-services))`);
+        lines.push("");
+      }
     }
   }
 
