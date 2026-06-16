@@ -2,11 +2,19 @@
   "port": 8766,
   "service_name": "amcs",
   "transport": [
-    "UDP",
-    "TCP"
+    "TCP",
+    "UDP"
   ],
   "iana_status": "Assigned",
   "description": "Agilent Connectivity Service",
+  "wiki_description": null,
+  "popularity_freq": 0.000152,
+  "wiki_url": null,
+  "nmap_tcp_freq": 0.000152,
+  "nmap_udp_freq": null,
+  "nmap_sctp_freq": null,
+  "nmap_service_name": "amcs",
+  "nmap_comment": "Agilent Connectivity Service",
   "risk_level": "MEDIUM",
   "cve_count": 2,
   "kev_count": 0,
