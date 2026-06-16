@@ -151,6 +151,23 @@ def render_port(result: dict):
         console.print(t)
         console.print("    " + " · ".join(result["search_terms"]))
 
+    # Usage & History (Wikipedia / nmap-services popularity)
+    wiki_description = result.get("wiki_description")
+    popularity_freq   = result.get("popularity_freq")
+    if wiki_description or popularity_freq is not None:
+        console.print()
+        t = Text()
+        t.append("[>] ", style="cyan")
+        t.append("Usage & History")
+        console.print(t)
+        if wiki_description:
+            console.print(f"    [dim]Wikipedia:[/dim] {wiki_description[:300]}")
+        if popularity_freq is not None:
+            console.print(
+                f"    [dim]Popularity:[/dim] {popularity_freq * 100:.1f}% of "
+                "internet-wide scans see this port open (nmap-services)"
+            )
+
     # Top CVEs
     top_cves = result.get("top_cves", [])
     if top_cves:
@@ -299,6 +316,21 @@ def render_markdown(result: dict) -> str:
         lines.append(desc)
         lines.append("")
 
+    # Usage & History (Wikipedia / nmap-services popularity)
+    wiki_description = result.get("wiki_description")
+    popularity_freq   = result.get("popularity_freq")
+    if wiki_description or popularity_freq is not None:
+        lines.append("## Usage & History")
+        if wiki_description:
+            lines.append(f"**Wikipedia:** {wiki_description}")
+            lines.append("")
+        if popularity_freq is not None:
+            lines.append(
+                f"**Popularity:** {popularity_freq * 100:.1f}% of internet-wide scans see this port open "
+                "([nmap-services](https://github.com/nmap/nmap/blob/master/nmap-services))"
+            )
+            lines.append("")
+
     def _nvd_link(cve_id: str) -> str:
         return f"[{cve_id}](https://nvd.nist.gov/vuln/detail/{cve_id})"
 
@@ -397,6 +429,10 @@ def render_markdown(result: dict) -> str:
         lines.append(f"- **Exploit-DB** — <https://www.exploit-db.com/>")
     if result.get("shadowserver_hits", 0):
         lines.append(f"- **Shadowserver** — <https://www.shadowserver.org/>")
+    if wiki_description:
+        lines.append(f"- **Wikipedia** — <https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers>")
+    if popularity_freq is not None:
+        lines.append(f"- **nmap-services** — <https://github.com/nmap/nmap/blob/master/nmap-services>")
     if techniques:
         lines.append(f"- **MITRE ATT&CK** — <https://attack.mitre.org/>")
     for cve in top_cves:

@@ -99,6 +99,25 @@ CREATE TABLE IF NOT EXISTS rate_limit_ip (
     requests     INTEGER DEFAULT 0,
     PRIMARY KEY (ip, date)
 );
+
+CREATE TABLE IF NOT EXISTS port_history (
+    port              INTEGER PRIMARY KEY,
+    wiki_description  TEXT,
+    popularity_freq   REAL,
+    updated_at        TEXT
+);
+
+CREATE TABLE IF NOT EXISTS wikipedia_ports_cache (
+    id          INTEGER PRIMARY KEY CHECK (id = 1),
+    fetched_at  TEXT NOT NULL,
+    data        TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS nmap_services_cache (
+    id          INTEGER PRIMARY KEY CHECK (id = 1),
+    fetched_at  TEXT NOT NULL,
+    data        TEXT NOT NULL
+);
 """
 
 
@@ -447,3 +466,75 @@ def check_ip_rate_limit(db: sqlite3.Connection, ip: str, limit: int = 20) -> boo
     )
     db.commit()
     return True
+
+
+# ── Port usage & history (Wikipedia + nmap-services) ───────────────────────────
+
+def get_port_history(db: sqlite3.Connection, port: int) -> dict | None:
+    """Return the port_history row as a dict, or None if no row exists."""
+    row = db.execute("SELECT * FROM port_history WHERE port=?", (port,)).fetchone()
+    return dict(row) if row else None
+
+
+def upsert_port_history(db: sqlite3.Connection, port: int,
+                         wiki_description: str | None = None,
+                         popularity_freq: float | None = None):
+    """
+    Upsert a port_history row. Only overwrites fields explicitly passed (non-None) —
+    fields not passed retain their existing stored value via COALESCE. This lets the
+    Wikipedia source and the nmap-services source each update their own field
+    independently without clobbering the other's data.
+    """
+    db.execute("""
+        INSERT INTO port_history (port, wiki_description, popularity_freq, updated_at)
+        VALUES (?, ?, ?, ?)
+        ON CONFLICT(port) DO UPDATE SET
+            wiki_description = COALESCE(excluded.wiki_description, port_history.wiki_description),
+            popularity_freq  = COALESCE(excluded.popularity_freq,  port_history.popularity_freq),
+            updated_at       = excluded.updated_at
+    """, (port, wiki_description, popularity_freq, now_utc()))
+    db.commit()
+
+
+# ── Wikipedia ports table blob cache (whole article parsed once, ~30 day TTL) ──
+
+def get_wikipedia_ports_cache(db: sqlite3.Connection) -> dict | None:
+    """Return cached {port_str: description_text} dict if less than 30 days old, else None."""
+    row = db.execute("SELECT * FROM wikipedia_ports_cache WHERE id=1").fetchone()
+    if not row:
+        return None
+    fetched = datetime.fromisoformat(row["fetched_at"].replace("Z", "+00:00"))
+    age_hours = (datetime.now(timezone.utc) - fetched).total_seconds() / 3600
+    if age_hours > 720:  # 30 days
+        return None
+    return json.loads(row["data"])
+
+
+def set_wikipedia_ports_cache(db: sqlite3.Connection, parsed: dict):
+    db.execute("""
+        INSERT INTO wikipedia_ports_cache (id, fetched_at, data) VALUES (1, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET fetched_at=excluded.fetched_at, data=excluded.data
+    """, (now_utc(), json.dumps(parsed)))
+    db.commit()
+
+
+# ── nmap-services flat file blob cache (whole file once, ~30 day TTL) ──────────
+
+def get_nmap_services_cache(db: sqlite3.Connection) -> str | None:
+    """Return cached raw nmap-services file text if less than 30 days old, else None."""
+    row = db.execute("SELECT * FROM nmap_services_cache WHERE id=1").fetchone()
+    if not row:
+        return None
+    fetched = datetime.fromisoformat(row["fetched_at"].replace("Z", "+00:00"))
+    age_hours = (datetime.now(timezone.utc) - fetched).total_seconds() / 3600
+    if age_hours > 720:  # 30 days
+        return None
+    return row["data"]
+
+
+def set_nmap_services_cache(db: sqlite3.Connection, raw_text: str):
+    db.execute("""
+        INSERT INTO nmap_services_cache (id, fetched_at, data) VALUES (1, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET fetched_at=excluded.fetched_at, data=excluded.data
+    """, (now_utc(), raw_text))
+    db.commit()

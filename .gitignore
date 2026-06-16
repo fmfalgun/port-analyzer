@@ -11,3 +11,4 @@ build/
 venv/
 *.log
 mitre_attack_bundle.json
+.notes/

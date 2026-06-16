@@ -251,6 +251,56 @@ Output table: variot_vulns (variot_id, port, cve_id, title, description, cvss_sc
 Focus: IoT device CVEs frequently absent from or under-enriched in NVD
 ```
 
+### 3.8 Wikipedia port history (`sources/wikipedia_history.py`)
+
+```
+Source: Wikipedia "List of TCP and UDP port numbers" article
+URL:    https://en.wikipedia.org/w/api.php?action=parse&page=List_of_TCP_and_UDP_port_numbers
+        &format=json&prop=text&formatversion=2
+Auth:   None (free public MediaWiki API)
+Fetch strategy: WHOLE-ARTICLE BLOB CACHE
+  - GETs the rendered article HTML once via action=parse
+  - Parses every <table class="wikitable"> with BeautifulSoup
+  - Locates the "port" and "description"/"use" columns by header text (case-insensitive)
+  - Extracts port numbers from the port cell via regex (handles ranges/multi-port cells)
+  - Strips Wikipedia footnote markers (e.g. "[477]") from the description cell
+  - Builds a single dict {port_str: description_text} (description capped at 1500 chars)
+  - Caches the WHOLE dict as one JSON blob in wikipedia_ports_cache (not per-port)
+  - Cache TTL: 720 hours (30 days) — port assignment history barely ever changes
+  - Per-port lookup done locally against the cached dict (no per-port API call)
+
+Per-port logic:
+  1. Load cached {port: description} dict (or fetch + parse + cache if stale/missing)
+  2. dict.get(str(port)) → if found, upsert_port_history(db, port, wiki_description=desc)
+  3. Never raises — any failure (network, parse, missing table) is caught and logged; no-op
+
+Output: port_history.wiki_description
+Function: fetch_wikipedia_history_for_port(port, db=None)
+```
+
+### 3.9 nmap-services popularity (`sources/nmap_services.py`)
+
+```
+Source: https://raw.githubusercontent.com/nmap/nmap/master/nmap-services
+Auth:   None (free, public, stable flat-text format)
+Format: name<TAB>port/proto<TAB>frequency<TAB>#comment
+Fetch strategy: WHOLE-FILE BLOB CACHE
+  - GETs the raw nmap-services text file once
+  - Caches the WHOLE raw text as one blob in nmap_services_cache (not per-port)
+  - Cache TTL: 720 hours (30 days) — real-world port popularity is near-static
+  - Per-port parsing done on-demand against the cached text (no per-port API call)
+
+Per-port logic:
+  1. Load cached raw text (or fetch + cache if stale/missing)
+  2. Regex-match every non-comment line; for lines matching the queried port,
+     take the MAX frequency value across tcp/udp/sctp entries for that port
+  3. If a frequency was found → upsert_port_history(db, port, popularity_freq=freq)
+  4. Never raises — any failure (network, no match) is caught and logged; no-op
+
+Output: port_history.popularity_freq (0.0–1.0, real-world internet-scan prevalence)
+Function: fetch_nmap_popularity_for_port(port, db=None)
+```
+
 ---
 
 ## 4. Smart Caching Architecture
@@ -278,6 +328,8 @@ Each source has its own TTL:
 | MITRE ATT&CK | 8760h (1yr) | Seed map is static |
 | PoC-in-GitHub | 24h | New PoC repos appear daily |
 | VARIoT | 48h | IoT CVE feed updates less frequently |
+| Wikipedia port history | 720h (30d) | Port assignment history barely ever changes |
+| nmap-services popularity | 720h (30d) | Real-world port popularity is near-static |
 
 ### 4.2 Fetch Log Table
 
@@ -330,7 +382,35 @@ For every `analyze_port(port)` call:
          update_fetch_log(port, 'variot')
    NO  → skip
 
-8. read everything from SQLite → assemble result dict → return
+8. fetch_attackerkb_for_port(port)  → is_stale(port, 'attackerkb', 24h)?
+   YES → fetch crowd-sourced exploitation assessments, update cves table
+   NO  → skip
+
+9. apply_exploitdb_to_port(port)    → exploitdb_cache stale (24h)?
+   YES → download full Exploit-DB CSV blob, cache it, mark port's CVEs
+   NO  → use cached blob, mark port's CVEs
+
+10. fetch_shadowserver_for_port(port) → is_stale(port, 'shadowserver', 6h)?
+    YES → query Shadowserver real-time scan data (no-op without API key)
+    NO  → skip
+
+11. fetch_wikipedia_history_for_port(port)
+                                    → wikipedia_ports_cache stale (720h/30d)?
+    YES → GET Wikipedia "List of TCP and UDP port numbers" via MediaWiki API,
+          parse all wikitable elements into {port: description}, cache whole blob
+    NO  → use cached blob
+    → look up this port's description → upsert_port_history(port, wiki_description=...)
+    → never raises; no-ops gracefully on any failure
+
+12. fetch_nmap_popularity_for_port(port)
+                                    → nmap_services_cache stale (720h/30d)?
+    YES → GET raw nmap-services text file from GitHub, cache whole blob
+    NO  → use cached blob
+    → parse this port's max frequency across tcp/udp/sctp → upsert_port_history(port, popularity_freq=...)
+    → never raises; no-ops gracefully on any failure
+
+13. read everything from SQLite (including history_row = get_port_history(db, port))
+    → assemble result dict → return
 ```
 
 ---
@@ -607,13 +687,15 @@ jobs:
   "_meta": {
     "generated_at": "2026-06-15T02:00:00Z",
     "port_count": 115,
-    "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK", "PoC-in-GitHub", "VARIoT"]
+    "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK", "PoC-in-GitHub", "VARIoT", "AttackerKB", "Exploit-DB", "Shadowserver", "Wikipedia", "nmap-services"]
   },
   "22": {
     "port": 22,
     "service_name": "ssh",
     "transport": ["TCP", "UDP", "SCTP"],
     "iana_status": "...",
+    "wiki_description": "The Secure Shell (SSH) Protocol...",
+    "popularity_freq": 0.978,
     "risk_level": "HIGH",
     "cve_count": 45,
     "kev_count": 3,
@@ -872,6 +954,29 @@ cisa_kev_cache (
     data       TEXT     -- full JSON blob
 )
 
+-- Port usage & history enrichment (Wikipedia description + nmap popularity)
+-- Updated independently by two sources via COALESCE so neither clobbers the other
+port_history (
+    port              INTEGER PRIMARY KEY,
+    wiki_description  TEXT,    -- from Wikipedia "List of TCP and UDP port numbers"
+    popularity_freq   REAL,    -- from nmap-services, 0.0-1.0 internet-scan prevalence
+    updated_at        TEXT
+)
+
+-- Wikipedia port-history article blob (one row, replaced every 720h/30d)
+wikipedia_ports_cache (
+    id         INTEGER PRIMARY KEY CHECK (id = 1),
+    fetched_at TEXT NOT NULL,
+    data       TEXT NOT NULL   -- JSON dict {port_str: description_text}
+)
+
+-- nmap-services raw file blob (one row, replaced every 720h/30d)
+nmap_services_cache (
+    id         INTEGER PRIMARY KEY CHECK (id = 1),
+    fetched_at TEXT NOT NULL,
+    data       TEXT NOT NULL   -- full raw nmap-services text file
+)
+
 -- API key registry (self-registered)
 api_keys (
     key              TEXT PRIMARY KEY,
@@ -1075,6 +1180,8 @@ Manual redeploy
 | `port_analyzer/sources/mitre_attack.py` | Data | ATT&CK seed writer |
 | `port_analyzer/sources/poc_github.py` | Data | PoC-in-GitHub per-CVE lookup (nomi-sec) |
 | `port_analyzer/sources/variot.py` | Data | VARIoT IoT CVE search (variot.eu) |
+| `port_analyzer/sources/wikipedia_history.py` | Data | Wikipedia port-history blob fetch/parse, 30d cache |
+| `port_analyzer/sources/nmap_services.py` | Data | nmap-services popularity blob fetch/parse, 30d cache |
 | `port_analyzer/engine.py` | Logic | Orchestration + PENTEST_NOTES + DEFENSIVE_NOTES |
 | `port_analyzer/renderer.py` | CLI UI | Rich terminal output, web-vapt style |
 | `port_analyzer/cli.py` | CLI UI | Click CLI, flag parsing, --no-live mode |
@@ -1220,4 +1327,4 @@ Swagger UI (`/docs`) and ReDoc (`/redoc`) are disabled by default. Set `ENABLE_D
 
 ---
 
-*Document version: 1.1 — Updated 2026-06-15*
+*Document version: 1.2 — Updated 2026-06-16*

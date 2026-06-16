@@ -87,12 +87,13 @@ def _cache_only_result(port: int, db) -> dict:
     Build a result dict from cache without hitting any live APIs.
     Mirrors the logic in cli.py --no-live mode.
     """
-    from port_analyzer.cache import get_port_profile, get_cves, get_techniques
+    from port_analyzer.cache import get_port_profile, get_cves, get_techniques, get_port_history
     from port_analyzer.engine import PENTEST_NOTES, DEFENSIVE_NOTES, _risk_level
 
-    profiles  = [dict(r) for r in get_port_profile(db, port)]
-    cves_rows = [dict(r) for r in get_cves(db, port)]
-    tech_rows = [dict(r) for r in get_techniques(db, port)]
+    profiles    = [dict(r) for r in get_port_profile(db, port)]
+    cves_rows   = [dict(r) for r in get_cves(db, port)]
+    tech_rows   = [dict(r) for r in get_techniques(db, port)]
+    history_row = get_port_history(db, port)
     kev_ids   = {c["cve_id"] for c in cves_rows if c.get("exploited_in_wild")}
     top_cves  = sorted(cves_rows, key=lambda c: c.get("cvss_score") or 0, reverse=True)[:10]
     svc_name  = profiles[0]["service_name"] if profiles else f"port-{port}"
@@ -103,6 +104,8 @@ def _cache_only_result(port: int, db) -> dict:
         "transport":       list({r["transport"] for r in profiles}) or ["TCP"],
         "iana_status":     profiles[0]["iana_status"] if profiles else "Unknown",
         "description":     profiles[0]["description"] if profiles else "",
+        "wiki_description": history_row["wiki_description"] if history_row else None,
+        "popularity_freq":  history_row["popularity_freq"]  if history_row else None,
         "risk_level":      _risk_level(cves_rows, bool(kev_ids)),
         "cve_count":       len(cves_rows),
         "kev_count":       len(kev_ids),

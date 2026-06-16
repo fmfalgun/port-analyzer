@@ -130,6 +130,8 @@ curl -H "X-API-Key: pa-your-key-here" \
   "risk_level": "HIGH",
   "cve_count": 47,
   "kev_count": 3,
+  "wiki_description": "The Secure Shell Protocol (SSH) is a cryptographic network protocol for operating network services securely over an unsecured network.",
+  "popularity_freq": 0.978692,
   "top_cves": [
     {
       "cve_id": "CVE-2023-38408",
@@ -417,6 +419,8 @@ Every endpoint that returns port data uses the same object shape. All fields are
 | `cve_count` | integer | Total number of CVEs associated with this port's service |
 | `kev_count` | integer | Number of CVEs on the CISA Known Exploited Vulnerabilities (KEV) catalogue |
 | `poc_count` | integer | Number of port's CVEs with at least one public PoC on PoC-in-GitHub |
+| `wiki_description` | string \| null | Human-readable description of the port from Wikipedia's "List of TCP and UDP port numbers" article; often includes historical/malware association notes (e.g. port 31337 mentions the Back Orifice trojan). `null` if Wikipedia has no entry for this port, or the lookup hasn't run yet |
+| `popularity_freq` | number \| null | Frequency (0.0–1.0) with which this port shows up open across internet-wide scans, sourced from the nmap-services flat file (e.g. `0.978692` for SSH/22 means ~97.9%). `null` if nmap-services has no entry for this port, or the lookup hasn't run yet |
 | `top_cves` | CVE[] | Up to 8 highest-severity CVEs (see CVE object below) |
 | `variot_vulns` | VARIoT[] | IoT-specific vulnerabilities from VARIoT matching this port's service (see VARIoT object below) |
 | `techniques` | Technique[] | Associated MITRE ATT&CK techniques (see Technique object below) |
@@ -761,9 +765,9 @@ The file structure:
   "_meta": {
     "generated_at": "2026-06-15T02:00:00Z",
     "port_count": 115,
-    "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK", "PoC-in-GitHub", "VARIoT"]
+    "sources": ["IANA", "NVD", "CISA KEV", "EPSS", "MITRE ATT&CK", "PoC-in-GitHub", "VARIoT", "Wikipedia", "nmap-services"]
   },
-  "22": { ... port result object (includes poc_count, variot_vulns) ... },
+  "22": { ... port result object (includes poc_count, variot_vulns, wiki_description, popularity_freq) ... },
   "443": { ... port result object ... }
 }
 ```

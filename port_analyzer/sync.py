@@ -46,6 +46,11 @@ def _get_file(url: str, hdrs: dict) -> tuple:
     Returns (content_dict_or_None, sha_or_None).
     404 is treated as a new file — returns (None, None).
     Raises RuntimeError for other non-OK responses.
+
+    Only use this when the decoded content is actually needed (e.g. merging
+    into the summary ports.json). The Contents API omits `content` (returns
+    "") for files over ~1MB, which would make json.loads() blow up here —
+    use _get_sha() instead when only the sha is needed.
     """
     import requests
 
@@ -59,6 +64,26 @@ def _get_file(url: str, hdrs: dict) -> tuple:
     raw = base64.b64decode(info["content"].replace("\n", ""))
     content = json.loads(raw.decode("utf-8"))
     return content, sha
+
+
+def _get_sha(url: str, hdrs: dict) -> str | None:
+    """
+    Fetch only the sha of a file from GitHub Contents API, without decoding
+    content. Safe for files over the Contents API's ~1MB inline-content
+    limit (per-port full datasets can be several MB once a port has
+    thousands of CVEs — e.g. port 443/22).
+
+    Returns None if the file doesn't exist yet (404).
+    Raises RuntimeError for other non-OK responses.
+    """
+    import requests
+
+    resp = requests.get(url, headers=hdrs, timeout=15)
+    if resp.status_code == 404:
+        return None
+    if not resp.ok:
+        raise RuntimeError(f"GitHub API error {resp.status_code}: {resp.text[:200]}")
+    return resp.json()["sha"]
 
 
 def _put_file(url: str, hdrs: dict, content_bytes: bytes, sha, commit_message: str) -> dict:
@@ -115,7 +140,7 @@ def sync_ports(results: list[dict], token: str = None, repo: str = None) -> tupl
         per_port_url = f"{_GITHUB_API}/repos/{repo}/contents/{per_port_path}"
 
         try:
-            _existing, sha = _get_file(per_port_url, hdrs)
+            sha = _get_sha(per_port_url, hdrs)
         except RuntimeError as exc:
             return False, str(exc)
 

@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     clearStatus();
     renderPortHeader(entry);
+    renderUsageHistory(entry);
     wireFilterBar();
     applyFiltersAndRender();
     renderVariotSection(entry);
@@ -160,6 +161,30 @@ function renderPortHeader(r) {
       ${pocBadge}
       ${edbBadge}
       ${dataNote}
+    </div>`;
+}
+
+// ── usage & history ────────────────────────────────────────────────
+function renderUsageHistory(r) {
+  const el = $("usage-history-section");
+  if (!el) return;
+
+  const wiki = r.wiki_description;
+  const freq = r.popularity_freq;
+  if (!wiki && freq == null) { el.innerHTML = ""; return; }
+
+  const wikiBlock = wiki
+    ? `<p class="usage-text">${esc(wiki)}</p>`
+    : "";
+  const freqBlock = (freq != null)
+    ? `<p class="usage-freq"><span style="color:var(--warn)">${esc((freq * 100).toFixed(1))}%</span> of internet-wide scans see this port open <span style="color:var(--dim);font-size:0.78rem">(nmap-services)</span></p>`
+    : "";
+
+  el.innerHTML = `
+    <div class="section-block" style="margin-bottom:1rem">
+      <div class="section-title">Usage &amp; History</div>
+      ${wikiBlock}
+      ${freqBlock}
     </div>`;
 }
 

@@ -39,6 +39,7 @@ Port Analyzer is an offline-first intelligence tool for security engineers, pene
 | **Risk level** | Computed summary: CRITICAL / HIGH / MEDIUM / LOW |
 | **Public PoC availability** | PoC count per CVE from nomi-sec PoC-in-GitHub — signals where exploit code is already public |
 | **IoT vulnerability intelligence** | VARIoT — IoT-specific CVEs from CIRCL Luxembourg, often missing from NVD |
+| **Usage & history** | Real-world description and historical/malware context from Wikipedia, plus a live popularity/frequency stat from nmap-services |
 
 All data sources are free and open — no commercial feeds required.
 
@@ -55,6 +56,8 @@ All data sources are free and open — no commercial feeds required.
 | [MITRE ATT&CK](https://attack.mitre.org/) | Technique and tactic mappings | No |
 | [PoC-in-GitHub (nomi-sec)](https://github.com/nomi-sec/PoC-in-GitHub) | Public PoC repo count per CVE; shows where exploit code is already public | No |
 | [VARIoT](https://www.variot.eu/) | IoT-specific vulnerabilities by CIRCL Luxembourg (EU Horizon 2020) | No |
+| [Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) | Port usage description + historical/malware association notes | No |
+| [nmap-services](https://github.com/nmap/nmap/blob/master/nmap-services) | Real-world popularity/frequency of the port being open (internet-wide scan data) | No |
 
 An optional NVD API key raises the NVD rate limit from 5 requests/30 s to 50 requests/30 s, which speeds up first-time queries significantly for large port ranges. Get one free at <https://nvd.nist.gov/developers/request-an-api-key>.
 
@@ -65,7 +68,7 @@ An optional NVD API key raises the NVD rate limit from 5 requests/30 s to 50 req
 All fetched data is stored in a local SQLite database (`db/port_analyzer.db` by default).
 
 - **First query** for a port: fetches the full CVE history from NVD, IANA identity, KEV list, EPSS scores, PoC availability from PoC-in-GitHub, and IoT vulns from VARIoT, then stores everything.
-- **Subsequent queries**: served from cache. NVD is re-queried only for CVEs published after the last fetch date (cursor-based incremental update). CISA KEV is re-downloaded at most once every 24 hours. PoC-in-GitHub data is refreshed every 24 hours (top 20 CVEs by CVSS). VARIoT data is refreshed every 48 hours. IANA data is re-fetched at most once per year (assignments are nearly immutable).
+- **Subsequent queries**: served from cache. NVD is re-queried only for CVEs published after the last fetch date (cursor-based incremental update). CISA KEV is re-downloaded at most once every 24 hours. PoC-in-GitHub data is refreshed every 24 hours (top 20 CVEs by CVSS). VARIoT data is refreshed every 48 hours. IANA data is re-fetched at most once per year (assignments are nearly immutable). The Wikipedia ports article and the nmap-services file are each fetched and parsed once, then cached whole for ~30 days before being re-downloaded — both are slow-changing reference datasets, so there's no need to hit them on every run.
 - **`--no-live` flag**: skip all network calls entirely and serve from whatever is already cached.
 
 This design means the tool is fast and works without a network connection once a port has been queried at least once.
@@ -108,7 +111,7 @@ CORS_ORIGINS=http://localhost:8000,https://yourdomain.github.io
 
 ### CLI
 
-The CLI is the primary interface. It writes to the terminal with rich formatting and can also emit structured JSON for scripting.
+The CLI is the primary interface. It writes to the terminal with rich formatting and can also emit structured JSON for scripting. Every analysis automatically includes a **USAGE & HISTORY** section in the terminal output — the Wikipedia-sourced description (including historical/malware associations, where documented) and the nmap-services popularity frequency for the port. No extra flag is needed; it's part of the standard `analyze_port()` pipeline.
 
 ```bash
 # Single port
@@ -161,7 +164,7 @@ python run.py --serve        # starts backend on :8000
 
 **Saving markdown reports:**
 
-The `--report PATH` flag writes a full markdown intelligence report to a file instead of (or in addition to) terminal output. When multiple ports are analyzed, all reports are concatenated in the file with `---` separators. Reports include CVE IDs as clickable links to their NVD detail pages and MITRE technique IDs as links to the ATT&CK technique pages, and each report closes with a `## References` section listing all data sources used (IANA, NVD, CISA KEV if applicable, EPSS, MITRE ATT&CK) along with per-CVE and per-technique links.
+The `--report PATH` flag writes a full markdown intelligence report to a file instead of (or in addition to) terminal output. When multiple ports are analyzed, all reports are concatenated in the file with `---` separators. Reports include CVE IDs as clickable links to their NVD detail pages and MITRE technique IDs as links to the ATT&CK technique pages, include a `## Usage & History` section with the Wikipedia description and nmap-services popularity frequency, and each report closes with a `## References` section listing all data sources used (IANA, NVD, CISA KEV if applicable, EPSS, MITRE ATT&CK) along with per-CVE and per-technique links.
 
 ```bash
 # Save a single-port report
@@ -244,7 +247,7 @@ The API is then available at `http://localhost:8000`. Interactive docs are at `/
 
 When the backend is running, the web UI is served automatically from `/` (the `web/` directory is mounted as static files by `backend/main.py`).
 
-Open `http://localhost:8000` in a browser. Enter a port number, comma-separated list, or range in the search box and click **ANALYZE**. Results render inline without a page reload.
+Open `http://localhost:8000` in a browser. Enter a port number, comma-separated list, or range in the search box and click **ANALYZE**. Results render inline without a page reload. Each port card automatically includes a **Usage & History** block — the Wikipedia-sourced description and the nmap-services popularity stat — and the same block appears on the `ports.html` CVE explorer detail page. This data is part of the standard analysis pipeline and requires no extra configuration.
 
 **Available ports panel:** If you search for a port that is not in the pre-built static dataset, the UI shows a helpful message pointing you to the CLI (`python -m port_analyzer.cli <port>`) and displays a collapsible panel listing all pre-built ports.
 

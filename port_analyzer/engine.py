@@ -3,7 +3,7 @@ Query engine — orchestrates all sources + cache for a single port.
 The CLI, backend API, and web all go through this.
 """
 
-from port_analyzer.cache import get_db, get_port_profile, get_cves, get_techniques, get_variot_vulns
+from port_analyzer.cache import get_db, get_port_profile, get_cves, get_techniques, get_variot_vulns, get_port_history
 from port_analyzer.sources.iana import fetch_iana_for_port, get_search_terms
 from port_analyzer.sources.nvd import fetch_nvd_for_port
 from port_analyzer.sources.cisa_kev import apply_kev_to_port, get_kev_details
@@ -14,6 +14,8 @@ from port_analyzer.sources.variot import fetch_variot_for_port
 from port_analyzer.sources.attackerkb import fetch_attackerkb_for_port
 from port_analyzer.sources.exploitdb import apply_exploitdb_to_port
 from port_analyzer.sources.shadowserver import fetch_shadowserver_for_port
+from port_analyzer.sources.wikipedia_history import fetch_wikipedia_history_for_port
+from port_analyzer.sources.nmap_services import fetch_nmap_popularity_for_port
 
 PENTEST_NOTES: dict[int, list[str]] = {
     21:    ["Anonymous login: ftp <host> (user: anonymous)", "Banner grab: nc -nv <host> 21",
@@ -319,11 +321,18 @@ def analyze_port(port: int, db=None, verbose: bool = False) -> dict:
         # 10. Shadowserver real-time active scanning (no-op without API key)
         fetch_shadowserver_for_port(port, db)
 
+        # 11. Wikipedia — port usage description & historical/malware notes (~30 day cache)
+        fetch_wikipedia_history_for_port(port, db)
+
+        # 12. nmap-services — real-world popularity/frequency (~30 day cache)
+        fetch_nmap_popularity_for_port(port, db)
+
         # ── assemble result ────────────────────────────────────────────────────
         profiles      = [dict(r) for r in get_port_profile(db, port)]
         cves_rows     = [dict(r) for r in get_cves(db, port)]
         tech_rows     = [dict(r) for r in get_techniques(db, port)]
         variot_rows   = get_variot_vulns(db, port)
+        history_row   = get_port_history(db, port)
 
         kev_cve_ids      = {c["cve_id"] for c in cves_rows if c.get("exploited_in_wild")}
         top_cves         = sorted(cves_rows, key=lambda c: c.get("cvss_score") or 0, reverse=True)[:10]
@@ -343,6 +352,8 @@ def analyze_port(port: int, db=None, verbose: bool = False) -> dict:
             "transport":       transports,
             "iana_status":     profiles[0]["iana_status"] if profiles else "Unknown",
             "description":     profiles[0]["description"] if profiles else "",
+            "wiki_description": history_row["wiki_description"] if history_row else None,
+            "popularity_freq":  history_row["popularity_freq"]  if history_row else None,
             "risk_level":      risk,
             "cve_count":       len(cves_rows),
             "kev_count":       len(kev_cve_ids),

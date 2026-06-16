@@ -54,7 +54,7 @@ def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int,
 
     if not output_json:
         renderer.info(f"port-analyzer v0.1.0  ·  querying {len(port_list)} port(s)")
-        renderer.info("sources: IANA · NVD · CISA KEV · EPSS · MITRE ATT&CK · PoC-in-GitHub · VARIoT")
+        renderer.info("sources: IANA · NVD · CISA KEV · EPSS · MITRE ATT&CK · PoC-in-GitHub · VARIoT · Wikipedia · nmap-services")
         if no_live:
             renderer.warn("--no-live: skipping API calls, serving from cache only")
         console.print()
@@ -63,15 +63,16 @@ def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int,
 
     if no_live:
         from port_analyzer.cache import (
-            get_port_profile, get_cves, get_techniques
+            get_port_profile, get_cves, get_techniques, get_port_history
         )
         from port_analyzer.engine import PENTEST_NOTES, DEFENSIVE_NOTES, _risk_level
 
         results = []
         for p in port_list:
-            profiles  = [dict(r) for r in get_port_profile(conn, p)]
-            cves_rows = [dict(r) for r in get_cves(conn, p)]
-            tech_rows = [dict(r) for r in get_techniques(conn, p)]
+            profiles    = [dict(r) for r in get_port_profile(conn, p)]
+            cves_rows   = [dict(r) for r in get_cves(conn, p)]
+            tech_rows   = [dict(r) for r in get_techniques(conn, p)]
+            history_row = get_port_history(conn, p)
             kev_ids   = {c["cve_id"] for c in cves_rows if c.get("exploited_in_wild")}
             top_cves  = sorted(cves_rows, key=lambda c: c.get("cvss_score") or 0, reverse=True)[:top]
             svc_name  = profiles[0]["service_name"] if profiles else f"port-{p}"
@@ -81,6 +82,8 @@ def main(ports: str, output_json: bool, no_live: bool, db: str | None, top: int,
                 "transport":       list({r["transport"] for r in profiles}) or ["TCP"],
                 "iana_status":     profiles[0]["iana_status"] if profiles else "Unknown",
                 "description":     profiles[0]["description"] if profiles else "",
+                "wiki_description": history_row["wiki_description"] if history_row else None,
+                "popularity_freq":  history_row["popularity_freq"]  if history_row else None,
                 "risk_level":      _risk_level(cves_rows, bool(kev_ids)),
                 "cve_count":       len(cves_rows),
                 "kev_count":       len(kev_ids),
