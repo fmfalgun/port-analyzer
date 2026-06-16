@@ -1,0 +1,35 @@
+{
+  "port": 995,
+  "service_name": "pop3s",
+  "transport": [
+    "TCP",
+    "UDP"
+  ],
+  "iana_status": "Assigned",
+  "description": "POP3 over TLS protocol",
+  "wiki_description": "Post Office Protocol 3 over TLS/SSL (POP3S)",
+  "popularity_freq": 0.029921,
+  "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+  "nmap_tcp_freq": 0.029921,
+  "nmap_udp_freq": 0.000991,
+  "nmap_sctp_freq": null,
+  "nmap_service_name": "pop3s",
+  "nmap_comment": "POP3 protocol over TLS/SSL | pop3 protocol over TLS/SSL (was spop3) | POP3 over TLS protocol",
+  "risk_level": "LOW",
+  "cve_count": 0,
+  "kev_count": 0,
+  "poc_count": 0,
+  "attackerkb_hits": 0,
+  "exploitdb_hits": 0,
+  "shadowserver_hits": 0,
+  "top_cves": [],
+  "all_cves": [],
+  "techniques": [],
+  "variot_vulns": [],
+  "pentest_notes": [],
+  "defensive_notes": [],
+  "search_terms": [
+    "pop3s",
+    "pop3"
+  ]
+}
