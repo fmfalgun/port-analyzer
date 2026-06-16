@@ -1,0 +1,35 @@
+{
+  "port": 636,
+  "service_name": "ldaps",
+  "transport": [
+    "TCP",
+    "UDP"
+  ],
+  "iana_status": "Assigned",
+  "description": "ldap protocol over TLS/SSL (was sldap)",
+  "wiki_description": "Lightweight Directory Access Protocol over TLS/SSL (LDAPS)",
+  "popularity_freq": 0.002083,
+  "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+  "nmap_tcp_freq": 0.002083,
+  "nmap_udp_freq": 0.000661,
+  "nmap_sctp_freq": null,
+  "nmap_service_name": "ldapssl",
+  "nmap_comment": "ldaps | LDAP over SSL | ldap protocol over TLS/SSL (was sldap)",
+  "risk_level": "LOW",
+  "cve_count": 0,
+  "kev_count": 0,
+  "poc_count": 0,
+  "attackerkb_hits": 0,
+  "exploitdb_hits": 0,
+  "shadowserver_hits": 0,
+  "top_cves": [],
+  "all_cves": [],
+  "techniques": [],
+  "variot_vulns": [],
+  "pentest_notes": [],
+  "defensive_notes": [],
+  "search_terms": [
+    "ldaps",
+    "ldap"
+  ]
+}
