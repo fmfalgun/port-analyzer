@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-15T18:14:05Z",
+    "generated_at": "2026-06-16T05:12:05Z",
     "port_count": 77,
     "sources": [
       "IANA",
@@ -969,12 +969,14 @@
     "port": 443,
     "service_name": "https",
     "transport": [
+      "TCP",
       "UDP",
-      "SCTP",
-      "TCP"
+      "SCTP"
     ],
     "iana_status": "Assigned",
     "description": "HTTPS",
+    "wiki_description": null,
+    "popularity_freq": 0.208669,
     "risk_level": "CRITICAL",
     "cve_count": 9749,
     "kev_count": 82,
