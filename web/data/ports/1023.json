@@ -1,0 +1,34 @@
+{
+  "port": 1023,
+  "service_name": "port-1023",
+  "transport": [
+    "TCP",
+    "UDP"
+  ],
+  "iana_status": "Assigned",
+  "description": "Reserved",
+  "wiki_description": null,
+  "popularity_freq": 0.016188,
+  "wiki_url": null,
+  "nmap_tcp_freq": 0.000953,
+  "nmap_udp_freq": 0.016188,
+  "nmap_sctp_freq": null,
+  "nmap_service_name": "netvenuechat",
+  "nmap_comment": "Nortel NetVenue Notification, Chat, Intercom",
+  "risk_level": "LOW",
+  "cve_count": 0,
+  "kev_count": 0,
+  "poc_count": 0,
+  "attackerkb_hits": 0,
+  "exploitdb_hits": 0,
+  "shadowserver_hits": 0,
+  "top_cves": [],
+  "all_cves": [],
+  "techniques": [],
+  "variot_vulns": [],
+  "pentest_notes": [],
+  "defensive_notes": [],
+  "search_terms": [
+    "1023"
+  ]
+}
