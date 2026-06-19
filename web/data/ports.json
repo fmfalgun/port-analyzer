@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-18T11:37:20Z",
+    "generated_at": "2026-06-19T07:43:25Z",
     "port_count": 138,
     "sources": [
       "IANA",
@@ -48,7 +48,7 @@
         "name": "Remote System Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1018/",
-        "fetched_at": "2026-06-18T06:48:53Z"
+        "fetched_at": "2026-06-19T07:03:18Z"
       },
       {
         "technique_id": "T1595.001",
@@ -56,7 +56,7 @@
         "name": "Active Scanning: Scanning IP Blocks",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1595/001/",
-        "fetched_at": "2026-06-18T06:48:53Z"
+        "fetched_at": "2026-06-19T07:03:18Z"
       }
     ],
     "variot_vulns": [],
@@ -73,8 +73,8 @@
     "service_name": "ftp-data",
     "transport": [
       "UDP",
-      "SCTP",
-      "TCP"
+      "TCP",
+      "SCTP"
     ],
     "iana_status": "Assigned",
     "description": "FTP",
@@ -107,8 +107,8 @@
     "service_name": "ftp",
     "transport": [
       "UDP",
-      "SCTP",
-      "TCP"
+      "TCP",
+      "SCTP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path>",
     "description": "FTP",
@@ -135,7 +135,7 @@
         "name": "SMB/Windows Admin Shares",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-18T06:50:49Z"
+        "fetched_at": "2026-06-19T07:05:01Z"
       },
       {
         "technique_id": "T1078",
@@ -143,7 +143,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T06:50:49Z"
+        "fetched_at": "2026-06-19T07:05:01Z"
       },
       {
         "technique_id": "T1190",
@@ -151,7 +151,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T06:50:49Z"
+        "fetched_at": "2026-06-19T07:05:01Z"
       }
     ],
     "variot_vulns": [],
@@ -178,8 +178,8 @@
     "service_name": "ssh",
     "transport": [
       "UDP",
-      "SCTP",
-      "TCP"
+      "TCP",
+      "SCTP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password>",
     "description": "SSH",
@@ -206,7 +206,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-18T06:51:28Z"
+        "fetched_at": "2026-06-19T07:05:41Z"
       },
       {
         "technique_id": "T1110.001",
@@ -214,7 +214,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-18T06:51:28Z"
+        "fetched_at": "2026-06-19T07:05:41Z"
       },
       {
         "technique_id": "T1098.004",
@@ -222,7 +222,7 @@
         "name": "Account Manipulation: SSH Authorized Keys",
         "tactic": "persistence",
         "url": "https://attack.mitre.org/techniques/T1098/004/",
-        "fetched_at": "2026-06-18T06:51:28Z"
+        "fetched_at": "2026-06-19T07:05:41Z"
       }
     ],
     "variot_vulns": [],
@@ -279,7 +279,7 @@
         "name": "Remote Services: Telnet",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-18T06:51:37Z"
+        "fetched_at": "2026-06-19T07:05:51Z"
       },
       {
         "technique_id": "T1110.001",
@@ -287,7 +287,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-18T06:51:37Z"
+        "fetched_at": "2026-06-19T07:05:51Z"
       }
     ],
     "variot_vulns": [],
@@ -336,7 +336,7 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-18T06:52:09Z"
+        "fetched_at": "2026-06-19T07:05:54Z"
       },
       {
         "technique_id": "T1071.003",
@@ -344,7 +344,7 @@
         "name": "Application Layer Protocol: Mail Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/003/",
-        "fetched_at": "2026-06-18T06:52:09Z"
+        "fetched_at": "2026-06-19T07:05:54Z"
       }
     ],
     "variot_vulns": [],
@@ -397,7 +397,7 @@
         "name": "Gather Victim Network Information",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1590/",
-        "fetched_at": "2026-06-18T06:52:18Z"
+        "fetched_at": "2026-06-19T07:06:03Z"
       }
     ],
     "variot_vulns": [],
@@ -439,7 +439,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T06:52:30Z"
+        "fetched_at": "2026-06-19T07:06:36Z"
       },
       {
         "technique_id": "T1556",
@@ -447,7 +447,7 @@
         "name": "Modify Authentication Process",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1556/",
-        "fetched_at": "2026-06-18T06:52:30Z"
+        "fetched_at": "2026-06-19T07:06:36Z"
       }
     ],
     "variot_vulns": [],
@@ -490,7 +490,7 @@
         "name": "Application Layer Protocol: DNS",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/004/",
-        "fetched_at": "2026-06-18T06:53:36Z"
+        "fetched_at": "2026-06-19T07:06:43Z"
       },
       {
         "technique_id": "T1568",
@@ -498,7 +498,7 @@
         "name": "Dynamic Resolution",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1568/",
-        "fetched_at": "2026-06-18T06:53:36Z"
+        "fetched_at": "2026-06-19T07:06:43Z"
       },
       {
         "technique_id": "T1048.001",
@@ -506,7 +506,7 @@
         "name": "Exfiltration Over Alternative Protocol: DNS",
         "tactic": "exfiltration",
         "url": "https://attack.mitre.org/techniques/T1048/001/",
-        "fetched_at": "2026-06-18T06:53:36Z"
+        "fetched_at": "2026-06-19T07:06:43Z"
       }
     ],
     "variot_vulns": [],
@@ -628,7 +628,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T06:55:55Z"
+        "fetched_at": "2026-06-19T07:07:52Z"
       }
     ],
     "variot_vulns": [],
@@ -670,7 +670,7 @@
         "name": "Gather Victim Host Information",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1592/",
-        "fetched_at": "2026-06-18T06:56:28Z"
+        "fetched_at": "2026-06-19T07:07:56Z"
       },
       {
         "technique_id": "T1589",
@@ -678,7 +678,7 @@
         "name": "Gather Victim Identity Information",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1589/",
-        "fetched_at": "2026-06-18T06:56:28Z"
+        "fetched_at": "2026-06-19T07:07:56Z"
       }
     ],
     "variot_vulns": [],
@@ -692,9 +692,9 @@
     "port": 80,
     "service_name": "http",
     "transport": [
-      "SCTP",
+      "UDP",
       "TCP",
-      "UDP"
+      "SCTP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path to document>",
     "description": "HTTP",
@@ -706,135 +706,14 @@
     "nmap_sctp_freq": 0.0,
     "nmap_service_name": "http",
     "nmap_comment": "www-http | www | World Wide Web HTTP",
-    "risk_level": "CRITICAL",
-    "cve_count": 134,
-    "kev_count": 1,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
     "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 41,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-1999-0233",
-        "port": 80,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.16702,
-        "epss_percentile": 0.96627,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "IIS 1.0 allows users to execute arbitrary commands using .bat or .cmd files.",
-        "published_at": "1996-02-25T05:00:00.000",
-        "fetched_at": "2026-06-16T06:55:01Z",
-        "epss_updated_at": "2026-06-18T11:15:29Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:15:35Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 1,
-        "exploitdb_ids": "[20445]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-0561",
-        "port": 80,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.07572,
-        "epss_percentile": 0.93746,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "IIS has the #exec function enabled for Server Side Include (SSI) files.",
-        "published_at": "1999-01-01T05:00:00.000",
-        "fetched_at": "2026-06-16T06:55:01Z",
-        "epss_updated_at": "2026-06-18T11:15:29Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:15:37Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-1376",
-        "port": 80,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.23962,
-        "epss_percentile": 0.97551,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Buffer overflow in fpcount.exe in IIS 4.0 with FrontPage Server Extensions allows remote attackers to execute arbitrary commands.",
-        "published_at": "1999-01-14T05:00:00.000",
-        "fetched_at": "2026-06-16T06:55:01Z",
-        "epss_updated_at": "2026-06-18T11:15:29Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:15:39Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-0407",
-        "port": 80,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.05126,
-        "epss_percentile": 0.91297,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "By default, IIS 4.0 has a virtual directory /IISADMPWD which contains files that can be used as proxies for brute force password attacks, or to identify valid users on the system.",
-        "published_at": "1999-02-09T05:00:00.000",
-        "fetched_at": "2026-06-16T06:55:01Z",
-        "epss_updated_at": "2026-06-18T11:15:29Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:15:41Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-1999-0874",
-        "port": 80,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.74651,
-        "epss_percentile": 0.99438,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Buffer overflow in IIS 4.0 allows remote attackers to cause a denial of service via a malformed request for files with .HTR, .IDC, or .STM extensions.",
-        "published_at": "1999-06-16T04:00:00.000",
-        "fetched_at": "2026-06-16T06:55:01Z",
-        "epss_updated_at": "2026-06-18T11:15:29Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:15:43Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 5,
-        "exploitdb_ids": "[19247, 16468, 19245, 19246, 19248]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [
       {
         "technique_id": "T1190",
@@ -842,7 +721,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-16T06:43:12Z"
+        "fetched_at": "2026-06-19T07:07:59Z"
       },
       {
         "technique_id": "T1059.007",
@@ -850,7 +729,7 @@
         "name": "Command and Scripting Interpreter: JavaScript",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1059/007/",
-        "fetched_at": "2026-06-16T06:43:12Z"
+        "fetched_at": "2026-06-19T07:07:59Z"
       },
       {
         "technique_id": "T1071.001",
@@ -858,7 +737,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-16T06:43:12Z"
+        "fetched_at": "2026-06-19T07:07:59Z"
       }
     ],
     "variot_vulns": [],
@@ -913,7 +792,7 @@
         "name": "Steal or Forge Kerberos Tickets",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1558/",
-        "fetched_at": "2026-06-18T06:57:14Z"
+        "fetched_at": "2026-06-19T07:08:08Z"
       },
       {
         "technique_id": "T1558.003",
@@ -921,7 +800,7 @@
         "name": "Steal or Forge Kerberos Tickets: Kerberoasting",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1558/003/",
-        "fetched_at": "2026-06-18T06:57:14Z"
+        "fetched_at": "2026-06-19T07:08:08Z"
       },
       {
         "technique_id": "T1558.004",
@@ -929,7 +808,7 @@
         "name": "Steal or Forge Kerberos Tickets: AS-REP Roasting",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1558/004/",
-        "fetched_at": "2026-06-18T06:57:14Z"
+        "fetched_at": "2026-06-19T07:08:08Z"
       },
       {
         "technique_id": "T1550.003",
@@ -937,7 +816,7 @@
         "name": "Use Alternate Authentication Material: Pass the Ticket",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1550/003/",
-        "fetched_at": "2026-06-18T06:57:14Z"
+        "fetched_at": "2026-06-19T07:08:08Z"
       }
     ],
     "variot_vulns": [],
@@ -993,7 +872,7 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-18T06:57:23Z"
+        "fetched_at": "2026-06-19T07:08:17Z"
       }
     ],
     "variot_vulns": [],
@@ -1073,7 +952,7 @@
         "name": "Gather Victim Host Information",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1592/",
-        "fetched_at": "2026-06-18T06:57:34Z"
+        "fetched_at": "2026-06-19T07:09:39Z"
       }
     ],
     "variot_vulns": [],
@@ -1258,8 +1137,8 @@
     "port": 139,
     "service_name": "netbios-ssn",
     "transport": [
-      "TCP",
-      "UDP"
+      "UDP",
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "NETBIOS Session Service",
@@ -1271,135 +1150,14 @@
     "nmap_sctp_freq": null,
     "nmap_service_name": "netbios-ssn",
     "nmap_comment": "NETBIOS Session Service",
-    "risk_level": "CRITICAL",
-    "cve_count": 159,
-    "kev_count": 2,
-    "poc_count": 2,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 12,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-1999-0182",
-        "port": 139,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.09514,
-        "epss_percentile": 0.94821,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Samba has a buffer overflow which allows a remote attacker to obtain root access by specifying a long password.",
-        "published_at": "1997-09-30T04:00:00.000",
-        "fetched_at": "2026-06-16T07:23:23Z",
-        "epss_updated_at": "2026-06-18T11:17:21Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:17:27Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 1,
-        "exploitdb_ids": "[20308]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2000-0509",
-        "port": 139,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.04346,
-        "epss_percentile": 0.89956,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Buffer overflows in the finger and whois demonstration scripts in Sambar Server 4.3 allow remote attackers to execute arbitrary commands via a long hostname.",
-        "published_at": "2000-06-01T04:00:00.000",
-        "fetched_at": "2026-06-16T07:23:23Z",
-        "epss_updated_at": "2026-06-18T11:17:21Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:17:28Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2004-0882",
-        "port": 139,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.1373,
-        "epss_percentile": 0.9602,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Buffer overflow in the QFILEPATHINFO request handler in Samba 3.0.x through 3.0.7 may allow remote attackers to execute arbitrary code via a TRANSACT2_QFILEPATHINFO request with a small \"maximum data bytes\" value.",
-        "published_at": "2005-01-27T05:00:00.000",
-        "fetched_at": "2026-06-16T07:23:23Z",
-        "epss_updated_at": "2026-06-18T11:17:21Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:17:30Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2011-1018",
-        "port": 139,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.18321,
-        "epss_percentile": 0.96856,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "logwatch.pl in Logwatch 7.3.6 allows remote attackers to execute arbitrary commands via shell metacharacters in a log file name, as demonstrated via a crafted username to a Samba server.",
-        "published_at": "2011-02-25T19:00:01.320",
-        "fetched_at": "2026-06-16T07:23:23Z",
-        "epss_updated_at": "2026-06-18T11:17:21Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:17:31Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 1,
-        "exploitdb_ids": "[35386]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2017-7494",
-        "port": 139,
-        "cvss_score": 9.8,
-        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.99448,
-        "epss_percentile": 0.99937,
-        "exploit_type": null,
-        "exploited_in_wild": 1,
-        "description": "Samba since version 3.5.0 and before 4.6.4, 4.5.10 and 4.4.14 is vulnerable to remote code execution vulnerability, allowing a malicious client to upload a shared library to a writable share, and then cause the server to load and execute it.",
-        "published_at": "2017-05-30T18:29:00.190",
-        "fetched_at": "2026-06-16T07:23:27Z",
-        "epss_updated_at": "2026-06-18T11:17:21Z",
-        "poc_count": 20,
-        "poc_urls": "[{\"url\": \"https://github.com/betab0t/cve-2017-7494\", \"stars\": 181, \"name\": \"betab0t/cve-2017-7494\"}, {\"url\": \"https://github.com/homjxi0e/CVE-2017-7494\", \"stars\": 0, \"name\": \"homjxi0e/CVE-2017-7494\"}, {\"url\": \"https://github.com/opsxcq/exploit-CVE-2017-7494\", \"stars\": 382, \"name\": \"opsxcq/exploit-CVE-2017-7494\"}, {\"url\": \"https://github.com/Waffles-2/SambaCry\", \"stars\": 63, \"name\": \"Waffles-2/SambaCry\"}, {\"url\": \"https://github.com/brianwrf/SambaHunter\", \"stars\": 57, \"name\": \"brianwrf/SambaHunter\"}, {\"url\": \"https://github.com/joxeankoret/CVE-2017-7494\", \"stars\": 260, \"name\": \"joxeankoret/CVE-2017-7494\"}, {\"url\": \"https://github.com/Zer0d0y/Samba-CVE-2017-7494\", \"stars\": 1, \"name\": \"Zer0d0y/Samba-CVE-2017-7494\"}, {\"url\": \"https://github.com/incredible1yu/CVE-2017-7494\", \"stars\": 0, \"name\": \"incredible1yu/CVE-2017-7494\"}, {\"url\": \"https://github.com/cved-sources/cve-2017-7494\", \"stars\": 0, \"name\": \"cved-sources/cve-2017-7494\"}, {\"url\": \"https://github.com/john-80/cve-2017-7494\", \"stars\": 0, \"name\": \"john-80/cve-2017-7494\"}, {\"url\": \"https://github.com/Hansindu-M/CVE-2017-7494_IT19115344\", \"stars\": 0, \"name\": \"Hansindu-M/CVE-2017-7494_IT19115344\"}, {\"url\": \"https://github.com/0xm4ud/noSAMBAnoCRY-CVE-2017-7494\", \"stars\": 5, \"name\": \"0xm4ud/noSAMBAnoCRY-CVE-2017-7494\"}, {\"url\": \"https://github.com/I-Rinka/BIT-EternalBlue-for-macOS_Linux\", \"stars\": 4, \"name\": \"I-Rinka/BIT-EternalBlue-for-macOS_Linux\"}, {\"url\": \"https://github.com/adjaliya/-CVE-2017-7494-Samba-Exploit-POC\", \"stars\": 0, \"name\": \"adjaliya/-CVE-2017-7494-Samba-Exploit-POC\"}, {\"url\": \"https://github.com/00mjk/exploit-CVE-2017-7494\", \"stars\": 1, \"name\": \"00mjk/exploit-CVE-2017-7494\"}, {\"url\": \"https://github.com/d3fudd/CVE-2017-7494_SambaCry\", \"stars\": 7, \"name\": \"d3fudd/CVE-2017-7494_SambaCry\"}, {\"url\": \"https://github.com/FelipeR-UFBA/cve-2017-7494-fixed\", \"stars\": 0, \"name\": \"FelipeR-UFBA/cve-2017-7494-fixed\"}, {\"url\": \"https://github.com/sudlit/CVE-2017-7494\", \"stars\": 0, \"name\": \"sudlit/CVE-2017-7494\"}, {\"url\": \"https://github.com/Zanex360/cdt-samba-deploy\", \"stars\": 0, \"name\": \"Zanex360/cdt-samba-deploy\"}, {\"url\": \"https://github.com/Zanex360/cdt-vulnsamba-deploy\", \"stars\": 0, \"name\": \"Zanex360/cdt-vulnsamba-deploy\"}]",
-        "poc_checked_at": "2026-06-18T11:17:33Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 2,
-        "exploitdb_ids": "[42060, 42084]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [],
     "variot_vulns": [],
     "pentest_notes": [
@@ -1446,7 +1204,7 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-18T06:59:07Z"
+        "fetched_at": "2026-06-19T07:12:17Z"
       }
     ],
     "variot_vulns": [],
@@ -1493,7 +1251,7 @@
         "name": "Data from Configuration Repository: SNMP MIB Dump",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1602/001/",
-        "fetched_at": "2026-06-18T06:59:15Z"
+        "fetched_at": "2026-06-19T07:12:26Z"
       },
       {
         "technique_id": "T1040",
@@ -1501,7 +1259,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-18T06:59:15Z"
+        "fetched_at": "2026-06-19T07:12:26Z"
       }
     ],
     "variot_vulns": [],
@@ -1576,7 +1334,7 @@
         "name": "Remote Services",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/",
-        "fetched_at": "2026-06-18T06:59:21Z"
+        "fetched_at": "2026-06-19T07:12:32Z"
       }
     ],
     "variot_vulns": [],
@@ -1619,7 +1377,7 @@
         "name": "Application Layer Protocol: Mail Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/003/",
-        "fetched_at": "2026-06-18T06:59:28Z"
+        "fetched_at": "2026-06-19T07:12:39Z"
       }
     ],
     "variot_vulns": [],
@@ -1695,7 +1453,7 @@
         "name": "Account Discovery: Domain Account",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1087/002/",
-        "fetched_at": "2026-06-18T07:00:38Z"
+        "fetched_at": "2026-06-19T07:13:17Z"
       },
       {
         "technique_id": "T1482",
@@ -1703,7 +1461,7 @@
         "name": "Domain Trust Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1482/",
-        "fetched_at": "2026-06-18T07:00:38Z"
+        "fetched_at": "2026-06-19T07:13:17Z"
       }
     ],
     "variot_vulns": [],
@@ -1718,9 +1476,9 @@
     "port": 443,
     "service_name": "https",
     "transport": [
-      "SCTP",
+      "UDP",
       "TCP",
-      "UDP"
+      "SCTP"
     ],
     "iana_status": "Assigned",
     "description": "HTTPS",
@@ -1732,135 +1490,14 @@
     "nmap_sctp_freq": 0.0,
     "nmap_service_name": "https",
     "nmap_comment": "http protocol over TLS/SSL",
-    "risk_level": "CRITICAL",
-    "cve_count": 9749,
-    "kev_count": 82,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
     "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 415,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-2001-1574",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.03616,
-        "epss_percentile": 0.88014,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Buffer overflow in (1) HttpSaveCVP.dll and (2) HttpSaveCSP.dll in Trend Micro InterScan VirusWall 3.5.1 allows remote attackers to execute arbitrary code.",
-        "published_at": "2001-12-31T05:00:00.000",
-        "fetched_at": "2026-06-16T09:13:58Z",
-        "epss_updated_at": "2026-06-18T11:19:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:24:34Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2005-3059",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02237,
-        "epss_percentile": 0.80501,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Multiple unspecified vulnerabilities in Opera 8.50 on Linux and Windows have unknown impact and attack vectors, related to (1) \" handling of must-revalidate cache directive for HTTPS pages\" or (2) a \"display issue with cookie comment encoding.\"",
-        "published_at": "2005-09-26T19:03:00.000",
-        "fetched_at": "2026-06-16T09:14:31Z",
-        "epss_updated_at": "2026-06-18T11:19:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:24:36Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2006-5347",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.0231,
-        "epss_percentile": 0.81122,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7 and Oracle Collaboration Suite 9.0.4.2 has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS04.",
-        "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-16T09:14:39Z",
-        "epss_updated_at": "2026-06-18T11:19:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:24:38Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2006-5348",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.0231,
-        "epss_percentile": 0.81123,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7, Oracle Collaboration Suite 9.0.4.2, and Oracle E-Business Suite and Applications 11.5.10CU2 has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS05.",
-        "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-16T09:14:39Z",
-        "epss_updated_at": "2026-06-18T11:19:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:24:40Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2006-5349",
-        "port": 443,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.0231,
-        "epss_percentile": 0.81122,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Unspecified vulnerability in Oracle HTTP Server 9.2.0.7, when running on HP Tru64 UNIX, has unknown impact and remote attack vectors related to HTTPS and SSL, aka Vuln# OHS07.",
-        "published_at": "2006-10-18T01:07:00.000",
-        "fetched_at": "2026-06-16T09:14:39Z",
-        "epss_updated_at": "2026-06-18T11:19:28Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:24:41Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [
       {
         "technique_id": "T1190",
@@ -1868,7 +1505,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-15T10:49:04Z"
+        "fetched_at": "2026-06-19T07:13:45Z"
       },
       {
         "technique_id": "T1071.001",
@@ -1876,7 +1513,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-15T10:49:04Z"
+        "fetched_at": "2026-06-19T07:13:45Z"
       },
       {
         "technique_id": "T1573",
@@ -1884,7 +1521,7 @@
         "name": "Encrypted Channel",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1573/",
-        "fetched_at": "2026-06-15T10:49:04Z"
+        "fetched_at": "2026-06-19T07:13:45Z"
       }
     ],
     "variot_vulns": [],
@@ -1912,8 +1549,8 @@
     "port": 445,
     "service_name": "microsoft-ds",
     "transport": [
-      "TCP",
-      "UDP"
+      "UDP",
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "Microsoft-DS",
@@ -1925,135 +1562,14 @@
     "nmap_sctp_freq": null,
     "nmap_service_name": "microsoft-ds",
     "nmap_comment": "SMB directly over IP",
-    "risk_level": "CRITICAL",
-    "cve_count": 63,
+    "risk_level": "LOW",
+    "cve_count": 0,
     "kev_count": 0,
-    "poc_count": 3,
+    "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 3,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-2001-0981",
-        "port": 445,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02474,
-        "epss_percentile": 0.82441,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "HP CIFS/9000 Server (SAMBA) A.01.07 and earlier with the \"unix password sync\" option enabled calls the passwd program without specifying the username of the user making the request, which could cause the server to change the password of a different user.",
-        "published_at": "2001-08-31T04:00:00.000",
-        "fetched_at": "2026-06-16T07:23:35Z",
-        "epss_updated_at": "2026-06-18T11:26:58Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:27:00Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2014-2830",
-        "port": 445,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.05178,
-        "epss_percentile": 0.91378,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Stack-based buffer overflow in cifskey.c or cifscreds.c in cifs-utils before 6.4, as used in pam_cifscreds, allows remote attackers to have unspecified impact via unknown vectors.",
-        "published_at": "2015-03-31T14:59:02.047",
-        "fetched_at": "2026-06-16T07:23:35Z",
-        "epss_updated_at": "2026-06-18T11:26:58Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:27:02Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2021-37040",
-        "port": 445,
-        "cvss_score": 9.8,
-        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.00769,
-        "epss_percentile": 0.50708,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "There is a Parameter injection vulnerability in Huawei Smartphone.Successful exploitation of this vulnerability may cause privilege escalation of files after CIFS share mounting.",
-        "published_at": "2021-12-08T15:15:09.267",
-        "fetched_at": "2026-06-16T07:23:35Z",
-        "epss_updated_at": "2026-06-18T11:26:58Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:27:03Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2010-0833",
-        "port": 445,
-        "cvss_score": 9.3,
-        "cvss_vector": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.04137,
-        "epss_percentile": 0.8952,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "The pam_lsass library in Likewise Open 5.4 and CIFS 5.4 before build 8046, and 6.0 before build 8234, as used in HP StorageWorks X9000 Network Storage Systems and possibly other products, uses \"SetPassword logic\" when running as part of a root service, which allows remote attackers to bypass authentication for a Likewise Security Authority (lsassd) account whose password is marked as expired.",
-        "published_at": "2010-07-28T12:48:51.917",
-        "fetched_at": "2026-06-16T07:23:35Z",
-        "epss_updated_at": "2026-06-18T11:26:58Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:27:05Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2010-4680",
-        "port": 445,
-        "cvss_score": 9.0,
-        "cvss_vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02804,
-        "epss_percentile": 0.84625,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "The WebVPN implementation on Cisco Adaptive Security Appliances (ASA) 5500 series devices with software before 8.2(3) permits the viewing of CIFS shares even when CIFS file browsing has been disabled, which allows remote authenticated users to bypass intended access restrictions via CIFS requests, aka Bug ID CSCsz80777.",
-        "published_at": "2011-01-07T12:00:50.267",
-        "fetched_at": "2026-06-16T07:23:35Z",
-        "epss_updated_at": "2026-06-18T11:26:58Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:27:07Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [
       {
         "technique_id": "T1021.002",
@@ -2061,7 +1577,7 @@
         "name": "Remote Services: SMB/Windows Admin Shares",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-16T07:22:51Z"
+        "fetched_at": "2026-06-19T07:15:20Z"
       },
       {
         "technique_id": "T1110.002",
@@ -2069,7 +1585,7 @@
         "name": "Brute Force: Password Spraying",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/002/",
-        "fetched_at": "2026-06-16T07:22:51Z"
+        "fetched_at": "2026-06-19T07:15:20Z"
       },
       {
         "technique_id": "T1569.002",
@@ -2077,7 +1593,7 @@
         "name": "System Services: Service Execution",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1569/002/",
-        "fetched_at": "2026-06-16T07:22:51Z"
+        "fetched_at": "2026-06-19T07:15:20Z"
       }
     ],
     "variot_vulns": [],
@@ -2164,7 +1680,7 @@
         "name": "Protocol Tunneling",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1572/",
-        "fetched_at": "2026-06-18T07:02:34Z"
+        "fetched_at": "2026-06-19T07:16:05Z"
       },
       {
         "technique_id": "T1133",
@@ -2172,7 +1688,7 @@
         "name": "External Remote Services",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1133/",
-        "fetched_at": "2026-06-18T07:02:34Z"
+        "fetched_at": "2026-06-19T07:16:05Z"
       }
     ],
     "variot_vulns": [],
@@ -2229,7 +1745,7 @@
         "name": "Scripting",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T0853/",
-        "fetched_at": "2026-06-18T07:02:43Z"
+        "fetched_at": "2026-06-19T07:16:14Z"
       },
       {
         "technique_id": "T0855",
@@ -2237,7 +1753,7 @@
         "name": "Unauthorized Command Message",
         "tactic": "impair-process-control",
         "url": "https://attack.mitre.org/techniques/T0855/",
-        "fetched_at": "2026-06-18T07:02:43Z"
+        "fetched_at": "2026-06-19T07:16:14Z"
       }
     ],
     "variot_vulns": [],
@@ -2279,7 +1795,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-18T07:03:29Z"
+        "fetched_at": "2026-06-19T07:16:38Z"
       },
       {
         "technique_id": "T1078",
@@ -2287,7 +1803,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T07:03:29Z"
+        "fetched_at": "2026-06-19T07:16:38Z"
       }
     ],
     "variot_vulns": [],
@@ -2339,7 +1855,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-18T07:04:32Z"
+        "fetched_at": "2026-06-19T07:17:15Z"
       },
       {
         "technique_id": "T1078",
@@ -2347,7 +1863,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T07:04:32Z"
+        "fetched_at": "2026-06-19T07:17:15Z"
       }
     ],
     "variot_vulns": [],
@@ -2467,7 +1983,7 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-18T07:07:08Z"
+        "fetched_at": "2026-06-19T07:17:34Z"
       }
     ],
     "variot_vulns": [],
@@ -2543,7 +2059,7 @@
         "name": "Data from Network Shared Drive",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1039/",
-        "fetched_at": "2026-06-18T07:08:27Z"
+        "fetched_at": "2026-06-19T07:17:43Z"
       },
       {
         "technique_id": "T1021",
@@ -2551,7 +2067,7 @@
         "name": "Remote Services",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/",
-        "fetched_at": "2026-06-18T07:08:27Z"
+        "fetched_at": "2026-06-19T07:17:43Z"
       }
     ],
     "variot_vulns": [],
@@ -2595,7 +2111,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-18T07:09:48Z"
+        "fetched_at": "2026-06-19T07:17:55Z"
       }
     ],
     "variot_vulns": [],
@@ -2672,7 +2188,7 @@
         "name": "Brute Force",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/",
-        "fetched_at": "2026-06-18T07:12:42Z"
+        "fetched_at": "2026-06-19T07:18:12Z"
       },
       {
         "technique_id": "T1552",
@@ -2680,7 +2196,7 @@
         "name": "Unsecured Credentials",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1552/",
-        "fetched_at": "2026-06-18T07:12:42Z"
+        "fetched_at": "2026-06-19T07:18:12Z"
       }
     ],
     "variot_vulns": [],
@@ -2804,7 +2320,7 @@
         "name": "Endpoint Denial of Service",
         "tactic": "impact",
         "url": "https://attack.mitre.org/techniques/T1499/",
-        "fetched_at": "2026-06-18T07:15:48Z"
+        "fetched_at": "2026-06-19T07:20:35Z"
       }
     ],
     "variot_vulns": [],
@@ -2847,7 +2363,7 @@
         "name": "Steal or Forge Kerberos Tickets",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1558/",
-        "fetched_at": "2026-06-18T07:16:43Z"
+        "fetched_at": "2026-06-19T07:20:45Z"
       },
       {
         "technique_id": "T1078",
@@ -2855,7 +2371,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T07:16:43Z"
+        "fetched_at": "2026-06-19T07:20:45Z"
       }
     ],
     "variot_vulns": [],
@@ -2898,7 +2414,7 @@
         "name": "Application Layer Protocol: DNS",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/004/",
-        "fetched_at": "2026-06-18T07:18:15Z"
+        "fetched_at": "2026-06-19T07:21:16Z"
       }
     ],
     "variot_vulns": [],
@@ -3007,7 +2523,7 @@
         "name": "Exfiltration Over Alternative Protocol",
         "tactic": "exfiltration",
         "url": "https://attack.mitre.org/techniques/T1048/",
-        "fetched_at": "2026-06-18T07:21:19Z"
+        "fetched_at": "2026-06-19T07:21:29Z"
       }
     ],
     "variot_vulns": [],
@@ -3050,7 +2566,7 @@
         "name": "Exfiltration Over Alternative Protocol",
         "tactic": "exfiltration",
         "url": "https://attack.mitre.org/techniques/T1048/",
-        "fetched_at": "2026-06-18T07:21:51Z"
+        "fetched_at": "2026-06-19T07:21:36Z"
       }
     ],
     "variot_vulns": [],
@@ -3164,6 +2680,74 @@
       "pop3"
     ]
   },
+  "1022": {
+    "port": 1022,
+    "service_name": "exp2",
+    "transport": [
+      "SCTP",
+      "TCP",
+      "DCCP",
+      "UDP"
+    ],
+    "iana_status": "Assigned",
+    "description": "RFC3692-style Experiment 2",
+    "wiki_description": null,
+    "popularity_freq": 0.007929,
+    "wiki_url": null,
+    "nmap_tcp_freq": 0.001217,
+    "nmap_udp_freq": 0.007929,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "exp2",
+    "nmap_comment": "RFC3692-style Experiment 2 (*)    [RFC4727] | RFC3692-style Experiment 2",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "exp2"
+    ]
+  },
+  "1023": {
+    "port": 1023,
+    "service_name": "port-1023",
+    "transport": [
+      "TCP",
+      "UDP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Reserved",
+    "wiki_description": null,
+    "popularity_freq": 0.016188,
+    "wiki_url": null,
+    "nmap_tcp_freq": 0.000953,
+    "nmap_udp_freq": 0.016188,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "netvenuechat",
+    "nmap_comment": "Nortel NetVenue Notification, Chat, Intercom",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "1023"
+    ]
+  },
   "1080": {
     "port": 1080,
     "service_name": "socks",
@@ -3198,6 +2782,72 @@
       "proxy"
     ]
   },
+  "1091": {
+    "port": 1091,
+    "service_name": "ff-sm",
+    "transport": [
+      "TCP",
+      "UDP"
+    ],
+    "iana_status": "Assigned",
+    "description": "FF System Management",
+    "wiki_description": null,
+    "popularity_freq": 0.000228,
+    "wiki_url": null,
+    "nmap_tcp_freq": 0.000228,
+    "nmap_udp_freq": 0.0,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "ff-sm",
+    "nmap_comment": "FF System Management",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "ff-sm"
+    ]
+  },
+  "1092": {
+    "port": 1092,
+    "service_name": "obrpd",
+    "transport": [
+      "TCP",
+      "UDP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Open Business Reporting Protocol",
+    "wiki_description": null,
+    "popularity_freq": 0.00033,
+    "wiki_url": null,
+    "nmap_tcp_freq": 0.000152,
+    "nmap_udp_freq": 0.00033,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "obrpd",
+    "nmap_comment": "Open Business Reporting Protocol",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "obrpd"
+    ]
+  },
   "1099": {
     "port": 1099,
     "service_name": "rmiregistry",
@@ -3230,7 +2880,7 @@
         "name": "Exploitation for Client Execution",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1203/",
-        "fetched_at": "2026-06-18T07:26:55Z"
+        "fetched_at": "2026-06-19T07:24:02Z"
       },
       {
         "technique_id": "T1190",
@@ -3238,7 +2888,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:26:55Z"
+        "fetched_at": "2026-06-19T07:24:02Z"
       }
     ],
     "variot_vulns": [],
@@ -3326,7 +2976,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:28:30Z"
+        "fetched_at": "2026-06-19T07:24:58Z"
       },
       {
         "technique_id": "T1078",
@@ -3334,7 +2984,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T07:28:30Z"
+        "fetched_at": "2026-06-19T07:24:58Z"
       },
       {
         "technique_id": "T1505.001",
@@ -3342,7 +2992,7 @@
         "name": "Server Software Component: SQL Stored Procedures",
         "tactic": "persistence",
         "url": "https://attack.mitre.org/techniques/T1505/001/",
-        "fetched_at": "2026-06-18T07:28:30Z"
+        "fetched_at": "2026-06-19T07:24:58Z"
       }
     ],
     "variot_vulns": [],
@@ -3394,7 +3044,7 @@
         "name": "Network Service Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1046/",
-        "fetched_at": "2026-06-18T07:30:17Z"
+        "fetched_at": "2026-06-19T07:25:06Z"
       },
       {
         "technique_id": "T1190",
@@ -3402,7 +3052,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:30:17Z"
+        "fetched_at": "2026-06-19T07:25:06Z"
       }
     ],
     "variot_vulns": [],
@@ -3483,7 +3133,7 @@
         "name": "Protocol Tunneling",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1572/",
-        "fetched_at": "2026-06-18T07:32:27Z"
+        "fetched_at": "2026-06-19T07:26:02Z"
       },
       {
         "technique_id": "T1133",
@@ -3491,7 +3141,7 @@
         "name": "External Remote Services",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1133/",
-        "fetched_at": "2026-06-18T07:32:27Z"
+        "fetched_at": "2026-06-19T07:26:02Z"
       }
     ],
     "variot_vulns": [],
@@ -3545,7 +3195,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-18T07:34:28Z"
+        "fetched_at": "2026-06-19T07:27:03Z"
       },
       {
         "technique_id": "T1557",
@@ -3553,7 +3203,7 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-18T07:34:28Z"
+        "fetched_at": "2026-06-19T07:27:03Z"
       }
     ],
     "variot_vulns": [],
@@ -3564,13 +3214,46 @@
       "mosquitto"
     ]
   },
+  "2000": {
+    "port": 2000,
+    "service_name": "cisco-sccp",
+    "transport": [
+      "TCP",
+      "UDP"
+    ],
+    "iana_status": "Assigned",
+    "description": "Cisco SCCP",
+    "wiki_description": "Cisco Skinny Client Control Protocol (SCCP)",
+    "popularity_freq": 0.011697,
+    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
+    "nmap_tcp_freq": 0.010112,
+    "nmap_udp_freq": 0.011697,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "cisco-sccp",
+    "nmap_comment": "cisco SCCP (Skinny Client Control Protocol) | Cisco SCCP | Cisco SCCp",
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "cisco-sccp"
+    ]
+  },
   "2049": {
     "port": 2049,
     "service_name": "shilp",
     "transport": [
       "UDP",
-      "SCTP",
-      "TCP"
+      "TCP",
+      "SCTP"
     ],
     "iana_status": "Defined TXT keys: path=<path to mount point>",
     "description": "Network File System",
@@ -3630,7 +3313,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:35:47Z"
+        "fetched_at": "2026-06-19T07:27:42Z"
       },
       {
         "technique_id": "T1078",
@@ -3638,7 +3321,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T07:35:47Z"
+        "fetched_at": "2026-06-19T07:27:42Z"
       }
     ],
     "variot_vulns": [],
@@ -3681,7 +3364,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:36:19Z"
+        "fetched_at": "2026-06-19T07:27:48Z"
       },
       {
         "technique_id": "T1078",
@@ -3689,7 +3372,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T07:36:19Z"
+        "fetched_at": "2026-06-19T07:27:48Z"
       }
     ],
     "variot_vulns": [],
@@ -3766,7 +3449,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-18T07:37:58Z"
+        "fetched_at": "2026-06-19T07:28:20Z"
       },
       {
         "technique_id": "T1110.001",
@@ -3774,7 +3457,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-18T07:37:58Z"
+        "fetched_at": "2026-06-19T07:28:20Z"
       }
     ],
     "variot_vulns": [],
@@ -3818,7 +3501,7 @@
         "name": "Deploy Container",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1610/",
-        "fetched_at": "2026-06-18T07:39:35Z"
+        "fetched_at": "2026-06-19T07:29:29Z"
       },
       {
         "technique_id": "T1190",
@@ -3826,7 +3509,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:39:35Z"
+        "fetched_at": "2026-06-19T07:29:29Z"
       }
     ],
     "variot_vulns": [],
@@ -3946,7 +3629,7 @@
         "name": "Account Discovery: Domain Account",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1087/002/",
-        "fetched_at": "2026-06-18T07:41:37Z"
+        "fetched_at": "2026-06-19T07:29:44Z"
       },
       {
         "technique_id": "T1482",
@@ -3954,7 +3637,7 @@
         "name": "Domain Trust Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1482/",
-        "fetched_at": "2026-06-18T07:41:37Z"
+        "fetched_at": "2026-06-19T07:29:44Z"
       }
     ],
     "variot_vulns": [],
@@ -3998,7 +3681,7 @@
         "name": "Account Discovery: Domain Account",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1087/002/",
-        "fetched_at": "2026-06-18T07:42:29Z"
+        "fetched_at": "2026-06-19T07:29:53Z"
       },
       {
         "technique_id": "T1482",
@@ -4006,7 +3689,7 @@
         "name": "Domain Trust Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1482/",
-        "fetched_at": "2026-06-18T07:42:29Z"
+        "fetched_at": "2026-06-19T07:29:53Z"
       }
     ],
     "variot_vulns": [],
@@ -4050,7 +3733,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:43:52Z"
+        "fetched_at": "2026-06-19T07:30:01Z"
       },
       {
         "technique_id": "T1078",
@@ -4058,7 +3741,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T07:43:52Z"
+        "fetched_at": "2026-06-19T07:30:01Z"
       }
     ],
     "variot_vulns": [],
@@ -4081,8 +3764,8 @@
     "port": 3389,
     "service_name": "ms-wbt-server",
     "transport": [
-      "TCP",
-      "UDP"
+      "UDP",
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "MS WBT Server",
@@ -4094,135 +3777,14 @@
     "nmap_sctp_freq": null,
     "nmap_service_name": "ms-wbt-server",
     "nmap_comment": "Microsoft Remote Display Protocol (aka ms-term-serv, microsoft-rdp) | MS WBT Server",
-    "risk_level": "CRITICAL",
-    "cve_count": 615,
-    "kev_count": 4,
-    "poc_count": 1,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 37,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-2006-4309",
-        "port": 3389,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02368,
-        "epss_percentile": 0.81602,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "VNC server on the AK-Systems Windows Terminal 1.2.5 ExVLP is not password protected, which allows remote attackers to login and view RDP or Citrix sessions.",
-        "published_at": "2006-08-23T19:04:00.000",
-        "fetched_at": "2026-06-16T08:49:14Z",
-        "epss_updated_at": "2026-06-18T11:31:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:31:56Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2004-0962",
-        "port": 3389,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.03422,
-        "epss_percentile": 0.87351,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Apple Remote Desktop Client 1.2.4 executes a GUI application as root when it is started by an Apple Remote Desktop Administrator application, which allows remote authenticated users to execute arbitrary code when loginwindow is active via Fast User Switching.",
-        "published_at": "2005-02-09T05:00:00.000",
-        "fetched_at": "2026-06-16T08:23:14Z",
-        "epss_updated_at": "2026-06-18T11:31:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:31:58Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2006-0736",
-        "port": 3389,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.06891,
-        "epss_percentile": 0.93237,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Stack-based buffer overflow in the pam_micasa PAM authentication module in CASA on Novell Linux Desktop 9 and Open Enterprise Server 1 allows remote attackers to execute arbitrary code via unspecified vectors.",
-        "published_at": "2006-02-27T20:06:00.000",
-        "fetched_at": "2026-06-16T08:23:14Z",
-        "epss_updated_at": "2026-06-18T11:31:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:32:00Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2007-3216",
-        "port": 3389,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.59193,
-        "epss_percentile": 0.98996,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Multiple buffer overflows in the LGServer component of CA (Computer Associates) BrightStor ARCserve Backup for Laptops and Desktops r11.1 allow remote attackers to execute arbitrary code via crafted arguments to the (1) rxsAddNewUser, (2) rxsSetUserInfo, (3) rxsRenameUser, (4) rxsSetMessageLogSettings, (5) rxsExportData, (6) rxsSetServerOptions, (7) rxsRenameFile, (8) rxsACIManageSend, (9) rxsExportUser, (10) rxsImportUser, (11) rxsMoveUserData, (12) rxsUseLicenseIni, (13) rxsLicGetSiteId, (14) rxsGetLogFileNames, (15) rxsGetBackupLog, (16) rxsBackupComplete, (17) rxsSetDataProtectionSecurityData, (18) rxsSetDefaultConfigName, (19) rxsGetMessageLogSettings, (20) rxsHWDiskGetTotal, (21) rxsHWDiskGetFree, (22) rxsGetSubDirs, (23) rxsGetServerDBPathName, (24) rxsSetServerOptions, (25) rxsDeleteFile, (26) rxsACIManageSend, (27) rxcReadBackupSetList, (28) rxcWriteConfigInfo, (29) rxcSetAssetManagement, (30) rxcWriteFileListForRestore, (31) rxcReadSaveSetProfile, (32) rxcInitSaveSetProfile, (33) rxcAddSaveSetNextAppList, (34) rxcAddSaveSetNextFilesPathList, (35) rxcAddNextBackupSetIncWildCard, (36) rxcGetRevisions, (37) rxrAddMovedUser, (38) rxrSetClientVersion, or (39) rxsSetDataGrowthScheduleAndFilter commands.",
-        "published_at": "2007-06-14T22:30:00.000",
-        "fetched_at": "2026-06-16T08:23:14Z",
-        "epss_updated_at": "2026-06-18T11:31:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:32:01Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 3,
-        "exploitdb_ids": "[16415, 16416, 16409]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2007-5003",
-        "port": 3389,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.67204,
-        "epss_percentile": 0.99207,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Multiple stack-based buffer overflows in CA (Computer Associates) BrightStor ARCserve Backup for Laptops and Desktops r11.0 through r11.5 allow remote attackers to execute arbitrary code via a long (1) username or (2) password to the rxrLogin command in rxRPC.dll, or a long (3) username argument to the GetUserInfo function.",
-        "published_at": "2007-10-01T20:17:00.000",
-        "fetched_at": "2026-06-16T08:23:14Z",
-        "epss_updated_at": "2026-06-18T11:31:39Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:32:03Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 1,
-        "exploitdb_ids": "[16411]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [
       {
         "technique_id": "T1021.001",
@@ -4230,7 +3792,7 @@
         "name": "Remote Services: Remote Desktop Protocol",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/001/",
-        "fetched_at": "2026-06-16T08:23:05Z"
+        "fetched_at": "2026-06-19T07:30:42Z"
       },
       {
         "technique_id": "T1110.001",
@@ -4238,7 +3800,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-16T08:23:05Z"
+        "fetched_at": "2026-06-19T07:30:42Z"
       },
       {
         "technique_id": "T1563.002",
@@ -4246,7 +3808,7 @@
         "name": "Remote Service Session Hijacking: RDP Hijacking",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1563/002/",
-        "fetched_at": "2026-06-16T08:23:05Z"
+        "fetched_at": "2026-06-19T07:30:42Z"
       }
     ],
     "variot_vulns": [],
@@ -4487,7 +4049,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:47:37Z"
+        "fetched_at": "2026-06-19T07:31:22Z"
       },
       {
         "technique_id": "T1046",
@@ -4495,7 +4057,7 @@
         "name": "Network Service Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1046/",
-        "fetched_at": "2026-06-18T07:47:37Z"
+        "fetched_at": "2026-06-19T07:31:22Z"
       }
     ],
     "variot_vulns": [],
@@ -4574,7 +4136,7 @@
         "name": "Remote Access Software",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1219/",
-        "fetched_at": "2026-06-18T07:49:29Z"
+        "fetched_at": "2026-06-19T07:32:16Z"
       },
       {
         "technique_id": "T1059",
@@ -4582,7 +4144,7 @@
         "name": "Command and Scripting Interpreter",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1059/",
-        "fetched_at": "2026-06-18T07:49:29Z"
+        "fetched_at": "2026-06-19T07:32:16Z"
       }
     ],
     "variot_vulns": [],
@@ -4767,7 +4329,7 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-18T07:53:56Z"
+        "fetched_at": "2026-06-19T07:34:24Z"
       },
       {
         "technique_id": "T1040",
@@ -4775,7 +4337,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-18T07:53:56Z"
+        "fetched_at": "2026-06-19T07:34:24Z"
       }
     ],
     "variot_vulns": [],
@@ -4831,7 +4393,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T07:54:49Z"
+        "fetched_at": "2026-06-19T07:34:34Z"
       },
       {
         "technique_id": "T1078",
@@ -4839,7 +4401,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T07:54:49Z"
+        "fetched_at": "2026-06-19T07:34:34Z"
       }
     ],
     "variot_vulns": [],
@@ -4930,8 +4492,8 @@
     "service_name": "amqp",
     "transport": [
       "UDP",
-      "SCTP",
-      "TCP"
+      "TCP",
+      "SCTP"
     ],
     "iana_status": "Assigned",
     "description": "AMQP",
@@ -4992,7 +4554,7 @@
         "name": "Remote Services: VNC",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/005/",
-        "fetched_at": "2026-06-18T07:59:11Z"
+        "fetched_at": "2026-06-19T07:34:55Z"
       },
       {
         "technique_id": "T1110.001",
@@ -5000,7 +4562,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-18T07:59:11Z"
+        "fetched_at": "2026-06-19T07:34:55Z"
       }
     ],
     "variot_vulns": [],
@@ -5082,7 +4644,7 @@
         "name": "Remote Services: Windows Remote Management",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/006/",
-        "fetched_at": "2026-06-18T08:01:00Z"
+        "fetched_at": "2026-06-19T07:35:37Z"
       },
       {
         "technique_id": "T1110.001",
@@ -5090,7 +4652,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-18T08:01:00Z"
+        "fetched_at": "2026-06-19T07:35:37Z"
       }
     ],
     "variot_vulns": [],
@@ -5145,7 +4707,7 @@
         "name": "Remote Services: Windows Remote Management",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/006/",
-        "fetched_at": "2026-06-18T08:01:52Z"
+        "fetched_at": "2026-06-19T07:36:40Z"
       },
       {
         "technique_id": "T1573",
@@ -5153,7 +4715,7 @@
         "name": "Encrypted Channel",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1573/",
-        "fetched_at": "2026-06-18T08:01:52Z"
+        "fetched_at": "2026-06-19T07:36:40Z"
       }
     ],
     "variot_vulns": [],
@@ -5190,135 +4752,14 @@
     "nmap_sctp_freq": null,
     "nmap_service_name": "X11",
     "nmap_comment": "X Window server",
-    "risk_level": "CRITICAL",
-    "cve_count": 116,
+    "risk_level": "LOW",
+    "cve_count": 0,
     "kev_count": 0,
     "poc_count": 0,
     "attackerkb_hits": 0,
-    "exploitdb_hits": 3,
+    "exploitdb_hits": 0,
     "shadowserver_hits": 0,
-    "top_cves": [
-      {
-        "cve_id": "CVE-2008-2362",
-        "port": 6000,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.03566,
-        "epss_percentile": 0.87855,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Multiple integer overflows in the Render extension in the X server 1.4 in X.Org X11R7.3 allow context-dependent attackers to execute arbitrary code via a (1) SProcRenderCreateLinearGradient, (2) SProcRenderCreateRadialGradient, or (3) SProcRenderCreateConicalGradient request with an invalid field specifying the number of bytes to swap in the request data, which triggers heap memory corruption.",
-        "published_at": "2008-06-16T19:41:00.000",
-        "fetched_at": "2026-06-18T11:33:36Z",
-        "epss_updated_at": "2026-06-18T11:34:13Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:34:17Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2012-2118",
-        "port": 6000,
-        "cvss_score": 10.0,
-        "cvss_vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02689,
-        "epss_percentile": 0.83913,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Format string vulnerability in the LogVHdrMessageVerb function in os/log.c in X.Org X11 1.11 allows attackers to cause a denial of service or possibly execute arbitrary code via format string specifiers in an input device name.",
-        "published_at": "2012-05-18T22:55:03.093",
-        "fetched_at": "2026-06-18T11:33:36Z",
-        "epss_updated_at": "2026-06-18T11:34:13Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:34:20Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2019-16649",
-        "port": 6000,
-        "cvss_score": 10.0,
-        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.0092,
-        "epss_percentile": 0.55529,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "On Supermicro H11, H12, M11, X9, X10, and X11 products, a combination of encryption and authentication problems in the virtual media service allows capture of BMC credentials and data transferred over virtual media devices. Attackers can use captured credentials to connect virtual USB devices to the server managed by the BMC.",
-        "published_at": "2019-09-21T02:15:11.523",
-        "fetched_at": "2026-06-18T11:33:36Z",
-        "epss_updated_at": "2026-06-18T11:34:13Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:34:22Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2019-16650",
-        "port": 6000,
-        "cvss_score": 10.0,
-        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.02163,
-        "epss_percentile": 0.7985,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "On Supermicro X10 and X11 products, a client's access privileges may be transferred to a different client that later has the same socket file descriptor number. In opportunistic circumstances, an attacker can simply connect to the virtual media service, and then connect virtual USB devices to the server managed by the BMC.",
-        "published_at": "2019-09-21T02:15:11.587",
-        "fetched_at": "2026-06-18T11:33:36Z",
-        "epss_updated_at": "2026-06-18T11:34:13Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:34:23Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      },
-      {
-        "cve_id": "CVE-2023-28100",
-        "port": 6000,
-        "cvss_score": 10.0,
-        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "cvss_severity": "CRITICAL",
-        "epss_score": 0.00871,
-        "epss_percentile": 0.5406,
-        "exploit_type": null,
-        "exploited_in_wild": 0,
-        "description": "Flatpak is a system for building, distributing, and running sandboxed desktop applications on Linux. Versions prior to 1.10.8, 1.12.8, 1.14.4, and 1.15.4 contain a vulnerability similar to CVE-2017-5226, but using the `TIOCLINUX` ioctl command instead of `TIOCSTI`. If a Flatpak app is run on a Linux virtual console such as `/dev/tty1`, it can copy text from the virtual console and paste it into the command buffer, from which the command might be run after the Flatpak app has exited. Ordinary graphical terminal emulators like xterm, gnome-terminal and Konsole are unaffected. This vulnerability is specific to the Linux virtual consoles `/dev/tty1`, `/dev/tty2` and so on. A patch is available in versions 1.10.8, 1.12.8, 1.14.4, and 1.15.4. As a workaround, don't run Flatpak on a Linux virtual console. Flatpak is primarily designed to be used in a Wayland or X11 graphical environment.",
-        "published_at": "2023-03-16T16:15:12.553",
-        "fetched_at": "2026-06-18T11:33:36Z",
-        "epss_updated_at": "2026-06-18T11:34:13Z",
-        "poc_count": 0,
-        "poc_urls": "[]",
-        "poc_checked_at": "2026-06-18T11:34:25Z",
-        "attackerkb_score": null,
-        "attackerkb_url": null,
-        "exploitdb_count": 0,
-        "exploitdb_ids": "[]",
-        "shadowserver_count": null,
-        "shadowserver_updated_at": null
-      }
-    ],
+    "top_cves": [],
     "techniques": [
       {
         "technique_id": "T1021.005",
@@ -5326,7 +4767,7 @@
         "name": "Remote Services: VNC",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/005/",
-        "fetched_at": "2026-06-18T11:33:28Z"
+        "fetched_at": "2026-06-19T07:36:49Z"
       },
       {
         "technique_id": "T1185",
@@ -5334,7 +4775,7 @@
         "name": "Browser Session Hijacking",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1185/",
-        "fetched_at": "2026-06-18T11:33:28Z"
+        "fetched_at": "2026-06-19T07:36:49Z"
       }
     ],
     "variot_vulns": [],
@@ -5389,7 +4830,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:05:43Z"
+        "fetched_at": "2026-06-19T07:37:32Z"
       },
       {
         "technique_id": "T1059",
@@ -5397,7 +4838,7 @@
         "name": "Command and Scripting Interpreter",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1059/",
-        "fetched_at": "2026-06-18T08:05:43Z"
+        "fetched_at": "2026-06-19T07:37:32Z"
       }
     ],
     "variot_vulns": [],
@@ -5514,7 +4955,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:07:49Z"
+        "fetched_at": "2026-06-19T07:38:11Z"
       },
       {
         "technique_id": "T1071.001",
@@ -5522,7 +4963,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-18T08:07:49Z"
+        "fetched_at": "2026-06-19T07:38:11Z"
       }
     ],
     "variot_vulns": [],
@@ -5567,7 +5008,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:08:38Z"
+        "fetched_at": "2026-06-19T07:38:20Z"
       },
       {
         "technique_id": "T1071.001",
@@ -5575,7 +5016,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-18T08:08:38Z"
+        "fetched_at": "2026-06-19T07:38:20Z"
       }
     ],
     "variot_vulns": [],
@@ -5618,7 +5059,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:09:53Z"
+        "fetched_at": "2026-06-19T07:38:26Z"
       },
       {
         "technique_id": "T1071.001",
@@ -5626,7 +5067,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-18T08:09:53Z"
+        "fetched_at": "2026-06-19T07:38:26Z"
       }
     ],
     "variot_vulns": [],
@@ -5704,7 +5145,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:12:50Z"
+        "fetched_at": "2026-06-19T07:40:29Z"
       },
       {
         "technique_id": "T1071.001",
@@ -5712,7 +5153,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-18T08:12:50Z"
+        "fetched_at": "2026-06-19T07:40:29Z"
       }
     ],
     "variot_vulns": [],
@@ -5851,7 +5292,7 @@
         "name": "Network Service Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1046/",
-        "fetched_at": "2026-06-18T08:14:45Z"
+        "fetched_at": "2026-06-19T07:41:14Z"
       },
       {
         "technique_id": "T1190",
@@ -5859,7 +5300,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:14:45Z"
+        "fetched_at": "2026-06-19T07:41:14Z"
       }
     ],
     "variot_vulns": [],
@@ -6049,7 +5490,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-18T08:15:17Z"
+        "fetched_at": "2026-06-19T07:41:19Z"
       },
       {
         "technique_id": "T1557",
@@ -6057,7 +5498,7 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-18T08:15:17Z"
+        "fetched_at": "2026-06-19T07:41:19Z"
       }
     ],
     "variot_vulns": [],
@@ -6203,7 +5644,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:19:51Z"
+        "fetched_at": "2026-06-19T07:41:47Z"
       },
       {
         "technique_id": "T1213",
@@ -6211,7 +5652,7 @@
         "name": "Data from Information Repositories",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1213/",
-        "fetched_at": "2026-06-18T08:19:51Z"
+        "fetched_at": "2026-06-19T07:41:47Z"
       }
     ],
     "variot_vulns": [],
@@ -6294,7 +5735,7 @@
         "name": "Data from Information Repositories",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1213/",
-        "fetched_at": "2026-06-18T08:20:57Z"
+        "fetched_at": "2026-06-19T07:41:54Z"
       },
       {
         "technique_id": "T1552.001",
@@ -6302,7 +5743,7 @@
         "name": "Unsecured Credentials: Credentials In Files",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1552/001/",
-        "fetched_at": "2026-06-18T08:20:57Z"
+        "fetched_at": "2026-06-19T07:41:54Z"
       }
     ],
     "variot_vulns": [],
@@ -6357,7 +5798,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:22:33Z"
+        "fetched_at": "2026-06-19T07:42:03Z"
       },
       {
         "technique_id": "T1078",
@@ -6365,7 +5806,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-18T08:22:33Z"
+        "fetched_at": "2026-06-19T07:42:03Z"
       }
     ],
     "variot_vulns": [],
@@ -6705,7 +6146,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-18T08:24:42Z"
+        "fetched_at": "2026-06-19T07:42:19Z"
       },
       {
         "technique_id": "T1213",
@@ -6713,7 +6154,7 @@
         "name": "Data from Information Repositories",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1213/",
-        "fetched_at": "2026-06-18T08:24:42Z"
+        "fetched_at": "2026-06-19T07:42:19Z"
       }
     ],
     "variot_vulns": [],
@@ -6891,7 +6332,7 @@
         "name": "Remote Services",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T0886/",
-        "fetched_at": "2026-06-18T08:25:31Z"
+        "fetched_at": "2026-06-19T07:43:02Z"
       },
       {
         "technique_id": "T0855",
@@ -6899,7 +6340,7 @@
         "name": "Unauthorized Command Message",
         "tactic": "impair-process-control",
         "url": "https://attack.mitre.org/techniques/T0855/",
-        "fetched_at": "2026-06-18T08:25:31Z"
+        "fetched_at": "2026-06-19T07:43:02Z"
       }
     ],
     "variot_vulns": [],
@@ -6956,7 +6397,7 @@
         "name": "Remote Services",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T0886/",
-        "fetched_at": "2026-06-18T08:26:20Z"
+        "fetched_at": "2026-06-19T07:43:11Z"
       },
       {
         "technique_id": "T0840",
@@ -6964,7 +6405,7 @@
         "name": "Network Connection Enumeration",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T0840/",
-        "fetched_at": "2026-06-18T08:26:20Z"
+        "fetched_at": "2026-06-19T07:43:11Z"
       }
     ],
     "variot_vulns": [],
@@ -6986,6 +6427,38 @@
       "bacnet",
       "building automation",
       "ashrae"
+    ]
+  },
+  "50003": {
+    "port": 50003,
+    "service_name": "port-50003",
+    "transport": [
+      "TCP"
+    ],
+    "iana_status": "Unknown",
+    "description": "",
+    "wiki_description": null,
+    "popularity_freq": 0.00038,
+    "wiki_url": null,
+    "nmap_tcp_freq": 0.00038,
+    "nmap_udp_freq": null,
+    "nmap_sctp_freq": null,
+    "nmap_service_name": "unknown",
+    "nmap_comment": null,
+    "risk_level": "LOW",
+    "cve_count": 0,
+    "kev_count": 0,
+    "poc_count": 0,
+    "attackerkb_hits": 0,
+    "exploitdb_hits": 0,
+    "shadowserver_hits": 0,
+    "top_cves": [],
+    "techniques": [],
+    "variot_vulns": [],
+    "pentest_notes": [],
+    "defensive_notes": [],
+    "search_terms": [
+      "50003"
     ]
   },
   "50070": {
@@ -7019,205 +6492,6 @@
     "search_terms": [
       "hadoop",
       "hdfs"
-    ]
-  },
-  "1022": {
-    "port": 1022,
-    "service_name": "exp2",
-    "transport": [
-      "SCTP",
-      "TCP",
-      "DCCP",
-      "UDP"
-    ],
-    "iana_status": "Assigned",
-    "description": "RFC3692-style Experiment 2",
-    "wiki_description": null,
-    "popularity_freq": 0.007929,
-    "wiki_url": null,
-    "nmap_tcp_freq": 0.001217,
-    "nmap_udp_freq": 0.007929,
-    "nmap_sctp_freq": null,
-    "nmap_service_name": "exp2",
-    "nmap_comment": "RFC3692-style Experiment 2 (*)    [RFC4727] | RFC3692-style Experiment 2",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "poc_count": 0,
-    "attackerkb_hits": 0,
-    "exploitdb_hits": 0,
-    "shadowserver_hits": 0,
-    "top_cves": [],
-    "techniques": [],
-    "variot_vulns": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "exp2"
-    ]
-  },
-  "1023": {
-    "port": 1023,
-    "service_name": "port-1023",
-    "transport": [
-      "TCP",
-      "UDP"
-    ],
-    "iana_status": "Assigned",
-    "description": "Reserved",
-    "wiki_description": null,
-    "popularity_freq": 0.016188,
-    "wiki_url": null,
-    "nmap_tcp_freq": 0.000953,
-    "nmap_udp_freq": 0.016188,
-    "nmap_sctp_freq": null,
-    "nmap_service_name": "netvenuechat",
-    "nmap_comment": "Nortel NetVenue Notification, Chat, Intercom",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "poc_count": 0,
-    "attackerkb_hits": 0,
-    "exploitdb_hits": 0,
-    "shadowserver_hits": 0,
-    "top_cves": [],
-    "techniques": [],
-    "variot_vulns": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "1023"
-    ]
-  },
-  "1091": {
-    "port": 1091,
-    "service_name": "ff-sm",
-    "transport": [
-      "TCP",
-      "UDP"
-    ],
-    "iana_status": "Assigned",
-    "description": "FF System Management",
-    "wiki_description": null,
-    "popularity_freq": 0.000228,
-    "wiki_url": null,
-    "nmap_tcp_freq": 0.000228,
-    "nmap_udp_freq": 0.0,
-    "nmap_sctp_freq": null,
-    "nmap_service_name": "ff-sm",
-    "nmap_comment": "FF System Management",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "poc_count": 0,
-    "attackerkb_hits": 0,
-    "exploitdb_hits": 0,
-    "shadowserver_hits": 0,
-    "top_cves": [],
-    "techniques": [],
-    "variot_vulns": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "ff-sm"
-    ]
-  },
-  "1092": {
-    "port": 1092,
-    "service_name": "obrpd",
-    "transport": [
-      "TCP",
-      "UDP"
-    ],
-    "iana_status": "Assigned",
-    "description": "Open Business Reporting Protocol",
-    "wiki_description": null,
-    "popularity_freq": 0.00033,
-    "wiki_url": null,
-    "nmap_tcp_freq": 0.000152,
-    "nmap_udp_freq": 0.00033,
-    "nmap_sctp_freq": null,
-    "nmap_service_name": "obrpd",
-    "nmap_comment": "Open Business Reporting Protocol",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "poc_count": 0,
-    "attackerkb_hits": 0,
-    "exploitdb_hits": 0,
-    "shadowserver_hits": 0,
-    "top_cves": [],
-    "techniques": [],
-    "variot_vulns": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "obrpd"
-    ]
-  },
-  "2000": {
-    "port": 2000,
-    "service_name": "cisco-sccp",
-    "transport": [
-      "TCP",
-      "UDP"
-    ],
-    "iana_status": "Assigned",
-    "description": "Cisco SCCP",
-    "wiki_description": "Cisco Skinny Client Control Protocol (SCCP)",
-    "popularity_freq": 0.011697,
-    "wiki_url": "https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers",
-    "nmap_tcp_freq": 0.010112,
-    "nmap_udp_freq": 0.011697,
-    "nmap_sctp_freq": null,
-    "nmap_service_name": "cisco-sccp",
-    "nmap_comment": "cisco SCCP (Skinny Client Control Protocol) | Cisco SCCP | Cisco SCCp",
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "poc_count": 0,
-    "attackerkb_hits": 0,
-    "exploitdb_hits": 0,
-    "shadowserver_hits": 0,
-    "top_cves": [],
-    "techniques": [],
-    "variot_vulns": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "cisco-sccp"
-    ]
-  },
-  "50003": {
-    "port": 50003,
-    "service_name": "port-50003",
-    "transport": [
-      "TCP"
-    ],
-    "iana_status": "Unknown",
-    "description": "",
-    "wiki_description": null,
-    "popularity_freq": 0.00038,
-    "wiki_url": null,
-    "nmap_tcp_freq": 0.00038,
-    "nmap_udp_freq": null,
-    "nmap_sctp_freq": null,
-    "nmap_service_name": "unknown",
-    "nmap_comment": null,
-    "risk_level": "LOW",
-    "cve_count": 0,
-    "kev_count": 0,
-    "poc_count": 0,
-    "attackerkb_hits": 0,
-    "exploitdb_hits": 0,
-    "shadowserver_hits": 0,
-    "top_cves": [],
-    "techniques": [],
-    "variot_vulns": [],
-    "pentest_notes": [],
-    "defensive_notes": [],
-    "search_terms": [
-      "50003"
     ]
   }
 }
