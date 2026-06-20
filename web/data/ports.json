@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-19T07:43:25Z",
+    "generated_at": "2026-06-20T07:32:34Z",
     "port_count": 138,
     "sources": [
       "IANA",
@@ -48,7 +48,7 @@
         "name": "Remote System Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1018/",
-        "fetched_at": "2026-06-19T07:03:18Z"
+        "fetched_at": "2026-06-20T06:17:56Z"
       },
       {
         "technique_id": "T1595.001",
@@ -56,7 +56,7 @@
         "name": "Active Scanning: Scanning IP Blocks",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1595/001/",
-        "fetched_at": "2026-06-19T07:03:18Z"
+        "fetched_at": "2026-06-20T06:17:56Z"
       }
     ],
     "variot_vulns": [],
@@ -73,8 +73,8 @@
     "service_name": "ftp-data",
     "transport": [
       "UDP",
-      "TCP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "FTP",
@@ -107,8 +107,8 @@
     "service_name": "ftp",
     "transport": [
       "UDP",
-      "TCP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path>",
     "description": "FTP",
@@ -135,7 +135,7 @@
         "name": "SMB/Windows Admin Shares",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-19T07:05:01Z"
+        "fetched_at": "2026-06-20T06:18:39Z"
       },
       {
         "technique_id": "T1078",
@@ -143,7 +143,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:05:01Z"
+        "fetched_at": "2026-06-20T06:18:39Z"
       },
       {
         "technique_id": "T1190",
@@ -151,7 +151,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:05:01Z"
+        "fetched_at": "2026-06-20T06:18:39Z"
       }
     ],
     "variot_vulns": [],
@@ -178,8 +178,8 @@
     "service_name": "ssh",
     "transport": [
       "UDP",
-      "TCP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password>",
     "description": "SSH",
@@ -206,7 +206,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-19T07:05:41Z"
+        "fetched_at": "2026-06-20T06:19:37Z"
       },
       {
         "technique_id": "T1110.001",
@@ -214,7 +214,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-19T07:05:41Z"
+        "fetched_at": "2026-06-20T06:19:37Z"
       },
       {
         "technique_id": "T1098.004",
@@ -222,7 +222,7 @@
         "name": "Account Manipulation: SSH Authorized Keys",
         "tactic": "persistence",
         "url": "https://attack.mitre.org/techniques/T1098/004/",
-        "fetched_at": "2026-06-19T07:05:41Z"
+        "fetched_at": "2026-06-20T06:19:37Z"
       }
     ],
     "variot_vulns": [],
@@ -279,7 +279,7 @@
         "name": "Remote Services: Telnet",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-19T07:05:51Z"
+        "fetched_at": "2026-06-20T06:21:22Z"
       },
       {
         "technique_id": "T1110.001",
@@ -287,7 +287,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-19T07:05:51Z"
+        "fetched_at": "2026-06-20T06:21:22Z"
       }
     ],
     "variot_vulns": [],
@@ -336,7 +336,7 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-19T07:05:54Z"
+        "fetched_at": "2026-06-20T06:21:29Z"
       },
       {
         "technique_id": "T1071.003",
@@ -344,7 +344,7 @@
         "name": "Application Layer Protocol: Mail Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/003/",
-        "fetched_at": "2026-06-19T07:05:54Z"
+        "fetched_at": "2026-06-20T06:21:29Z"
       }
     ],
     "variot_vulns": [],
@@ -397,7 +397,7 @@
         "name": "Gather Victim Network Information",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1590/",
-        "fetched_at": "2026-06-19T07:06:03Z"
+        "fetched_at": "2026-06-20T06:22:41Z"
       }
     ],
     "variot_vulns": [],
@@ -439,7 +439,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:06:36Z"
+        "fetched_at": "2026-06-20T06:23:15Z"
       },
       {
         "technique_id": "T1556",
@@ -447,7 +447,7 @@
         "name": "Modify Authentication Process",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1556/",
-        "fetched_at": "2026-06-19T07:06:36Z"
+        "fetched_at": "2026-06-20T06:23:15Z"
       }
     ],
     "variot_vulns": [],
@@ -490,7 +490,7 @@
         "name": "Application Layer Protocol: DNS",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/004/",
-        "fetched_at": "2026-06-19T07:06:43Z"
+        "fetched_at": "2026-06-20T06:23:54Z"
       },
       {
         "technique_id": "T1568",
@@ -498,7 +498,7 @@
         "name": "Dynamic Resolution",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1568/",
-        "fetched_at": "2026-06-19T07:06:43Z"
+        "fetched_at": "2026-06-20T06:23:54Z"
       },
       {
         "technique_id": "T1048.001",
@@ -506,7 +506,7 @@
         "name": "Exfiltration Over Alternative Protocol: DNS",
         "tactic": "exfiltration",
         "url": "https://attack.mitre.org/techniques/T1048/001/",
-        "fetched_at": "2026-06-19T07:06:43Z"
+        "fetched_at": "2026-06-20T06:23:54Z"
       }
     ],
     "variot_vulns": [],
@@ -628,7 +628,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:07:52Z"
+        "fetched_at": "2026-06-20T06:25:49Z"
       }
     ],
     "variot_vulns": [],
@@ -670,7 +670,7 @@
         "name": "Gather Victim Host Information",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1592/",
-        "fetched_at": "2026-06-19T07:07:56Z"
+        "fetched_at": "2026-06-20T06:25:53Z"
       },
       {
         "technique_id": "T1589",
@@ -678,7 +678,7 @@
         "name": "Gather Victim Identity Information",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1589/",
-        "fetched_at": "2026-06-19T07:07:56Z"
+        "fetched_at": "2026-06-20T06:25:53Z"
       }
     ],
     "variot_vulns": [],
@@ -693,8 +693,8 @@
     "service_name": "http",
     "transport": [
       "UDP",
-      "TCP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Defined TXT keys: u=<username> p=<password> path=<path to document>",
     "description": "HTTP",
@@ -721,7 +721,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:07:59Z"
+        "fetched_at": "2026-06-20T06:25:56Z"
       },
       {
         "technique_id": "T1059.007",
@@ -729,7 +729,7 @@
         "name": "Command and Scripting Interpreter: JavaScript",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1059/007/",
-        "fetched_at": "2026-06-19T07:07:59Z"
+        "fetched_at": "2026-06-20T06:25:56Z"
       },
       {
         "technique_id": "T1071.001",
@@ -737,7 +737,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-19T07:07:59Z"
+        "fetched_at": "2026-06-20T06:25:56Z"
       }
     ],
     "variot_vulns": [],
@@ -792,7 +792,7 @@
         "name": "Steal or Forge Kerberos Tickets",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1558/",
-        "fetched_at": "2026-06-19T07:08:08Z"
+        "fetched_at": "2026-06-20T06:26:05Z"
       },
       {
         "technique_id": "T1558.003",
@@ -800,7 +800,7 @@
         "name": "Steal or Forge Kerberos Tickets: Kerberoasting",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1558/003/",
-        "fetched_at": "2026-06-19T07:08:08Z"
+        "fetched_at": "2026-06-20T06:26:05Z"
       },
       {
         "technique_id": "T1558.004",
@@ -808,7 +808,7 @@
         "name": "Steal or Forge Kerberos Tickets: AS-REP Roasting",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1558/004/",
-        "fetched_at": "2026-06-19T07:08:08Z"
+        "fetched_at": "2026-06-20T06:26:05Z"
       },
       {
         "technique_id": "T1550.003",
@@ -816,7 +816,7 @@
         "name": "Use Alternate Authentication Material: Pass the Ticket",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1550/003/",
-        "fetched_at": "2026-06-19T07:08:08Z"
+        "fetched_at": "2026-06-20T06:26:05Z"
       }
     ],
     "variot_vulns": [],
@@ -872,7 +872,7 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-19T07:08:17Z"
+        "fetched_at": "2026-06-20T06:26:27Z"
       }
     ],
     "variot_vulns": [],
@@ -952,7 +952,7 @@
         "name": "Gather Victim Host Information",
         "tactic": "reconnaissance",
         "url": "https://attack.mitre.org/techniques/T1592/",
-        "fetched_at": "2026-06-19T07:09:39Z"
+        "fetched_at": "2026-06-20T06:27:49Z"
       }
     ],
     "variot_vulns": [],
@@ -1204,7 +1204,7 @@
         "name": "Phishing: Spearphishing Attachment",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1566/001/",
-        "fetched_at": "2026-06-19T07:12:17Z"
+        "fetched_at": "2026-06-20T06:32:59Z"
       }
     ],
     "variot_vulns": [],
@@ -1251,7 +1251,7 @@
         "name": "Data from Configuration Repository: SNMP MIB Dump",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1602/001/",
-        "fetched_at": "2026-06-19T07:12:26Z"
+        "fetched_at": "2026-06-20T06:34:26Z"
       },
       {
         "technique_id": "T1040",
@@ -1259,7 +1259,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-19T07:12:26Z"
+        "fetched_at": "2026-06-20T06:34:26Z"
       }
     ],
     "variot_vulns": [],
@@ -1334,7 +1334,7 @@
         "name": "Remote Services",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/",
-        "fetched_at": "2026-06-19T07:12:32Z"
+        "fetched_at": "2026-06-20T06:34:32Z"
       }
     ],
     "variot_vulns": [],
@@ -1377,7 +1377,7 @@
         "name": "Application Layer Protocol: Mail Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/003/",
-        "fetched_at": "2026-06-19T07:12:39Z"
+        "fetched_at": "2026-06-20T06:35:09Z"
       }
     ],
     "variot_vulns": [],
@@ -1453,7 +1453,7 @@
         "name": "Account Discovery: Domain Account",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1087/002/",
-        "fetched_at": "2026-06-19T07:13:17Z"
+        "fetched_at": "2026-06-20T06:35:37Z"
       },
       {
         "technique_id": "T1482",
@@ -1461,7 +1461,7 @@
         "name": "Domain Trust Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1482/",
-        "fetched_at": "2026-06-19T07:13:17Z"
+        "fetched_at": "2026-06-20T06:35:37Z"
       }
     ],
     "variot_vulns": [],
@@ -1477,8 +1477,8 @@
     "service_name": "https",
     "transport": [
       "UDP",
-      "TCP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "HTTPS",
@@ -1505,7 +1505,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:13:45Z"
+        "fetched_at": "2026-06-20T06:35:42Z"
       },
       {
         "technique_id": "T1071.001",
@@ -1513,7 +1513,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-19T07:13:45Z"
+        "fetched_at": "2026-06-20T06:35:42Z"
       },
       {
         "technique_id": "T1573",
@@ -1521,7 +1521,7 @@
         "name": "Encrypted Channel",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1573/",
-        "fetched_at": "2026-06-19T07:13:45Z"
+        "fetched_at": "2026-06-20T06:35:42Z"
       }
     ],
     "variot_vulns": [],
@@ -1577,7 +1577,7 @@
         "name": "Remote Services: SMB/Windows Admin Shares",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/002/",
-        "fetched_at": "2026-06-19T07:15:20Z"
+        "fetched_at": "2026-06-20T06:35:54Z"
       },
       {
         "technique_id": "T1110.002",
@@ -1585,7 +1585,7 @@
         "name": "Brute Force: Password Spraying",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/002/",
-        "fetched_at": "2026-06-19T07:15:20Z"
+        "fetched_at": "2026-06-20T06:35:54Z"
       },
       {
         "technique_id": "T1569.002",
@@ -1593,7 +1593,7 @@
         "name": "System Services: Service Execution",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1569/002/",
-        "fetched_at": "2026-06-19T07:15:20Z"
+        "fetched_at": "2026-06-20T06:35:54Z"
       }
     ],
     "variot_vulns": [],
@@ -1680,7 +1680,7 @@
         "name": "Protocol Tunneling",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1572/",
-        "fetched_at": "2026-06-19T07:16:05Z"
+        "fetched_at": "2026-06-20T06:36:23Z"
       },
       {
         "technique_id": "T1133",
@@ -1688,7 +1688,7 @@
         "name": "External Remote Services",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1133/",
-        "fetched_at": "2026-06-19T07:16:05Z"
+        "fetched_at": "2026-06-20T06:36:23Z"
       }
     ],
     "variot_vulns": [],
@@ -1745,7 +1745,7 @@
         "name": "Scripting",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T0853/",
-        "fetched_at": "2026-06-19T07:16:14Z"
+        "fetched_at": "2026-06-20T06:37:39Z"
       },
       {
         "technique_id": "T0855",
@@ -1753,7 +1753,7 @@
         "name": "Unauthorized Command Message",
         "tactic": "impair-process-control",
         "url": "https://attack.mitre.org/techniques/T0855/",
-        "fetched_at": "2026-06-19T07:16:14Z"
+        "fetched_at": "2026-06-20T06:37:39Z"
       }
     ],
     "variot_vulns": [],
@@ -1795,7 +1795,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-19T07:16:38Z"
+        "fetched_at": "2026-06-20T06:38:06Z"
       },
       {
         "technique_id": "T1078",
@@ -1803,7 +1803,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:16:38Z"
+        "fetched_at": "2026-06-20T06:38:06Z"
       }
     ],
     "variot_vulns": [],
@@ -1855,7 +1855,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-19T07:17:15Z"
+        "fetched_at": "2026-06-20T06:38:38Z"
       },
       {
         "technique_id": "T1078",
@@ -1863,7 +1863,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:17:15Z"
+        "fetched_at": "2026-06-20T06:38:38Z"
       }
     ],
     "variot_vulns": [],
@@ -1983,7 +1983,7 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-19T07:17:34Z"
+        "fetched_at": "2026-06-20T06:41:13Z"
       }
     ],
     "variot_vulns": [],
@@ -2059,7 +2059,7 @@
         "name": "Data from Network Shared Drive",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1039/",
-        "fetched_at": "2026-06-19T07:17:43Z"
+        "fetched_at": "2026-06-20T06:42:13Z"
       },
       {
         "technique_id": "T1021",
@@ -2067,7 +2067,7 @@
         "name": "Remote Services",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/",
-        "fetched_at": "2026-06-19T07:17:43Z"
+        "fetched_at": "2026-06-20T06:42:13Z"
       }
     ],
     "variot_vulns": [],
@@ -2111,7 +2111,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-19T07:17:55Z"
+        "fetched_at": "2026-06-20T06:42:47Z"
       }
     ],
     "variot_vulns": [],
@@ -2188,7 +2188,7 @@
         "name": "Brute Force",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/",
-        "fetched_at": "2026-06-19T07:18:12Z"
+        "fetched_at": "2026-06-20T06:44:17Z"
       },
       {
         "technique_id": "T1552",
@@ -2196,7 +2196,7 @@
         "name": "Unsecured Credentials",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1552/",
-        "fetched_at": "2026-06-19T07:18:12Z"
+        "fetched_at": "2026-06-20T06:44:17Z"
       }
     ],
     "variot_vulns": [],
@@ -2320,7 +2320,7 @@
         "name": "Endpoint Denial of Service",
         "tactic": "impact",
         "url": "https://attack.mitre.org/techniques/T1499/",
-        "fetched_at": "2026-06-19T07:20:35Z"
+        "fetched_at": "2026-06-20T06:46:17Z"
       }
     ],
     "variot_vulns": [],
@@ -2363,7 +2363,7 @@
         "name": "Steal or Forge Kerberos Tickets",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1558/",
-        "fetched_at": "2026-06-19T07:20:45Z"
+        "fetched_at": "2026-06-20T06:47:27Z"
       },
       {
         "technique_id": "T1078",
@@ -2371,7 +2371,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:20:45Z"
+        "fetched_at": "2026-06-20T06:47:27Z"
       }
     ],
     "variot_vulns": [],
@@ -2414,7 +2414,7 @@
         "name": "Application Layer Protocol: DNS",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/004/",
-        "fetched_at": "2026-06-19T07:21:16Z"
+        "fetched_at": "2026-06-20T06:48:13Z"
       }
     ],
     "variot_vulns": [],
@@ -2523,7 +2523,7 @@
         "name": "Exfiltration Over Alternative Protocol",
         "tactic": "exfiltration",
         "url": "https://attack.mitre.org/techniques/T1048/",
-        "fetched_at": "2026-06-19T07:21:29Z"
+        "fetched_at": "2026-06-20T06:49:53Z"
       }
     ],
     "variot_vulns": [],
@@ -2566,7 +2566,7 @@
         "name": "Exfiltration Over Alternative Protocol",
         "tactic": "exfiltration",
         "url": "https://attack.mitre.org/techniques/T1048/",
-        "fetched_at": "2026-06-19T07:21:36Z"
+        "fetched_at": "2026-06-20T06:51:00Z"
       }
     ],
     "variot_vulns": [],
@@ -2880,7 +2880,7 @@
         "name": "Exploitation for Client Execution",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1203/",
-        "fetched_at": "2026-06-19T07:24:02Z"
+        "fetched_at": "2026-06-20T06:55:15Z"
       },
       {
         "technique_id": "T1190",
@@ -2888,7 +2888,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:24:02Z"
+        "fetched_at": "2026-06-20T06:55:15Z"
       }
     ],
     "variot_vulns": [],
@@ -2976,7 +2976,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:24:58Z"
+        "fetched_at": "2026-06-20T06:56:55Z"
       },
       {
         "technique_id": "T1078",
@@ -2984,7 +2984,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:24:58Z"
+        "fetched_at": "2026-06-20T06:56:55Z"
       },
       {
         "technique_id": "T1505.001",
@@ -2992,7 +2992,7 @@
         "name": "Server Software Component: SQL Stored Procedures",
         "tactic": "persistence",
         "url": "https://attack.mitre.org/techniques/T1505/001/",
-        "fetched_at": "2026-06-19T07:24:58Z"
+        "fetched_at": "2026-06-20T06:56:55Z"
       }
     ],
     "variot_vulns": [],
@@ -3044,7 +3044,7 @@
         "name": "Network Service Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1046/",
-        "fetched_at": "2026-06-19T07:25:06Z"
+        "fetched_at": "2026-06-20T06:57:53Z"
       },
       {
         "technique_id": "T1190",
@@ -3052,7 +3052,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:25:06Z"
+        "fetched_at": "2026-06-20T06:57:53Z"
       }
     ],
     "variot_vulns": [],
@@ -3133,7 +3133,7 @@
         "name": "Protocol Tunneling",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1572/",
-        "fetched_at": "2026-06-19T07:26:02Z"
+        "fetched_at": "2026-06-20T06:58:59Z"
       },
       {
         "technique_id": "T1133",
@@ -3141,7 +3141,7 @@
         "name": "External Remote Services",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1133/",
-        "fetched_at": "2026-06-19T07:26:02Z"
+        "fetched_at": "2026-06-20T06:58:59Z"
       }
     ],
     "variot_vulns": [],
@@ -3195,7 +3195,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-19T07:27:03Z"
+        "fetched_at": "2026-06-20T06:59:57Z"
       },
       {
         "technique_id": "T1557",
@@ -3203,7 +3203,7 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-19T07:27:03Z"
+        "fetched_at": "2026-06-20T06:59:57Z"
       }
     ],
     "variot_vulns": [],
@@ -3252,8 +3252,8 @@
     "service_name": "shilp",
     "transport": [
       "UDP",
-      "TCP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Defined TXT keys: path=<path to mount point>",
     "description": "Network File System",
@@ -3313,7 +3313,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:27:42Z"
+        "fetched_at": "2026-06-20T07:01:37Z"
       },
       {
         "technique_id": "T1078",
@@ -3321,7 +3321,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:27:42Z"
+        "fetched_at": "2026-06-20T07:01:37Z"
       }
     ],
     "variot_vulns": [],
@@ -3364,7 +3364,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:27:48Z"
+        "fetched_at": "2026-06-20T07:02:14Z"
       },
       {
         "technique_id": "T1078",
@@ -3372,7 +3372,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:27:48Z"
+        "fetched_at": "2026-06-20T07:02:14Z"
       }
     ],
     "variot_vulns": [],
@@ -3449,7 +3449,7 @@
         "name": "Remote Services: SSH",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/004/",
-        "fetched_at": "2026-06-19T07:28:20Z"
+        "fetched_at": "2026-06-20T07:02:58Z"
       },
       {
         "technique_id": "T1110.001",
@@ -3457,7 +3457,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-19T07:28:20Z"
+        "fetched_at": "2026-06-20T07:02:58Z"
       }
     ],
     "variot_vulns": [],
@@ -3501,7 +3501,7 @@
         "name": "Deploy Container",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1610/",
-        "fetched_at": "2026-06-19T07:29:29Z"
+        "fetched_at": "2026-06-20T07:03:06Z"
       },
       {
         "technique_id": "T1190",
@@ -3509,7 +3509,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:29:29Z"
+        "fetched_at": "2026-06-20T07:03:06Z"
       }
     ],
     "variot_vulns": [],
@@ -3629,7 +3629,7 @@
         "name": "Account Discovery: Domain Account",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1087/002/",
-        "fetched_at": "2026-06-19T07:29:44Z"
+        "fetched_at": "2026-06-20T07:04:22Z"
       },
       {
         "technique_id": "T1482",
@@ -3637,7 +3637,7 @@
         "name": "Domain Trust Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1482/",
-        "fetched_at": "2026-06-19T07:29:44Z"
+        "fetched_at": "2026-06-20T07:04:22Z"
       }
     ],
     "variot_vulns": [],
@@ -3681,7 +3681,7 @@
         "name": "Account Discovery: Domain Account",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1087/002/",
-        "fetched_at": "2026-06-19T07:29:53Z"
+        "fetched_at": "2026-06-20T07:04:30Z"
       },
       {
         "technique_id": "T1482",
@@ -3689,7 +3689,7 @@
         "name": "Domain Trust Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1482/",
-        "fetched_at": "2026-06-19T07:29:53Z"
+        "fetched_at": "2026-06-20T07:04:30Z"
       }
     ],
     "variot_vulns": [],
@@ -3733,7 +3733,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:30:01Z"
+        "fetched_at": "2026-06-20T07:04:44Z"
       },
       {
         "technique_id": "T1078",
@@ -3741,7 +3741,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:30:01Z"
+        "fetched_at": "2026-06-20T07:04:44Z"
       }
     ],
     "variot_vulns": [],
@@ -3792,7 +3792,7 @@
         "name": "Remote Services: Remote Desktop Protocol",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/001/",
-        "fetched_at": "2026-06-19T07:30:42Z"
+        "fetched_at": "2026-06-20T07:05:20Z"
       },
       {
         "technique_id": "T1110.001",
@@ -3800,7 +3800,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-19T07:30:42Z"
+        "fetched_at": "2026-06-20T07:05:20Z"
       },
       {
         "technique_id": "T1563.002",
@@ -3808,7 +3808,7 @@
         "name": "Remote Service Session Hijacking: RDP Hijacking",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1563/002/",
-        "fetched_at": "2026-06-19T07:30:42Z"
+        "fetched_at": "2026-06-20T07:05:20Z"
       }
     ],
     "variot_vulns": [],
@@ -4049,7 +4049,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:31:22Z"
+        "fetched_at": "2026-06-20T07:07:26Z"
       },
       {
         "technique_id": "T1046",
@@ -4057,7 +4057,7 @@
         "name": "Network Service Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1046/",
-        "fetched_at": "2026-06-19T07:31:22Z"
+        "fetched_at": "2026-06-20T07:07:26Z"
       }
     ],
     "variot_vulns": [],
@@ -4136,7 +4136,7 @@
         "name": "Remote Access Software",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1219/",
-        "fetched_at": "2026-06-19T07:32:16Z"
+        "fetched_at": "2026-06-20T07:08:27Z"
       },
       {
         "technique_id": "T1059",
@@ -4144,7 +4144,7 @@
         "name": "Command and Scripting Interpreter",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1059/",
-        "fetched_at": "2026-06-19T07:32:16Z"
+        "fetched_at": "2026-06-20T07:08:27Z"
       }
     ],
     "variot_vulns": [],
@@ -4329,7 +4329,7 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-19T07:34:24Z"
+        "fetched_at": "2026-06-20T07:11:17Z"
       },
       {
         "technique_id": "T1040",
@@ -4337,7 +4337,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-19T07:34:24Z"
+        "fetched_at": "2026-06-20T07:11:17Z"
       }
     ],
     "variot_vulns": [],
@@ -4393,7 +4393,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:34:34Z"
+        "fetched_at": "2026-06-20T07:12:09Z"
       },
       {
         "technique_id": "T1078",
@@ -4401,7 +4401,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:34:34Z"
+        "fetched_at": "2026-06-20T07:12:09Z"
       }
     ],
     "variot_vulns": [],
@@ -4492,8 +4492,8 @@
     "service_name": "amqp",
     "transport": [
       "UDP",
-      "TCP",
-      "SCTP"
+      "SCTP",
+      "TCP"
     ],
     "iana_status": "Assigned",
     "description": "AMQP",
@@ -4554,7 +4554,7 @@
         "name": "Remote Services: VNC",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/005/",
-        "fetched_at": "2026-06-19T07:34:55Z"
+        "fetched_at": "2026-06-20T07:14:28Z"
       },
       {
         "technique_id": "T1110.001",
@@ -4562,7 +4562,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-19T07:34:55Z"
+        "fetched_at": "2026-06-20T07:14:28Z"
       }
     ],
     "variot_vulns": [],
@@ -4644,7 +4644,7 @@
         "name": "Remote Services: Windows Remote Management",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/006/",
-        "fetched_at": "2026-06-19T07:35:37Z"
+        "fetched_at": "2026-06-20T07:16:08Z"
       },
       {
         "technique_id": "T1110.001",
@@ -4652,7 +4652,7 @@
         "name": "Brute Force: Password Guessing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1110/001/",
-        "fetched_at": "2026-06-19T07:35:37Z"
+        "fetched_at": "2026-06-20T07:16:08Z"
       }
     ],
     "variot_vulns": [],
@@ -4707,7 +4707,7 @@
         "name": "Remote Services: Windows Remote Management",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/006/",
-        "fetched_at": "2026-06-19T07:36:40Z"
+        "fetched_at": "2026-06-20T07:16:21Z"
       },
       {
         "technique_id": "T1573",
@@ -4715,7 +4715,7 @@
         "name": "Encrypted Channel",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1573/",
-        "fetched_at": "2026-06-19T07:36:40Z"
+        "fetched_at": "2026-06-20T07:16:21Z"
       }
     ],
     "variot_vulns": [],
@@ -4767,7 +4767,7 @@
         "name": "Remote Services: VNC",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T1021/005/",
-        "fetched_at": "2026-06-19T07:36:49Z"
+        "fetched_at": "2026-06-20T07:16:33Z"
       },
       {
         "technique_id": "T1185",
@@ -4775,7 +4775,7 @@
         "name": "Browser Session Hijacking",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1185/",
-        "fetched_at": "2026-06-19T07:36:49Z"
+        "fetched_at": "2026-06-20T07:16:33Z"
       }
     ],
     "variot_vulns": [],
@@ -4830,7 +4830,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:37:32Z"
+        "fetched_at": "2026-06-20T07:18:02Z"
       },
       {
         "technique_id": "T1059",
@@ -4838,7 +4838,7 @@
         "name": "Command and Scripting Interpreter",
         "tactic": "execution",
         "url": "https://attack.mitre.org/techniques/T1059/",
-        "fetched_at": "2026-06-19T07:37:32Z"
+        "fetched_at": "2026-06-20T07:18:02Z"
       }
     ],
     "variot_vulns": [],
@@ -4955,7 +4955,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:38:11Z"
+        "fetched_at": "2026-06-20T07:20:14Z"
       },
       {
         "technique_id": "T1071.001",
@@ -4963,7 +4963,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-19T07:38:11Z"
+        "fetched_at": "2026-06-20T07:20:14Z"
       }
     ],
     "variot_vulns": [],
@@ -5008,7 +5008,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:38:20Z"
+        "fetched_at": "2026-06-20T07:20:23Z"
       },
       {
         "technique_id": "T1071.001",
@@ -5016,7 +5016,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-19T07:38:20Z"
+        "fetched_at": "2026-06-20T07:20:23Z"
       }
     ],
     "variot_vulns": [],
@@ -5059,7 +5059,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:38:26Z"
+        "fetched_at": "2026-06-20T07:21:11Z"
       },
       {
         "technique_id": "T1071.001",
@@ -5067,7 +5067,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-19T07:38:26Z"
+        "fetched_at": "2026-06-20T07:21:11Z"
       }
     ],
     "variot_vulns": [],
@@ -5145,7 +5145,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:40:29Z"
+        "fetched_at": "2026-06-20T07:22:33Z"
       },
       {
         "technique_id": "T1071.001",
@@ -5153,7 +5153,7 @@
         "name": "Application Layer Protocol: Web Protocols",
         "tactic": "command-and-control",
         "url": "https://attack.mitre.org/techniques/T1071/001/",
-        "fetched_at": "2026-06-19T07:40:29Z"
+        "fetched_at": "2026-06-20T07:22:33Z"
       }
     ],
     "variot_vulns": [],
@@ -5292,7 +5292,7 @@
         "name": "Network Service Discovery",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T1046/",
-        "fetched_at": "2026-06-19T07:41:14Z"
+        "fetched_at": "2026-06-20T07:24:11Z"
       },
       {
         "technique_id": "T1190",
@@ -5300,7 +5300,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:41:14Z"
+        "fetched_at": "2026-06-20T07:24:11Z"
       }
     ],
     "variot_vulns": [],
@@ -5490,7 +5490,7 @@
         "name": "Network Sniffing",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1040/",
-        "fetched_at": "2026-06-19T07:41:19Z"
+        "fetched_at": "2026-06-20T07:24:52Z"
       },
       {
         "technique_id": "T1557",
@@ -5498,7 +5498,7 @@
         "name": "Adversary-in-the-Middle",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1557/",
-        "fetched_at": "2026-06-19T07:41:19Z"
+        "fetched_at": "2026-06-20T07:24:52Z"
       }
     ],
     "variot_vulns": [],
@@ -5644,7 +5644,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:41:47Z"
+        "fetched_at": "2026-06-20T07:28:51Z"
       },
       {
         "technique_id": "T1213",
@@ -5652,7 +5652,7 @@
         "name": "Data from Information Repositories",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1213/",
-        "fetched_at": "2026-06-19T07:41:47Z"
+        "fetched_at": "2026-06-20T07:28:51Z"
       }
     ],
     "variot_vulns": [],
@@ -5735,7 +5735,7 @@
         "name": "Data from Information Repositories",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1213/",
-        "fetched_at": "2026-06-19T07:41:54Z"
+        "fetched_at": "2026-06-20T07:29:37Z"
       },
       {
         "technique_id": "T1552.001",
@@ -5743,7 +5743,7 @@
         "name": "Unsecured Credentials: Credentials In Files",
         "tactic": "credential-access",
         "url": "https://attack.mitre.org/techniques/T1552/001/",
-        "fetched_at": "2026-06-19T07:41:54Z"
+        "fetched_at": "2026-06-20T07:29:37Z"
       }
     ],
     "variot_vulns": [],
@@ -5798,7 +5798,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:42:03Z"
+        "fetched_at": "2026-06-20T07:29:45Z"
       },
       {
         "technique_id": "T1078",
@@ -5806,7 +5806,7 @@
         "name": "Valid Accounts",
         "tactic": "defense-evasion",
         "url": "https://attack.mitre.org/techniques/T1078/",
-        "fetched_at": "2026-06-19T07:42:03Z"
+        "fetched_at": "2026-06-20T07:29:45Z"
       }
     ],
     "variot_vulns": [],
@@ -6146,7 +6146,7 @@
         "name": "Exploit Public-Facing Application",
         "tactic": "initial-access",
         "url": "https://attack.mitre.org/techniques/T1190/",
-        "fetched_at": "2026-06-19T07:42:19Z"
+        "fetched_at": "2026-06-20T07:30:01Z"
       },
       {
         "technique_id": "T1213",
@@ -6154,7 +6154,7 @@
         "name": "Data from Information Repositories",
         "tactic": "collection",
         "url": "https://attack.mitre.org/techniques/T1213/",
-        "fetched_at": "2026-06-19T07:42:19Z"
+        "fetched_at": "2026-06-20T07:30:01Z"
       }
     ],
     "variot_vulns": [],
@@ -6332,7 +6332,7 @@
         "name": "Remote Services",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T0886/",
-        "fetched_at": "2026-06-19T07:43:02Z"
+        "fetched_at": "2026-06-20T07:30:23Z"
       },
       {
         "technique_id": "T0855",
@@ -6340,7 +6340,7 @@
         "name": "Unauthorized Command Message",
         "tactic": "impair-process-control",
         "url": "https://attack.mitre.org/techniques/T0855/",
-        "fetched_at": "2026-06-19T07:43:02Z"
+        "fetched_at": "2026-06-20T07:30:23Z"
       }
     ],
     "variot_vulns": [],
@@ -6397,7 +6397,7 @@
         "name": "Remote Services",
         "tactic": "lateral-movement",
         "url": "https://attack.mitre.org/techniques/T0886/",
-        "fetched_at": "2026-06-19T07:43:11Z"
+        "fetched_at": "2026-06-20T07:31:46Z"
       },
       {
         "technique_id": "T0840",
@@ -6405,7 +6405,7 @@
         "name": "Network Connection Enumeration",
         "tactic": "discovery",
         "url": "https://attack.mitre.org/techniques/T0840/",
-        "fetched_at": "2026-06-19T07:43:11Z"
+        "fetched_at": "2026-06-20T07:31:46Z"
       }
     ],
     "variot_vulns": [],
